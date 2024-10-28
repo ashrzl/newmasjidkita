@@ -1,12 +1,11 @@
 import 'dart:convert';
+// import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 // import 'package:geolocator/geolocator.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:new_mk_v3/navigationdrawer.dart';
 import 'package:new_mk_v3/pages/login_pages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,8 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _selectedIndex = 0;
-  // Position? _currentPosition;
-  String _currentAddress = 'Fetching location...';
+  // String _currentAddress = 'Fetching location...';
   String? _authToken;
   String? UserName;
   String? Email;
@@ -35,13 +33,63 @@ class _HomePageState extends State<HomePage> {
       _loadUserInfo().then((_) {
         print('Loaded user info: Token: $_authToken, UserId: $UserId'); // Debugging line
         if (_authToken != null && UserId != null) {
-          fetchUserInfo(); // Call only if token and UserId are loaded
+          fetchUserInfo();
+          fetchFavoriteMosques();// Call only if token and UserId are loaded
         } else {
           print('Token or UserId is null, skipping fetchUserInfo.');
         }
       });
     });
   }
+
+  // Future<void> _getCurrentLocation() async {
+  //   bool serviceEnabled;
+  //   LocationPermission permission;
+  //
+  //   // Check if location services are enabled
+  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //   if (!serviceEnabled) {
+  //     print('Location services are disabled.');
+  //     return Future.error('Location services are disabled.');
+  //   }
+  //
+  //   // Check for location permissions
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.denied) {
+  //       print('Location permissions are denied');
+  //       return Future.error('Location permissions are denied');
+  //     }
+  //   }
+  //
+  //   if (permission == LocationPermission.deniedForever) {
+  //     print('Location permissions are permanently denied.');
+  //     return Future.error('Location permissions are permanently denied');
+  //   }
+  //
+  //   // Get the current location
+  //   try {
+  //     Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  //     List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+  //
+  //     if (placemarks.isNotEmpty) {
+  //       Placemark place = placemarks[0];
+  //       setState(() {
+  //         _currentAddress = '${place.locality ?? ''}, ${place.administrativeArea ?? ''}, ${place.country ?? ''}';
+  //       });
+  //     } else {
+  //       setState(() {
+  //         _currentAddress = 'Address not found';
+  //       });
+  //     }
+  //   } catch (e) {
+  //     print('Failed to get location: $e');
+  //     setState(() {
+  //       _currentAddress = 'Failed to get location';
+  //     });
+  //   }
+  // }
 
   Future<void> _loadUserInfo() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -103,65 +151,54 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  List<Map<String, dynamic>> favoriteMosques = [];
 
-  // Future<void> _getCurrentLocation() async {
-  //   bool serviceEnabled;
-  //   LocationPermission permission;
-  //
-  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  //   if (!serviceEnabled) {
-  //     return Future.error('Location services are disabled.');
-  //   }
-  //
-  //   permission = await Geolocator.checkPermission();
-  //   if (permission == LocationPermission.denied) {
-  //     permission = await Geolocator.requestPermission();
-  //     if (permission == LocationPermission.denied) {
-  //       return Future.error('Location permissions are denied');
-  //     }
-  //   }
-  //
-  //   if (permission == LocationPermission.deniedForever) {
-  //     return Future.error('Location permissions are permanently denied, we cannot request permissions.');
-  //   }
-  //
-  //   Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-  //   List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
-  //
-  //   if (placemarks.isNotEmpty) {
-  //     Placemark place = placemarks[0];
-  //     String address = '${place.locality ?? ''}, ${place.administrativeArea ?? ''}, ${place.country ?? ''}';
-  //
-  //     setState(() {
-  //       _currentPosition = position;
-  //       _currentAddress = address.isNotEmpty ? address : 'Address not found';
-  //     });
-  //   } else {
-  //     setState(() {
-  //       _currentAddress = 'Address not found';
-  //     });
-  //   }
-  // }
+  Future<void> fetchFavoriteMosques() async {
+    try {
+      final response = await http.get(
+        Uri.parse('https://test.cmsbstaging.com.my/web-api/api/Tnmosques?userId=$UserId'), // Include userId if required
+        headers: {
+          'Authorization': 'Bearer $_authToken',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        print('Fetched mosques: ${jsonResponse['data']}');
+        if (jsonResponse['data'] != null && jsonResponse['data']['\$values'] != null) {
+          List mosques = jsonResponse['data']['\$values'];
+          setState(() {
+            favoriteMosques = List<Map<String, dynamic>>.from(mosques);
+          });
+        } else {
+          print('No favorite mosques found or invalid structure. Response: $jsonResponse');
+        }
+      } else {
+        print('Failed to load favorite mosques: ${response.body}');
+      }
+    } catch (e) {
+      print('Error fetching favorite mosques: $e');
+    }
+  }
+
+
 
   void _onItemTapped(int index) async {
     setState(() {
-      _selectedIndex = index; // Update the selected index
+      _selectedIndex = index;
     });
 
-    // Navigate based on the selected index
     switch (index) {
       case 0:
-      // Navigate to HomePage
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => HomePage()),
         );
         break;
       case 1:
-      // Navigate to the search page (implement this page)
         break;
       case 2:
-      // Navigate to the profile page (implement this page)
         break;
     }
   }
@@ -180,13 +217,13 @@ class _HomePageState extends State<HomePage> {
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(title: '')));
           },
         ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Lokasi Anda:", style: TextStyle(color: Colors.white)),
-            Text(_currentAddress, style: TextStyle(fontSize: 14, color: Colors.white)),
-          ],
-        ),
+        // title: Column(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     Text("Lokasi Anda:", style: TextStyle(color: Colors.white)),
+        //     Text(_currentAddress, style: TextStyle(fontSize: 14, color: Colors.white)),
+        //   ],
+        // ),
         actions: [
           IconButton(
             onPressed: () {
@@ -245,29 +282,53 @@ class _HomePageState extends State<HomePage> {
   Widget _buildProfileSection() {
     return Padding(
       padding: EdgeInsets.all(30),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 40.0,
-            backgroundImage: _imageUrl != null
-                ? NetworkImage(_imageUrl!) as ImageProvider<Object>
-                : AssetImage('assets/user.png') as ImageProvider<Object>,
-          ),
-          SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Name: ${UserName ?? "No Name"}', style: TextStyle(fontSize: 15)), // Handle null safely
-              SizedBox(height: 8),
-              Text('Email: ${Email ?? "No Email"}', style: TextStyle(fontSize: 15)), // Handle null safely
-              SizedBox(height: 8),
-              Text('Phone: ${PhoneNo ?? "No Phone Number"}', style: TextStyle(fontSize: 15)), // Handle null safely
-            ],
-          ),
-        ],
+      child: Container(
+        padding: EdgeInsets.all(16), // Additional padding inside the container
+        decoration: BoxDecoration(
+          color: Colors.white, // Background color of the container
+          borderRadius: BorderRadius.circular(12), // Rounded corners
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.9), // Shadow color
+              spreadRadius: 1, // Spread radius
+              blurRadius: 5, // Blur radius
+              offset: Offset(0, 3), // Offset for the shadow
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container( // Wrap CircleAvatar in a Container
+              decoration: BoxDecoration(
+                shape: BoxShape.circle, // Ensures the container is circular
+                border: Border.all(color: Color(0xFF5C0065), width: 5), // Set border color and width
+              ),
+              child: CircleAvatar(
+                radius: 40.0,
+                backgroundImage: _imageUrl != null
+                    ? NetworkImage(_imageUrl!) as ImageProvider<Object>
+                    : AssetImage('assets/user.png') as ImageProvider<Object>,
+              ),
+            ),
+            SizedBox(width: 12),
+            Expanded( // Use Expanded to allow flexibility in the Column width
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Name: ${UserName ?? "No Name"}', style: TextStyle(fontSize: 15)),
+                  SizedBox(height: 8),
+                  Text('Email: ${Email ?? "No Email"}', style: TextStyle(fontSize: 15)),
+                  SizedBox(height: 8),
+                  Text('Phone: ${PhoneNo ?? "No Phone"}', style: TextStyle(fontSize: 15)),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+
 
   Widget _buildFeatureIcons() {
     return Padding(
@@ -307,13 +368,62 @@ class _HomePageState extends State<HomePage> {
           ),
           Container(
             height: 300,
-            child: const TabBarView(
+            child: TabBarView(
               children: [
-                Center(child: Text('Masjid Dilanggan')),
-                Center(child: Text('Masjid Diikuti')),
+                Center(child: Text('Masjid Dilanggan')),  // Replace with actual data if available
+                favoriteMosques.isNotEmpty
+                    ? ListView.builder(
+                  itemCount: favoriteMosques.length,
+                  itemBuilder: (context, index) {
+                    final mosque = favoriteMosques[index];
+                    final moduleName = mosque['ModuleName'] ?? 'Unknown';
+                    Color buttonColor;
+
+                    // Determine button color based on ModuleName
+                    if (moduleName == 'KariahKITA') {
+                      buttonColor = Color(0xFF6B2572); // Button color for Module1
+                    } else if (moduleName == 'KhairatKITA') {
+                      buttonColor = Colors.green; // Button color for Module2
+                    } else {
+                      buttonColor = Colors.grey; // Default color if ModuleName is not matched
+                    }
+
+                    return ListTile(
+                      title: Text(mosque['TnName'] ?? 'Unknown Mosque'),
+                      subtitle: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              moduleName,
+                              overflow: TextOverflow.ellipsis, // Handle overflow
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              // Define your action here
+                              print('Button pressed for: $moduleName');
+                            },
+                            style: TextButton.styleFrom(
+                              backgroundColor: buttonColor, // Set button color
+                              primary: Colors.white, // Text color on the button
+                            ),
+                            child: Text(
+                              moduleName, // Use ModuleName as button label
+                              style: TextStyle(fontSize: 12), // Adjust font size if needed
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                )
+                    : Center(child: Text('Tiada Masjid Diikuti')),
               ],
             ),
-          ),
+          )
+
+
         ],
       ),
     );

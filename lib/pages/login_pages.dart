@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter/gestures.dart';
+// import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:new_mk_v3/pages/home_pages.dart';
@@ -264,47 +264,47 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 20),
                 // Or Divider
-                Row(
-                  children: [
-                    Expanded(child: Divider(color: Colors.black26)),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text('Atau Log Masuk'),
-                    ),
-                    Expanded(child: Divider(color: Colors.black26)),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     Expanded(child: Divider(color: Colors.black26)),
+                //     Padding(
+                //       padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                //       child: Text('Atau Log Masuk'),
+                //     ),
+                //     Expanded(child: Divider(color: Colors.black26)),
+                //   ],
+                // ),
                 SizedBox(height: 30.0),
                 // Google Sign In Button (Placeholder)
-                IconButton(
-                  onPressed: () {
-                    // Implement Google Sign-In feature here
-                  },
-                  icon: Image.asset(
-                    'assets/google.png',
-                    height: 50,
-                  ), // Update with your logo path
-                ),
+                // IconButton(
+                //   onPressed: () {
+                //     // Implement Google Sign-In feature here
+                //   },
+                //   icon: Image.asset(
+                //     'assets/google.png',
+                //     height: 50,
+                //   ), // Update with your logo path
+                // ),
                 const SizedBox(height: 30),
-                Align(
-                  alignment: Alignment.center,
-                  child: RichText(
-                    text: TextSpan(
-                      text: 'Belum ada akaun? ',
-                      style: TextStyle(color: Colors.black54),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Daftar',
-                          style: TextStyle(color: Colors.blue),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              // Implement your registration link
-                            },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                // Align(
+                //   alignment: Alignment.center,
+                //   child: RichText(
+                //     text: TextSpan(
+                //       text: 'Belum ada akaun? ',
+                //       style: TextStyle(color: Colors.black54),
+                //       children: <TextSpan>[
+                //         TextSpan(
+                //           text: 'Daftar',
+                //           style: TextStyle(color: Colors.blue),
+                //           recognizer: TapGestureRecognizer()
+                //             ..onTap = () {
+                //               // Implement your registration link
+                //             },
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
