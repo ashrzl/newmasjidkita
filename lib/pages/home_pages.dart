@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:new_mk_v3/navigationdrawer.dart';
 import 'package:new_mk_v3/pages/login_pages.dart';
 import 'package:new_mk_v3/pages/prayertimes_pages.dart';
@@ -123,7 +125,7 @@ class _HomePageState extends State<HomePage> {
 
       final response = await http.get(
         Uri.parse(
-            'https://api.cmsb-env2.com.my/api/UserAccounts/GetUserProfile'),
+            'https://test.cmsbstaging.com.my/web-api/api/UserAccounts/GetUserProfile'),
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',
@@ -140,7 +142,7 @@ class _HomePageState extends State<HomePage> {
             Email = jsonResponse['data']['Email'] ?? 'No Email';
             PhoneNo = jsonResponse['data']['PhoneNo'] ?? 'No Phone';
             _imageUrl = jsonResponse['data']['UaphotoUrl'] != null
-                ? 'https://cmsb-env2.com.my${jsonResponse['data']['UaphotoUrl']}'
+                ? 'https://test.cmsbstaging.com.my${jsonResponse['data']['UaphotoUrl']}'
                 : null;
           });
 
@@ -165,9 +167,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> fetchFavoriteMosques() async {
     try {
       final response = await http.get(
-        Uri.parse(
-            'https://api.cmsb-env2.com.my/api/UserAccounts/GetUserTntLists?userId=$UserId'),
-        // Include userId if required
+        Uri.parse('https://test.cmsbstaging.com.my/web-api/api/UserAccounts/GetUserTntLists'),
         headers: {
           'Authorization': 'Bearer $_authToken',
           'Content-Type': 'application/json',
@@ -176,16 +176,24 @@ class _HomePageState extends State<HomePage> {
 
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
-        print('Fetched mosques: ${jsonResponse['data']}');
-        if (jsonResponse['data'] != null &&
-            jsonResponse['data']['\$values'] != null) {
-          List mosques = jsonResponse['data']['\$values'];
-          setState(() {
-            favoriteMosques = List<Map<String, dynamic>>.from(mosques);
-          });
+        print('Fetched mosques: $jsonResponse'); // Log the entire response for debugging
+
+        // Check if the response has the required structure
+        if (jsonResponse['data'] != null && jsonResponse['data']['\$values'] is List) {
+          List mosquesList = jsonResponse['data']['\$values'];
+
+          // Check if the mosques list is empty
+          if (mosquesList.isEmpty) {
+            print('No favorite mosques found.'); // Inform user about empty list
+            setState(() {
+              favoriteMosques = []; // Ensure the state is updated with an empty list
+            });
+            return; // Exit the method early
+          }
+
+          print('Favorite mosques: $favoriteMosques'); // Log the favorite mosques for debugging
         } else {
-          print(
-              'No favorite mosques found or invalid structure. Response: $jsonResponse');
+          print('Invalid structure in response: $jsonResponse');
         }
       } else {
         print('Failed to load favorite mosques: ${response.body}');
@@ -334,51 +342,90 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+// Declare a variable to hold the selected image
+  File? _imageFile;
+
+// Function to pick an image from the gallery or take a new photo
+  Future<void> _pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      setState(() {
+        _imageFile = File(image.path);
+        _imageUrl = null; // Reset _imageUrl if using file
+      });
+    }
+  }
+
+// Updated _buildProfileSection widget
   Widget _buildProfileSection() {
     return Padding(
       padding: EdgeInsets.all(30),
       child: Container(
-        padding: EdgeInsets.all(16), // Additional padding inside the container
+        padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white, // Background color of the container
-          borderRadius: BorderRadius.circular(12), // Rounded corners
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.9), // Shadow color
-              spreadRadius: 1, // Spread radius
-              blurRadius: 5, // Blur radius
-              offset: Offset(0, 3), // Offset for the shadow
+              color: Colors.grey.withOpacity(0.9),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 3),
             ),
           ],
         ),
         child: Row(
           children: [
-            Container( // Wrap CircleAvatar in a Container
-              decoration: BoxDecoration(
-                shape: BoxShape.circle, // Ensures the container is circular
-                border: Border.all(color: Color(0xFF5C0065),
-                    width: 5), // Set border color and width
-              ),
-              child: CircleAvatar(
-                radius: 40.0,
-                backgroundImage: _imageUrl != null
-                    ? NetworkImage(_imageUrl!) as ImageProvider<Object>
-                    : AssetImage('assets/user.png') as ImageProvider<Object>,
-              ),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Color(0xFF5C0065), width: 5),
+                  ),
+                  child: CircleAvatar(
+                    radius: 40.0,
+                    backgroundImage: _imageFile != null
+                        ? FileImage(_imageFile!) // Use FileImage for local image
+                        : _imageUrl != null
+                        ? NetworkImage(_imageUrl!) as ImageProvider<Object>
+                        : AssetImage('assets/user.png') as ImageProvider<Object>,
+                  ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: Container(
+                    height: 40.0,
+                    width: 40.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Color(0xFF5C0065), width: 3),
+                      color: Colors.white,
+                    ),
+                    child: IconButton(
+                      icon: Icon(Icons.edit, color: Color(0xFF5C0065), size: 20.0),
+                      onPressed: () {
+                        _pickImage(); // Call the image picking function
+                      },
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(width: 12),
-            Expanded( // Use Expanded to allow flexibility in the Column width
+            Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Name: ${UserName ?? "No Name"}',
-                      style: TextStyle(fontSize: 15)),
+                  Text('${UserName ?? "No Name"}', style: TextStyle(fontSize: 15)),
                   SizedBox(height: 8),
-                  Text('Email: ${Email ?? "No Email"}',
-                      style: TextStyle(fontSize: 15)),
+                  Text('${Email ?? "No Email"}', style: TextStyle(fontSize: 15)),
                   SizedBox(height: 8),
-                  Text('Phone: ${PhoneNo ?? "No Phone"}',
-                      style: TextStyle(fontSize: 15)),
+                  Text('${PhoneNo ?? "No Phone"}', style: TextStyle(fontSize: 15)),
                 ],
               ),
             ),
@@ -490,8 +537,8 @@ class _HomePageState extends State<HomePage> {
             labelColor: Color(0xFF6B2572),
             unselectedLabelColor: Colors.black54,
             tabs: [
-              Text('Masjid Dilanggan'),
-              Text('Masjid Diikuti'),
+              Tab(text: 'Masjid Dilanggan'),
+              Tab(text: 'Masjid Diikuti'),
             ],
           ),
           Container(
@@ -499,36 +546,37 @@ class _HomePageState extends State<HomePage> {
             child: TabBarView(
               children: [
                 Center(child: Text('Masjid Dilanggan')),
-                // Replace with actual data if available
+                // Display favorite mosques or a message if none
                 favoriteMosques.isNotEmpty
                     ? ListView.builder(
                   itemCount: favoriteMosques.length,
                   itemBuilder: (context, index) {
                     final mosque = favoriteMosques[index];
                     final moduleName = mosque['ModuleName'] ?? 'Unknown';
+
                     Color buttonColor;
 
                     // Determine button color based on ModuleName
                     if (moduleName == 'KariahKITA') {
-                      buttonColor =
-                          Color(0xFF6B2572); // Button color for Module1
+                      buttonColor = Color(0xFF6B2572); // Color for KariahKITA
                     } else if (moduleName == 'KhairatKITA') {
-                      buttonColor = Colors.green; // Button color for Module2
+                      buttonColor = Colors.green; // Color for KhairatKITA
                     } else {
-                      buttonColor = Colors
-                          .grey; // Default color if ModuleName is not matched
+                      buttonColor = Colors.grey; // Default color
                     }
 
                     return ListTile(
-                      title: Text(mosque['TnName'] ?? 'Unknown Mosque'),
+                      leading: mosque['MosLogoUrl'] != null
+                          ? Image.network(mosque['MosLogoUrl']) // Display the logo if available
+                          : null,
+                      title: Text(mosque['MosName'] ?? 'Unknown Mosque'),
                       subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Flexible(
                             child: Text(
-                              moduleName,
-                              overflow: TextOverflow
-                                  .ellipsis, // Handle overflow
+                              mosque['AddressLine1'] ?? 'No Address',
+                              overflow: TextOverflow.ellipsis, // Handle overflow
                             ),
                           ),
                           TextButton(
@@ -537,12 +585,12 @@ class _HomePageState extends State<HomePage> {
                               print('Button pressed for: $moduleName');
                             },
                             style: TextButton.styleFrom(
-                              foregroundColor: Colors.white, backgroundColor: buttonColor, // Text color on the button
+                              foregroundColor: Colors.white,
+                              backgroundColor: buttonColor, // Text color on the button
                             ),
                             child: Text(
                               moduleName, // Use ModuleName as button label
-                              style: TextStyle(
-                                  fontSize: 12), // Adjust font size if needed
+                              style: TextStyle(fontSize: 12), // Adjust font size if needed
                             ),
                           ),
                         ],
@@ -550,14 +598,15 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                 )
-                    : Center(child: Text('Tiada Masjid Diikuti')),
+                    : Center(child: Text('Tiada Masjid Diikuti')), // Message when no mosques are found
               ],
             ),
-          )
+          ),
         ],
       ),
     );
   }
+
 
   Widget _buildMenuIconWithImage(String assetPath, String label, Color color,
       {VoidCallback? onTap}) {
