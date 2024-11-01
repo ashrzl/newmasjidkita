@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:new_mk_v3/navigationdrawer.dart';
 import 'package:new_mk_v3/pages/login_pages.dart';
 import 'package:new_mk_v3/pages/prayertimes_pages.dart';
+import 'package:new_mk_v3/pages/qiblah_pages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
@@ -125,7 +126,7 @@ class _HomePageState extends State<HomePage> {
 
       final response = await http.get(
         Uri.parse(
-            'https://test.cmsbstaging.com.my/web-api/api/UserAccounts/GetUserProfile'),
+            'https://api.cmsb-env2.com.my/api/UserAccounts/GetUserProfile'),
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',
@@ -142,7 +143,7 @@ class _HomePageState extends State<HomePage> {
             Email = jsonResponse['data']['Email'] ?? 'No Email';
             PhoneNo = jsonResponse['data']['PhoneNo'] ?? 'No Phone';
             _imageUrl = jsonResponse['data']['UaphotoUrl'] != null
-                ? 'https://test.cmsbstaging.com.my${jsonResponse['data']['UaphotoUrl']}'
+                ? 'https://cmsb-env2.com.my${jsonResponse['data']['UaphotoUrl']}'
                 : null;
           });
 
@@ -167,7 +168,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> fetchFavoriteMosques() async {
     try {
       final response = await http.get(
-        Uri.parse('https://test.cmsbstaging.com.my/web-api/api/UserAccounts/GetUserTntLists'),
+        Uri.parse('https://api.cmsb-env2.com.my/api/UserAccounts/GetUserTntLists'),
         headers: {
           'Authorization': 'Bearer $_authToken',
           'Content-Type': 'application/json',
@@ -179,19 +180,18 @@ class _HomePageState extends State<HomePage> {
         print('Fetched mosques: $jsonResponse'); // Log the entire response for debugging
 
         // Check if the response has the required structure
-        if (jsonResponse['data'] != null && jsonResponse['data']['\$values'] is List) {
-          List mosquesList = jsonResponse['data']['\$values'];
+        if (jsonResponse['data'] != null &&
+            jsonResponse['data']['\$values'] != null &&
+            jsonResponse['data']['\$values'] is List) {
 
-          // Check if the mosques list is empty
-          if (mosquesList.isEmpty) {
-            print('No favorite mosques found.'); // Inform user about empty list
-            setState(() {
-              favoriteMosques = []; // Ensure the state is updated with an empty list
-            });
-            return; // Exit the method early
-          }
+          final data = jsonResponse['data']['\$values'];
 
-          print('Favorite mosques: $favoriteMosques'); // Log the favorite mosques for debugging
+          // Populate favoriteMosques list with the parsed data
+          favoriteMosques = List<Map<String, dynamic>>.from(data);
+          setState(() {}); // Update the UI after assigning the data
+
+          // Log favorite mosques for verification
+          print('Favorite mosques: $favoriteMosques');
         } else {
           print('Invalid structure in response: $jsonResponse');
         }
@@ -202,6 +202,8 @@ class _HomePageState extends State<HomePage> {
       print('Error fetching favorite mosques: $e');
     }
   }
+
+
 
   // Replace this URL with your actual API endpoint
   String hadisApiUrl = 'https://hadis.my/api/hadisharian';
@@ -456,15 +458,16 @@ class _HomePageState extends State<HomePage> {
             ),
             GestureDetector(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => QiblaDirectionPage(),
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => QiblahScreen(),
+                  ),
+                );
               },
               child: _buildMenuIconWithImage('assets/qibla.png', 'Kiblat', const Color(0xFF6B2572)),
             ),
+
             GestureDetector(
               onTap: () {
                 // Navigator.push(
@@ -546,51 +549,48 @@ class _HomePageState extends State<HomePage> {
             child: TabBarView(
               children: [
                 Center(child: Text('Masjid Dilanggan')),
-                // Display favorite mosques or a message if none
                 favoriteMosques.isNotEmpty
                     ? ListView.builder(
                   itemCount: favoriteMosques.length,
                   itemBuilder: (context, index) {
                     final mosque = favoriteMosques[index];
                     final moduleName = mosque['ModuleName'] ?? 'Unknown';
-
                     Color buttonColor;
 
-                    // Determine button color based on ModuleName
                     if (moduleName == 'KariahKITA') {
-                      buttonColor = Color(0xFF6B2572); // Color for KariahKITA
+                      buttonColor = Color(0xFF6B2572);
                     } else if (moduleName == 'KhairatKITA') {
-                      buttonColor = Colors.green; // Color for KhairatKITA
+                      buttonColor = Colors.green;
                     } else {
-                      buttonColor = Colors.grey; // Default color
+                      buttonColor = Colors.grey;
                     }
 
                     return ListTile(
                       leading: mosque['MosLogoUrl'] != null
-                          ? Image.network(mosque['MosLogoUrl']) // Display the logo if available
+                          ? Image.network(mosque['MosLogoUrl'])
                           : null,
-                      title: Text(mosque['MosName'] ?? 'Unknown Mosque'),
+                      title: Text(mosque['TnName'] ?? 'Unknown Mosque'),
                       subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Flexible(
-                            child: Text(
-                              mosque['AddressLine1'] ?? 'No Address',
-                              overflow: TextOverflow.ellipsis, // Handle overflow
-                            ),
-                          ),
+                          // Flexible(
+                          //   child: Text(
+                          //     mosque['AddressLine1'] ?? 'No Address',
+                          //     overflow: TextOverflow.ellipsis,
+                          //   ),
+                          // ),
+                          SizedBox(height: 16),
                           TextButton(
                             onPressed: () {
-                              // Define your action here
                               print('Button pressed for: $moduleName');
                             },
                             style: TextButton.styleFrom(
                               foregroundColor: Colors.white,
-                              backgroundColor: buttonColor, // Text color on the button
+                              backgroundColor: buttonColor,
                             ),
                             child: Text(
-                              moduleName, // Use ModuleName as button label
-                              style: TextStyle(fontSize: 12), // Adjust font size if needed
+                              moduleName,
+                              style: TextStyle(fontSize: 12),
                             ),
                           ),
                         ],
@@ -598,7 +598,7 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                 )
-                    : Center(child: Text('Tiada Masjid Diikuti')), // Message when no mosques are found
+                    : Center(child: Text('Tiada Masjid Diikuti')),
               ],
             ),
           ),
@@ -606,7 +606,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
 
   Widget _buildMenuIconWithImage(String assetPath, String label, Color color,
       {VoidCallback? onTap}) {
