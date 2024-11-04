@@ -1,15 +1,12 @@
-import 'dart:convert';
-import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:new_mk_v3/controller/home_controller.dart';
+import 'package:new_mk_v3/model/mosque_model.dart';
+import 'package:new_mk_v3/model/user_model.dart';
 import 'package:new_mk_v3/navigationdrawer.dart';
 import 'package:new_mk_v3/pages/login_pages.dart';
 import 'package:new_mk_v3/pages/prayertimes_pages.dart';
-import 'package:new_mk_v3/pages/qiblah_pages.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,34 +14,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  int _selectedIndex = 0;
+  final HomeController _controller = HomeController();
+  User? _user;
+  List<Mosque> _favoriteMosques = [];
+  List<Mosque> _subscribeMosques = [];
   String _currentAddress = 'Fetching location...';
-  String? _authToken;
-  String? UserName;
-  String? Email;
-  String? PhoneNo;
-  String? _imageUrl;
-  String? UserId;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
     _getCurrentLocation();
-    SharedPreferences.getInstance().then((prefs) {
-      String? savedUserName = prefs.getString('UserName');
-      print('Saved username in HomePage: $savedUserName'); // Debugging print
-      _loadUserInfo().then((_) {
-        print(
-            'Loaded user info: Token: $_authToken, UserId: $UserId'); // Debugging line
-        if (_authToken != null && UserId != null) {
-          fetchUserInfo();
-          fetchFavoriteMosques(); // Call only if token and UserId are loaded
-        } else {
-          print('Token or UserId is null, skipping fetchUserInfo.');
-        }
-      });
-    });
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    await _controller.loadUserInfo();
+    _user = await _controller.fetchUserInfo();
+    _favoriteMosques = await _controller.fetchFavoriteMosques();
+    _subscribeMosques = await _controller.fetchSubscribeMosques();
+    setState(() {});
   }
 
   Future<void> _getCurrentLocation() async {
@@ -100,171 +89,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<void> _loadUserInfo() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _authToken = prefs.getString(
-          'Token'); // Make sure this matches the saved token key
-      UserId = prefs.getString('UserId'); // Load UserId from SharedPreferences
-    });
-
-    print('Loaded Token: $_authToken, UserId: $UserId'); // Debugging line
-  }
-
-  Future<void> fetchUserInfo() async {
-    try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('Token');
-      String? userId = prefs.getString('UserId');
-
-      print('Logged in user: $userId');
-
-      if (token == null || userId == null) {
-        print('No token or UserId found, user not logged in.');
-        return;
-      }
-
-      final response = await http.get(
-        Uri.parse(
-            'https://api.cmsb-env2.com.my/api/UserAccounts/GetUserProfile'),
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        final jsonResponse = jsonDecode(response.body);
-        print('User Info API response: $jsonResponse');
-
-        if (jsonResponse['data'] != null) {
-          setState(() {
-            UserName = jsonResponse['data']['Uaname'] ?? 'Unknown User';
-            Email = jsonResponse['data']['Email'] ?? 'No Email';
-            PhoneNo = jsonResponse['data']['PhoneNo'] ?? 'No Phone';
-            _imageUrl = jsonResponse['data']['UaphotoUrl'] != null
-                ? 'https://cmsb-env2.com.my${jsonResponse['data']['UaphotoUrl']}'
-                : null;
-          });
-
-          print(
-              'UserName: $UserName, Email: $Email, PhoneNo: $PhoneNo, Image URL: $_imageUrl');
-        } else {
-          print('No user data found in the response.');
-        }
-      } else if (response.statusCode == 401) {
-        // Handle unauthorized error
-        print('Token expired or unauthorized access');
-      } else {
-        print('Failed to load user info: ${response.body}');
-      }
-    } catch (e) {
-      print('Error fetching user info: $e');
-    }
-  }
-
-  List<Map<String, dynamic>> favoriteMosques = [];
-
-  Future<void> fetchFavoriteMosques() async {
-    try {
-      final response = await http.get(
-        Uri.parse('https://api.cmsb-env2.com.my/api/UserAccounts/GetUserTntLists'),
-        headers: {
-          'Authorization': 'Bearer $_authToken',
-          'Content-Type': 'application/json',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        final jsonResponse = jsonDecode(response.body);
-        print('Fetched mosques: $jsonResponse'); // Log the entire response for debugging
-
-        // Check if the response has the required structure
-        if (jsonResponse['data'] != null &&
-            jsonResponse['data']['\$values'] != null &&
-            jsonResponse['data']['\$values'] is List) {
-
-          final data = jsonResponse['data']['\$values'];
-
-          // Populate favoriteMosques list with the parsed data
-          favoriteMosques = List<Map<String, dynamic>>.from(data);
-          setState(() {}); // Update the UI after assigning the data
-
-          // Log favorite mosques for verification
-          print('Favorite mosques: $favoriteMosques');
-        } else {
-          print('Invalid structure in response: $jsonResponse');
-        }
-      } else {
-        print('Failed to load favorite mosques: ${response.body}');
-      }
-    } catch (e) {
-      print('Error fetching favorite mosques: $e');
-    }
-  }
-
-
-
-  // Replace this URL with your actual API endpoint
-  String hadisApiUrl = 'https://hadis.my/api/hadisharian';
-
-  Future<String> fetchHadis() async {
-    try {
-      // Log the start of the API call
-      print('Fetching Hadis from $hadisApiUrl');
-
-      final response = await http.get(Uri.parse(hadisApiUrl));
-
-      // Log the status code received
-      print('Response status code: ${response.statusCode}');
-
-      if (response.statusCode == 200) {
-        // Log the response body for debugging
-        print('Response body: ${response.body}');
-
-        final data = json.decode(response.body);
-
-        // Log the decoded data
-        print('Decoded data: $data');
-
-        // Access the list of Hadis from the "data" key
-        if (data.containsKey('data') && data['data'].isNotEmpty) {
-          // Extract the first Hadis from the list
-          String hadis = data['data'][0]['hadis'];
-          return hadis;
-        } else {
-          throw Exception('No Hadis found in the response data');
-        }
-      } else {
-        // Handle unexpected status codes
-        print('Error: Received status code ${response.statusCode}');
-        throw Exception('Failed to load Hadis: ${response.reasonPhrase}');
-      }
-    } catch (e) {
-      // Log any exceptions that occur during the process
-      print('Exception occurred: $e');
-      throw Exception('Failed to fetch Hadis due to an error: $e');
-    }
-  }
-  void _onItemTapped(int index) async {
-    setState(() {
-      _selectedIndex = index;
-    });
-
-    switch (index) {
-      case 0:
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
-        );
-        break;
-      case 1:
-        break;
-      case 2:
-        break;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -276,16 +100,14 @@ class _HomePageState extends State<HomePage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => LoginPage(title: '')));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(title: '')));
           },
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Lokasi Anda:", style: TextStyle(color: Colors.white)),
-            Text(_currentAddress,
-                style: TextStyle(fontSize: 14, color: Colors.white)),
+            Text(_currentAddress, style: TextStyle(fontSize: 14, color: Colors.white)),
           ],
         ),
         actions: [
@@ -313,13 +135,14 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Utama'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.search), label: 'Carian Masjid'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Carian Masjid'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: 0, // Set your selected index here
         selectedItemColor: Color(0xFF6B2572),
-        onTap: _onItemTapped,
+        onTap: (index) {
+          // Handle bottom navigation taps here
+        },
       ),
     );
   }
@@ -344,23 +167,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-// Declare a variable to hold the selected image
-  File? _imageFile;
-
-// Function to pick an image from the gallery or take a new photo
-  Future<void> _pickImage() async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-
-    if (image != null) {
-      setState(() {
-        _imageFile = File(image.path);
-        _imageUrl = null; // Reset _imageUrl if using file
-      });
-    }
-  }
-
-// Updated _buildProfileSection widget
   Widget _buildProfileSection() {
     return Padding(
       padding: EdgeInsets.all(30),
@@ -381,22 +187,24 @@ class _HomePageState extends State<HomePage> {
         child: Row(
           children: [
             Stack(
-              alignment: Alignment.center,
+              alignment: Alignment.bottomRight, // Align pencil icon to bottom right
               children: [
+                // CircleAvatar with a border
                 Container(
+                  width: 80, // Adjust width for the border
+                  height: 80, // Adjust height for the border
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(color: Color(0xFF5C0065), width: 5),
+                    border: Border.all(color: Color(0xFF6B2572), width: 3), // Border color and width
                   ),
                   child: CircleAvatar(
+                    backgroundImage: _user?.imageUrl != null
+                        ? NetworkImage(_user!.imageUrl!)
+                        : AssetImage('assets/user.png') as ImageProvider,
                     radius: 40.0,
-                    backgroundImage: _imageFile != null
-                        ? FileImage(_imageFile!) // Use FileImage for local image
-                        : _imageUrl != null
-                        ? NetworkImage(_imageUrl!) as ImageProvider<Object>
-                        : AssetImage('assets/user.png') as ImageProvider<Object>,
                   ),
                 ),
+                // Pencil icon for updating profile picture
                 Positioned(
                   bottom: 0,
                   right: 0,
@@ -409,9 +217,10 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.white,
                     ),
                     child: IconButton(
-                      icon: Icon(Icons.edit, color: Color(0xFF5C0065), size: 20.0),
+                      icon: Icon(Icons.edit, color: Color(0xFF6B2572), size: 20.0),
                       onPressed: () {
-                        _pickImage(); // Call the image picking function
+                        // Define the action when the icon is pressed
+                        // For example, show a dialog to update the profile picture
                       },
                     ),
                   ),
@@ -423,11 +232,11 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('${UserName ?? "No Name"}', style: TextStyle(fontSize: 15)),
+                  Text(_user?.username ?? "No Name", style: TextStyle(fontSize: 15)),
                   SizedBox(height: 8),
-                  Text('${Email ?? "No Email"}', style: TextStyle(fontSize: 15)),
+                  Text(_user?.email ?? "No Email", style: TextStyle(fontSize: 15)),
                   SizedBox(height: 8),
-                  Text('${PhoneNo ?? "No Phone"}', style: TextStyle(fontSize: 15)),
+                  Text(_user?.phoneNo ?? "No Phone", style: TextStyle(fontSize: 15)),
                 ],
               ),
             ),
@@ -436,6 +245,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
 
   Widget _buildFeatureIcons(BuildContext context) {
     return Padding(
@@ -458,69 +268,25 @@ class _HomePageState extends State<HomePage> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => QiblahScreen(),
-                  ),
-                );
+                // Navigate to Kiblat page
               },
               child: _buildMenuIconWithImage('assets/qibla.png', 'Kiblat', const Color(0xFF6B2572)),
             ),
-
             GestureDetector(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => QuranPage(),
-                //   ),
-                // );
+                // Navigate to Al-Quran page
               },
               child: _buildMenuIconWithImage('assets/read-quran.png', 'Al-Quran', const Color(0xFF6B2572)),
             ),
             GestureDetector(
-              onTap: () async {
-                try {
-                  String hadis = await fetchHadis(); // Fetch Hadis from API
-                  // Show dialog with the Hadis message
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text('Satu Hari, Satu Hadis'),
-                        content: Text(hadis),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop(); // Close the dialog
-                            },
-                            child: Text('Tutup'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                } catch (e) {
-                  // Handle error, e.g., show a SnackBar with an error message
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Carian Hadis Gagal.'),
-                      duration: Duration(seconds: 4),
-                    ),
-                  );
-                }
+              onTap: () {
+                // Fetch and display Hadis
               },
               child: _buildMenuIconWithImage('assets/hadis.png', 'Hadis', const Color(0xFF6B2572)),
             ),
             GestureDetector(
               onTap: () {
-                // Navigator.push(
-                //   // context,
-                //   // MaterialPageRoute(
-                //   //   // builder: (context) => HajjUmrahPage(),
-                //   // ),
-                // );
+                // Navigate to Haji & Umrah page
               },
               child: _buildMenuIconWithImage('assets/kaabah.png', 'Haji & Umrah', const Color(0xFF6B2572)),
             ),
@@ -548,57 +314,10 @@ class _HomePageState extends State<HomePage> {
             height: 300,
             child: TabBarView(
               children: [
-                Center(child: Text('Masjid Dilanggan')),
-                favoriteMosques.isNotEmpty
-                    ? ListView.builder(
-                  itemCount: favoriteMosques.length,
-                  itemBuilder: (context, index) {
-                    final mosque = favoriteMosques[index];
-                    final moduleName = mosque['ModuleName'] ?? 'Unknown';
-                    Color buttonColor;
-
-                    if (moduleName == 'KariahKITA') {
-                      buttonColor = Color(0xFF6B2572);
-                    } else if (moduleName == 'KhairatKITA') {
-                      buttonColor = Colors.green;
-                    } else {
-                      buttonColor = Colors.grey;
-                    }
-
-                    return ListTile(
-                      leading: mosque['MosLogoUrl'] != null
-                          ? Image.network(mosque['MosLogoUrl'])
-                          : null,
-                      title: Text(mosque['TnName'] ?? 'Unknown Mosque'),
-                      subtitle: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // Flexible(
-                          //   child: Text(
-                          //     mosque['AddressLine1'] ?? 'No Address',
-                          //     overflow: TextOverflow.ellipsis,
-                          //   ),
-                          // ),
-                          SizedBox(height: 16),
-                          TextButton(
-                            onPressed: () {
-                              print('Button pressed for: $moduleName');
-                            },
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: buttonColor,
-                            ),
-                            child: Text(
-                              moduleName,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                )
-                    : Center(child: Text('Tiada Masjid Diikuti')),
+                // "Masjid Dilanggan" tab content
+                _buildMosqueSubscribeList(_subscribeMosques),
+                // "Masjid Diikuti" tab content
+                _buildMosqueFavouriteList(_favoriteMosques), // Replace with actual data for this tab
               ],
             ),
           ),
@@ -607,23 +326,113 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildMenuIconWithImage(String assetPath, String label, Color color,
-      {VoidCallback? onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(20),
-            child: Image.asset(assetPath, height: 60, width: 60, color: color),
+  Widget _buildMosqueFavouriteList(List<Mosque> mosques) {
+    return mosques.isNotEmpty
+        ? ListView.builder(
+      itemCount: mosques.length,
+      itemBuilder: (context, index) {
+        final mosque = mosques[index];
+        SizedBox(height: 16.0);
+        return Card(
+          elevation: 4, // Adds shadow to the card for better aesthetics
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        mosque.mosName,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        mosque.address,
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+              ),
           ),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            style: const TextStyle(color: Colors.black54),
+        );
+      },
+    )
+        : Center(child: Text('Tiada Masjid Diikuti'));
+  }
+
+  Widget _buildMosqueSubscribeList(List<Mosque> mosques) {
+    return mosques.isNotEmpty
+        ? ListView.builder(
+      itemCount: mosques.length,
+      itemBuilder: (context, index) {
+        final mosque = mosques[index];
+
+        // Determine the button color based on moduleName
+        Color buttonColor;
+        if (mosque.moduleName == 'KariahKITA') {
+          buttonColor = Color(0xFF6B2572);
+        } else if (mosque.moduleName == 'KhairatKITA') {
+          buttonColor = Colors.green;
+        } else {
+          buttonColor = Colors.grey;
+        }
+
+        return Card(
+          elevation: 4, // Adds shadow to the card for better aesthetics
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), // Adds margin for spacing
+          child: Padding(
+            padding: const EdgeInsets.all(16.0), // Adds padding inside the card
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  mosque.tnName,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end, // Align button to the right
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        // Define the action when the button is pressed
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: buttonColor,
+                        foregroundColor: Colors.white, // Set text color to white
+                      ),
+                      child: Text(mosque.moduleName ?? 'Default Module'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ],
-      ),
+        );
+      },
+    )
+        : Center(child: Text('Tiada Masjid Dilanggan'));
+  }
+
+  Widget _buildMenuIconWithImage(String assetPath, String label, Color color) {
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(20),
+          child: Image.asset(assetPath, height: 60, width: 60, color: color),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          label,
+          style: const TextStyle(color: Colors.black54),
+        ),
+      ],
     );
   }
 }
