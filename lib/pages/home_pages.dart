@@ -246,7 +246,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-
   Widget _buildFeatureIcons(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -286,9 +285,9 @@ class _HomePageState extends State<HomePage> {
             ),
             GestureDetector(
               onTap: () {
-                // Navigate to Haji & Umrah page
+                // Navigate to  Zikir page
               },
-              child: _buildMenuIconWithImage('assets/kaabah.png', 'Haji & Umrah', const Color(0xFF6B2572)),
+              child: _buildMenuIconWithImage('assets/zikir.png', 'Zikir', const Color(0xFF6B2572)),
             ),
           ],
         ),
