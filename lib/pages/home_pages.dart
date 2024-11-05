@@ -7,6 +7,7 @@ import 'package:new_mk_v3/model/user_model.dart';
 import 'package:new_mk_v3/navigationdrawer.dart';
 import 'package:new_mk_v3/pages/login_pages.dart';
 import 'package:new_mk_v3/pages/prayertimes_pages.dart';
+import 'package:new_mk_v3/pages/qiblah_pages.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -267,7 +268,10 @@ class _HomePageState extends State<HomePage> {
             ),
             GestureDetector(
               onTap: () {
-                // Navigate to Kiblat page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => QiblahCompassPage()),
+                );
               },
               child: _buildMenuIconWithImage('assets/qibla.png', 'Kiblat', const Color(0xFF6B2572)),
             ),
@@ -331,30 +335,29 @@ class _HomePageState extends State<HomePage> {
       itemCount: mosques.length,
       itemBuilder: (context, index) {
         final mosque = mosques[index];
-        SizedBox(height: 16.0);
-        return Card(
-          elevation: 4, // Adds shadow to the card for better aesthetics
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        mosque.mosName,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        mosque.address,
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), // Adds margin for spacing
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                mosque.mosName,
+                style: TextStyle(
+                  fontSize: 18,
+                ),
               ),
+              SizedBox(height: 4), // Spacing between name and address
+              Text(
+                mosque.address,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[600], // Optional color for address text
+                ),
+              ),
+              SizedBox(height: 8), // Spacing before divider
+              if (index < mosques.length - 1) // Avoid divider after the last item
+                const Divider(thickness: 1, color: Colors.grey),
+            ],
           ),
         );
       },
@@ -364,60 +367,73 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildMosqueSubscribeList(List<Mosque> mosques) {
     return mosques.isNotEmpty
-        ? ListView.builder(
-      itemCount: mosques.length,
-      itemBuilder: (context, index) {
-        final mosque = mosques[index];
-
-        // Determine the button color based on moduleName
-        Color buttonColor;
-        if (mosque.moduleName == 'KariahKITA') {
-          buttonColor = Color(0xFF6B2572);
-        } else if (mosque.moduleName == 'KhairatKITA') {
-          buttonColor = Colors.green;
-        } else {
-          buttonColor = Colors.grey;
-        }
-
-        return Card(
-          elevation: 4, // Adds shadow to the card for better aesthetics
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), // Adds margin for spacing
-          child: Padding(
-            padding: const EdgeInsets.all(16.0), // Adds padding inside the card
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  mosque.tnName,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end, // Align button to the right
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        // Define the action when the button is pressed
-                      },
-                      style: TextButton.styleFrom(
-                        backgroundColor: buttonColor,
-                        foregroundColor: Colors.white, // Set text color to white
-                      ),
-                      child: Text(mosque.moduleName ?? 'Default Module'),
-                    ),
-                  ],
-                ),
-              ],
+        ? Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0), // Adds padding for spacing around the text
+          child: Text(
+            'Jumlah Masjid Dilanggan: ${mosques.length}',
+            style: TextStyle(
+              fontSize: 14.0,
             ),
           ),
-        );
-      },
+        ),
+        Divider(thickness: 1, color: Colors.grey),
+        Expanded(
+          child: ListView.builder(
+            itemCount: mosques.length,
+            itemBuilder: (context, index) {
+              final mosque = mosques[index];
+
+              // Determine the button color based on moduleName
+              Color buttonColor;
+              if (mosque.moduleName == 'KariahKITA') {
+                buttonColor = Color(0xFF6B2572);
+              } else if (mosque.moduleName == 'KhairatKITA') {
+                buttonColor = Colors.green;
+              } else {
+                buttonColor = Colors.grey;
+              }
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), // Adds margin for spacing
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      mosque.tnName,
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end, // Align button to the right
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            // Define the action when the button is pressed
+                          },
+                          style: TextButton.styleFrom(
+                            backgroundColor: buttonColor,
+                            foregroundColor: Colors.white, // Set text color to white
+                          ),
+                          child: Text(mosque.moduleName ?? 'Default Module'),
+                        ),
+                      ],
+                    ),
+                    const Divider(thickness: 1, color: Colors.grey), // Adds a divider to separate each item
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     )
         : Center(child: Text('Tiada Masjid Dilanggan'));
   }
+
 
   Widget _buildMenuIconWithImage(String assetPath, String label, Color color) {
     return Column(

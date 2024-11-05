@@ -18,7 +18,7 @@ class HomeController {
     if (authToken == null || userId == null) return null;
 
     final response = await http.get(
-      Uri.parse('https://test.cmsbstaging.com.my/web-api/api/UserAccounts/GetUserProfile'),
+      Uri.parse('https://api.cmsb-env2.com.my/api/UserAccounts/GetUserProfile'),
       headers: {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ class HomeController {
     print("Fetching favorite mosques...");
 
     final response = await http.get(
-      Uri.parse('https://test.cmsbstaging.com.my/web-api/api/Tnmosques'),
+      Uri.parse('https://api.cmsb-env2.com.my/api/Tnmosques'),
       headers: {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ class HomeController {
     print("Fetching subscribe mosques...");
 
     final response = await http.get(
-      Uri.parse('https://test.cmsbstaging.com.my/web-api/api/UserAccounts/GetUserTntLists'),
+      Uri.parse('https://api.cmsb-env2.com.my/api/UserAccounts/GetUserTntLists'),
       headers: {
         'Authorization': 'Bearer $authToken',
         'Content-Type': 'application/json',

@@ -12,7 +12,7 @@ class User {
       email: json['Email'] ?? 'No Email',
       phoneNo: json['PhoneNo'] ?? 'No Phone',
       imageUrl: json['UaphotoUrl'] != null
-          ? 'https://test.cmsbstaging.com.my${json['UaphotoUrl']}'
+          ? 'https://cmsb-env2.com.my${json['UaphotoUrl']}'
           : null,
     );
   }
