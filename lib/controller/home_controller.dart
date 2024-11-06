@@ -82,6 +82,7 @@ class HomeController {
     }
   }
 
+
   Future<List<Mosque>> fetchSubscribeMosques() async {
     // Log the start of the fetch operation
     print("Fetching subscribe mosques...");
