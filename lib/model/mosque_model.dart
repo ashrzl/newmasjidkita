@@ -6,6 +6,7 @@ class Mosque {
   final String address;
   final String tnName; // Assuming TnName is the mosque name
   final String moduleName;
+  final String mosLogoUrl;
 
   Mosque({
     required this.mosId,
@@ -15,6 +16,7 @@ class Mosque {
     required this.address,
     required this.tnName,
     required this.moduleName,
+    required this.mosLogoUrl
   });
 
   factory Mosque.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class Mosque {
       address: json['AddressLine1'] ?? 'No Address', // Default if null
       tnName: json['TnName'] ?? 'Unknown Mosque', // Default if null
       moduleName: json['ModuleName'] ?? '', // Default if null
+      mosLogoUrl: json['mosLogoUrl'] ?? '',
     );
   }
 }

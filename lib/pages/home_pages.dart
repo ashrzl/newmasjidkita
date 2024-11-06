@@ -7,6 +7,8 @@ import 'package:new_mk_v3/model/user_model.dart';
 import 'package:new_mk_v3/navigationdrawer.dart';
 import 'package:new_mk_v3/pages/login_pages.dart';
 import 'package:new_mk_v3/pages/prayertimes_pages.dart';
+import 'package:new_mk_v3/pages/qiblah_pages.dart';
+import 'package:new_mk_v3/pages/quran_pages.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -246,7 +248,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-
   Widget _buildFeatureIcons(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -268,13 +269,19 @@ class _HomePageState extends State<HomePage> {
             ),
             GestureDetector(
               onTap: () {
-                // Navigate to Kiblat page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => QiblahCompassPage()),
+                );
               },
               child: _buildMenuIconWithImage('assets/qibla.png', 'Kiblat', const Color(0xFF6B2572)),
             ),
             GestureDetector(
               onTap: () {
-                // Navigate to Al-Quran page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => QuranPage()),
+                );
               },
               child: _buildMenuIconWithImage('assets/read-quran.png', 'Al-Quran', const Color(0xFF6B2572)),
             ),
@@ -286,9 +293,9 @@ class _HomePageState extends State<HomePage> {
             ),
             GestureDetector(
               onTap: () {
-                // Navigate to Haji & Umrah page
+                // Navigate to  Zikir page
               },
-              child: _buildMenuIconWithImage('assets/kaabah.png', 'Haji & Umrah', const Color(0xFF6B2572)),
+              child: _buildMenuIconWithImage('assets/zikir.png', 'Zikir', const Color(0xFF6B2572)),
             ),
           ],
         ),
@@ -328,97 +335,164 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildMosqueFavouriteList(List<Mosque> mosques) {
     return mosques.isNotEmpty
-        ? ListView.builder(
-      itemCount: mosques.length,
-      itemBuilder: (context, index) {
-        final mosque = mosques[index];
-        SizedBox(height: 16.0);
-        return Card(
-          elevation: 4, // Adds shadow to the card for better aesthetics
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        mosque.mosName,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        mosque.address,
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-              ),
+        ? Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0), // Adds padding for spacing around the text
+          child: Text(
+            'Jumlah Masjid Diikuti: ${mosques.length}',
+            style: TextStyle(
+              fontSize: 14.0,
+            ),
           ),
-        );
-      },
+        ),
+        // The ListView with dividers
+        Expanded(
+          child: ListView.separated(
+            itemCount: mosques.length,
+            separatorBuilder: (context, index) => const Divider(thickness: 1, color: Colors.grey),
+            itemBuilder: (context, index) {
+              final mosque = mosques[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        // Display the mosque logo
+                        Image.asset(
+                          mosque.mosLogoUrl?.isNotEmpty == true
+                              ? mosque.mosLogoUrl!
+                              : 'assets/MasjidKITALogo.png', // Fallback image
+                          width: 60, // Adjust size as needed
+                          height: 60, // Adjust size as needed
+                          fit: BoxFit.cover, // Adjust fit as needed
+                        ),
+                        const SizedBox(width: 12), // Space between logo and name
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                mosque.mosName,
+                                style: const TextStyle(fontSize: 18),
+                              ),
+                              if (mosque.address.isNotEmpty ?? false)
+                                Column(
+                                  children: [
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      mosque.address,
+                                      style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                                    ),
+                                  ],
+                                ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     )
-        : Center(child: Text('Tiada Masjid Diikuti'));
+        : const Center(child: Text('Tiada Masjid Diikuti')); // Displayed when the list is empty
   }
 
   Widget _buildMosqueSubscribeList(List<Mosque> mosques) {
     return mosques.isNotEmpty
-        ? ListView.builder(
-      itemCount: mosques.length,
-      itemBuilder: (context, index) {
-        final mosque = mosques[index];
+        ? Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0), // Adds padding for spacing around the text
+          child: Text(
+            'Jumlah Masjid Dilanggan: ${mosques.length}',
+            style: const TextStyle(
+              fontSize: 14.0,
+            ),
+          ),
+        ),
+        const Divider(thickness: 1, color: Colors.grey),
+        // The ListView with dividers
+        Expanded(
+          child: ListView.separated(
+            itemCount: mosques.length,
+            separatorBuilder: (context, index) =>
+            const Divider(thickness: 1, color: Colors.grey),
+            itemBuilder: (context, index) {
+              final mosque = mosques[index];
 
-        // Determine the button color based on moduleName
-        Color buttonColor;
-        if (mosque.moduleName == 'KariahKITA') {
-          buttonColor = Color(0xFF6B2572);
-        } else if (mosque.moduleName == 'KhairatKITA') {
-          buttonColor = Colors.green;
-        } else {
-          buttonColor = Colors.grey;
-        }
+              // Determine the button color based on moduleName
+              Color buttonColor;
+              if (mosque.moduleName == 'KariahKITA') {
+                buttonColor = const Color(0xFF6B2572);
+              } else if (mosque.moduleName == 'KhairatKITA') {
+                buttonColor = Colors.green;
+              } else {
+                buttonColor = Colors.grey;
+              }
 
-        return Card(
-          elevation: 4, // Adds shadow to the card for better aesthetics
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), // Adds margin for spacing
-          child: Padding(
-            padding: const EdgeInsets.all(16.0), // Adds padding inside the card
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  mosque.tnName,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end, // Align button to the right
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextButton(
-                      onPressed: () {
-                        // Define the action when the button is pressed
-                      },
-                      style: TextButton.styleFrom(
-                        backgroundColor: buttonColor,
-                        foregroundColor: Colors.white, // Set text color to white
-                      ),
-                      child: Text(mosque.moduleName ?? 'Default Module'),
+                    Row(
+                      children: [
+                        // Display the mosque logo
+                        Image.asset(
+                          mosque.mosLogoUrl?.isNotEmpty == true
+                              ? mosque.mosLogoUrl!
+                              : 'assets/MasjidKITALogo.png', // Fallback image
+                          width: 60, // Adjust size as needed
+                          height: 60, // Adjust size as needed
+                          fit: BoxFit.cover, // Adjust fit as needed
+                        ),
+                        const SizedBox(width: 12), // Space between logo and name
+                        Expanded( // Wrap mosque name with Expanded to prevent overflow
+                          child: Text(
+                            mosque.tnName,
+                            style: const TextStyle(
+                              fontSize: 18,
+                            ),
+                            overflow: TextOverflow.ellipsis, // Prevent text overflow
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end, // Align button to the right
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            // Define the action when the button is pressed
+                          },
+                          style: TextButton.styleFrom(
+                            backgroundColor: buttonColor,
+                            foregroundColor: Colors.white, // Set text color to white
+                          ),
+                          child: Text(mosque.moduleName ?? 'Default Module'),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
+              );
+            },
           ),
-        );
-      },
+        ),
+      ],
     )
-        : Center(child: Text('Tiada Masjid Dilanggan'));
+        : const Center(child: Text('Tiada Masjid Dilanggan')); // Displayed when the list is empty
   }
+
 
   Widget _buildMenuIconWithImage(String assetPath, String label, Color color) {
     return Column(

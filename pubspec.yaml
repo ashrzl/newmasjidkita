@@ -50,8 +50,11 @@ dependencies:
   timezone: ^0.9.4
   image_picker: ^1.0.0
   win32: ^5.7.2
-#  flutter_qiblah: ^3.0.0
-#  flutter_compass: ^0.8.0
+  flutter_qiblah: ^3.0.0
+  prayers_times: ^0.0.6
+  quran: ^1.3.3
+  google_fonts: ^6.2.1
+  hadith: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -81,12 +84,15 @@ flutter:
     - assets/copyright.png
     - assets/google.png
     - assets/hadis.png
-    - assets/kaabah.png
     - assets/qibla.png
     - assets/read-quran.png
     - assets/solat.png
     - assets/user.png
     - assets/compass.png
+    - assets/zikir.png
+    - assets/qiblaneedle.png
+    - assets/mosque.png
+    - assets/MasjidKITALogo.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
