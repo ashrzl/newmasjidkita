@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -8,7 +11,7 @@ import 'package:new_mk_v3/navigationdrawer.dart';
 import 'package:new_mk_v3/pages/login_pages.dart';
 import 'package:new_mk_v3/pages/prayertimes_pages.dart';
 import 'package:new_mk_v3/pages/qiblah_pages.dart';
-import 'package:new_mk_v3/pages/quran_pages.dart';
+import 'package:new_mk_v3/pages/quran/quran_pages.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -36,6 +39,47 @@ class _HomePageState extends State<HomePage> {
     _favoriteMosques = await _controller.fetchFavoriteMosques();
     _subscribeMosques = await _controller.fetchSubscribeMosques();
     setState(() {});
+  }
+
+  static const String hadisApiUrl = 'https://hadis.my/api/hadisharian';
+
+  Future<String> fetchHadis() async {
+    try {
+      // Log the start of the API call
+      print('Fetching Hadis from $hadisApiUrl');
+
+      final response = await http.get(Uri.parse(hadisApiUrl));
+
+      // Log the status code received
+      print('Response status code: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        // Log the response body for debugging
+        print('Response body: ${response.body}');
+
+        final data = json.decode(response.body);
+
+        // Log the decoded data
+        print('Decoded data: $data');
+
+        // Access the list of Hadis from the "data" key
+        if (data.containsKey('data') && data['data'].isNotEmpty) {
+          // Extract the first Hadis from the list
+          String hadis = data['data'][0]['hadis'];
+          return hadis;
+        } else {
+          throw Exception('No Hadis found in the response data');
+        }
+      } else {
+        // Handle unexpected status codes
+        print('Error: Received status code ${response.statusCode}');
+        throw Exception('Failed to load Hadis: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      // Log any exceptions that occur during the process
+      print('Exception occurred: $e');
+      throw Exception('Failed to fetch Hadis due to an error: $e');
+    }
   }
 
   Future<void> _getCurrentLocation() async {
@@ -286,17 +330,45 @@ class _HomePageState extends State<HomePage> {
               child: _buildMenuIconWithImage('assets/read-quran.png', 'Al-Quran', const Color(0xFF6B2572)),
             ),
             GestureDetector(
-              onTap: () {
-                // Fetch and display Hadis
+              onTap: () async {
+                try {
+                  String hadis = await fetchHadis(); // Fetch Hadis from API
+                  // Show dialog with the Hadis message
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text('Satu Hari, Satu Hadis'),
+                        content: Text(hadis),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: Text('Close'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } catch (e) {
+                  // Handle error, e.g., show a SnackBar with an error message
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Failed to load Hadis.'),
+                      duration: Duration(seconds: 4),
+                    ),
+                  );
+                }
               },
               child: _buildMenuIconWithImage('assets/hadis.png', 'Hadis', const Color(0xFF6B2572)),
             ),
-            GestureDetector(
-              onTap: () {
-                // Navigate to  Zikir page
-              },
-              child: _buildMenuIconWithImage('assets/zikir.png', 'Zikir', const Color(0xFF6B2572)),
-            ),
+            // GestureDetector(
+            //   onTap: () {
+            //     // Navigate to  Zikir page
+            //   },
+            //   child: _buildMenuIconWithImage('assets/zikir.png', 'Zikir', const Color(0xFF6B2572)),
+            // ),
           ],
         ),
       ),
@@ -492,7 +564,6 @@ class _HomePageState extends State<HomePage> {
     )
         : const Center(child: Text('Tiada Masjid Dilanggan')); // Displayed when the list is empty
   }
-
 
   Widget _buildMenuIconWithImage(String assetPath, String label, Color color) {
     return Column(
