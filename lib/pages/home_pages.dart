@@ -8,6 +8,7 @@ import 'package:new_mk_v3/controller/home_controller.dart';
 import 'package:new_mk_v3/model/mosque_model.dart';
 import 'package:new_mk_v3/model/user_model.dart';
 import 'package:new_mk_v3/navigationdrawer.dart';
+import 'package:new_mk_v3/pages/carianmasjid_pages.dart';
 import 'package:new_mk_v3/pages/login_pages.dart';
 import 'package:new_mk_v3/pages/prayertimes_pages.dart';
 import 'package:new_mk_v3/pages/qiblah_pages.dart';
@@ -25,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   List<Mosque> _subscribeMosques = [];
   String _currentAddress = 'Fetching location...';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -79,6 +81,29 @@ class _HomePageState extends State<HomePage> {
       // Log any exceptions that occur during the process
       print('Exception occurred: $e');
       throw Exception('Failed to fetch Hadis due to an error: $e');
+    }
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index; // Update the selected index
+    });
+
+    // Navigate based on the selected index
+    switch (index) {
+      case 0:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+        break;
+      case 1:
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => CarianMasjid()));
+        break;
+      case 2:
+      // Navigate to the profile page (you'll need to create this)
+        break;
     }
   }
 
@@ -184,11 +209,9 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Carian Masjid'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
         ],
-        currentIndex: 0, // Set your selected index here
-        selectedItemColor: Color(0xFF6B2572),
-        onTap: (index) {
-          // Handle bottom navigation taps here
-        },
+        currentIndex: _selectedIndex, // The currently selected index
+        selectedItemColor: Color(0xFF6B2572), // The color of the selected item
+        onTap: _onItemTapped, // Handle the tap on an item
       ),
     );
   }
