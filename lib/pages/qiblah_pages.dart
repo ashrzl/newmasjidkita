@@ -13,6 +13,8 @@ class QiblahCompassPage extends StatefulWidget {
 class _QiblahCompassPageState extends State<QiblahCompassPage> {
   String? _currentAddress;
   bool _isFetchingLocation = true;
+  double _previousDirectionOffset = 0; // Declare it here
+  bool _needsCalibration = false; // Flag for calibration check
 
   @override
   void initState() {
@@ -73,6 +75,84 @@ class _QiblahCompassPageState extends State<QiblahCompassPage> {
     return status.isGranted;
   }
 
+  // The new _buildCompass widget function with calibration prompt
+  Widget _buildCompass(QiblahDirection direction) {
+    double newOffset = direction.offset;
+
+    // Only update if there is a significant change (e.g., > 1 degree)
+    if ((newOffset - _previousDirectionOffset).abs() > 1) {
+      _previousDirectionOffset = newOffset;
+      _needsCalibration = false; // Calibration done once offset is stable
+    } else {
+      newOffset = _previousDirectionOffset; // Apply previous stable offset
+      if (!_needsCalibration) {
+        // Prompt for calibration if direction changes minimally
+        setState(() {
+          _needsCalibration = true;
+        });
+      }
+    }
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        if (_needsCalibration)
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "Please calibrate your compass by rotating your device in a figure-eight pattern.",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.yellow, fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
+        Text(
+          "${newOffset.toStringAsFixed(1)}°",
+          style: TextStyle(
+            fontSize: 32,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          _currentAddress ?? "Loading location...",
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.white70,
+          ),
+        ),
+        SizedBox(height: 30),
+        Container(
+          width: 200,
+          height: 200,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+          ),
+          child: Transform.rotate(
+            angle: direction.qiblah,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.asset(
+                  'assets/compass.png', // Replace with your compass image asset
+                  fit: BoxFit.cover,
+                ),
+                Positioned(
+                  top: 10,
+                  child: Image.asset(
+                    'assets/qiblaneedle.png', // Replace with your Kaaba icon asset
+                    width: 40,
+                    height: 40,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,7 +165,7 @@ class _QiblahCompassPageState extends State<QiblahCompassPage> {
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
           },
         ),
-        title: Text("Arah Kiblat",style: TextStyle(color: Colors.white)),
+        title: Text("Arah Kiblat", style: TextStyle(color: Colors.white)),
       ),
       extendBodyBehindAppBar: true,
       body: Stack(
@@ -113,65 +193,7 @@ class _QiblahCompassPageState extends State<QiblahCompassPage> {
                     }
 
                     final direction = snapshot.data!;
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "${direction.offset.toStringAsFixed(1)}°",
-                            style: TextStyle(
-                              fontSize: 32,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            _currentAddress ?? "Loading location...",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white70,
-                            ),
-                          ),
-                          SizedBox(height: 30),
-                          Container(
-                            width: 200,
-                            height: 200,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                            ),
-                            child: Transform.rotate(
-                              angle: direction.qiblah,
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/compass.png', // Replace with your compass image asset
-                                    fit: BoxFit.cover,
-                                  ),
-                                  Positioned(
-                                    top: 15,
-                                    child: Icon(
-                                      Icons.arrow_upward,
-                                      color: Color(0xFF6A1B9A),
-                                      size: 50,
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 10,
-                                    child: Image.asset(
-                                      'assets/qiblaneedle.png', // Replace with your Kaaba icon asset
-                                      width: 40,
-                                      height: 40,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
+                    return Center(child: _buildCompass(direction)); // Use _buildCompass here
                   },
                 );
               } else {
