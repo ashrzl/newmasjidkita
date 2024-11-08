@@ -94,6 +94,7 @@ flutter:
     - assets/qiblaneedle.png
     - assets/mosque.png
     - assets/MasjidKITALogo.png
+    - assets/compassgif.gif
 
   # To add assets to your application, add an assets section, like this:
   # assets:

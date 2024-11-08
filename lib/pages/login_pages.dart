@@ -141,11 +141,9 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> saveToken(String token) async {
     // Save the token
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('token', token);
+    await prefs.setString('token', '$token');  // Replace 'your-token' with the actual token value
+    print('Token stored: $token');
 
-    // Retrieve the token to verify it was saved correctly
-    String? savedToken = prefs.getString('token');
-    print('Token saved: $savedToken');  // Print to verify
   }
 
   @override

@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   List<Mosque> _favoriteMosques = [];
   List<Mosque> _subscribeMosques = [];
   String _currentAddress = 'Fetching location...';
+  Position? _currentPosition;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _selectedIndex = 0;
 
@@ -108,57 +109,34 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _getCurrentLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    // Check if location services are enabled
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      print('Location services are disabled.');
-      return Future.error('Location services are disabled.');
-    }
-
-    // Check for location permissions
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        print('Location permissions are denied');
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      print('Location permissions are permanently denied.');
-      return Future.error('Location permissions are permanently denied');
-    }
-
-    // Get the current location
     try {
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      List<Placemark> placemarks = await placemarkFromCoordinates(
-          position.latitude, position.longitude);
+      // Get the current location
+      final position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
 
-      if (placemarks.isNotEmpty) {
-        Placemark place = placemarks[0];
+      // Get placemarks using the coordinates
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+
+      // Ensure that the widget is still in the widget tree before calling setState
+      if (mounted) {
         setState(() {
-          _currentAddress =
-          '${place.locality ?? ''}, ${place.administrativeArea ?? ''}, ${place
-              .country ?? ''}';
-        });
-      } else {
-        setState(() {
-          _currentAddress = 'Address not found';
+          _currentPosition = position; // Update _currentPosition here
+          // Optionally, update the address as well if placemarks is not empty
+          _currentAddress = placemarks.isNotEmpty
+              ? '${placemarks[0].locality}, ${placemarks[0].administrativeArea}'
+              : 'Address not found';
         });
       }
     } catch (e) {
-      print('Failed to get location: $e');
-      setState(() {
-        _currentAddress = 'Failed to get location';
-      });
+      // Handle the error appropriately
+      print("Failed to get location: $e");
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -240,6 +218,7 @@ class _HomePageState extends State<HomePage> {
     return Padding(
       padding: EdgeInsets.all(30),
       child: Container(
+        height: 170,
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -274,26 +253,26 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 // Pencil icon for updating profile picture
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: Container(
-                    height: 40.0,
-                    width: 40.0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Color(0xFF5C0065), width: 3),
-                      color: Colors.white,
-                    ),
-                    child: IconButton(
-                      icon: Icon(Icons.edit, color: Color(0xFF6B2572), size: 20.0),
-                      onPressed: () {
-                        // Define the action when the icon is pressed
-                        // For example, show a dialog to update the profile picture
-                      },
-                    ),
-                  ),
-                ),
+                // Positioned(
+                //   bottom: 0,
+                //   right: 0,
+                //   child: Container(
+                //     height: 40.0,
+                //     width: 40.0,
+                //     decoration: BoxDecoration(
+                //       shape: BoxShape.circle,
+                //       border: Border.all(color: Color(0xFF5C0065), width: 3),
+                //       color: Colors.white,
+                //     ),
+                //     child: IconButton(
+                //       icon: Icon(Icons.edit, color: Color(0xFF6B2572), size: 20.0),
+                //       onPressed: () {
+                //         // Define the action when the icon is pressed
+                //         // For example, show a dialog to update the profile picture
+                //       },
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             SizedBox(width: 12),
@@ -317,83 +296,103 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildFeatureIcons(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            GestureDetector(
-              onTap: () async {
-                Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PrayerTimesPage(latitude: position.latitude, longitude: position.longitude),
-                  ),
-                );
-              },
-              child: _buildMenuIconWithImage('assets/solat.png', 'Waktu Solat', const Color(0xFF6B2572)),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => QiblahCompassPage()),
-                );
-              },
-              child: _buildMenuIconWithImage('assets/qibla.png', 'Kiblat', const Color(0xFF6B2572)),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => QuranPage()),
-                );
-              },
-              child: _buildMenuIconWithImage('assets/read-quran.png', 'Al-Quran', const Color(0xFF6B2572)),
-            ),
-            GestureDetector(
-              onTap: () async {
-                try {
-                  String hadis = await fetchHadis(); // Fetch Hadis from API
-                  // Show dialog with the Hadis message
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text('Satu Hari, Satu Hadis'),
-                        content: Text(hadis),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop(); // Close the dialog
-                            },
-                            child: Text('Close'),
-                          ),
-                        ],
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Stack(
+        children: [
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () async {
+                    Position position = await Geolocator.getCurrentPosition(
+                      desiredAccuracy: LocationAccuracy.high,
+                    );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PrayerTimesPage(
+                          latitude: position.latitude,
+                          longitude: position.longitude,
+                        ),
+                      ),
+                    );
+                  },
+                  child: _buildMenuIconWithImage('assets/solat.png', 'Waktu Solat', const Color(0xFF6B2572)),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => QiblahCompassPage()),
+                    );
+                  },
+                  child: _buildMenuIconWithImage('assets/qibla.png', 'Kiblat', const Color(0xFF6B2572)),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => QuranPage()),
+                    );
+                  },
+                  child: _buildMenuIconWithImage('assets/read-quran.png', 'Al-Quran', const Color(0xFF6B2572)),
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    try {
+                      String hadis = await fetchHadis(); // Fetch Hadis from API
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text('Satu Hari, Satu Hadis'),
+                            content: Text(hadis),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Close'),
+                              ),
+                            ],
+                          );
+                        },
                       );
-                    },
-                  );
-                } catch (e) {
-                  // Handle error, e.g., show a SnackBar with an error message
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Failed to load Hadis.'),
-                      duration: Duration(seconds: 4),
-                    ),
-                  );
-                }
-              },
-              child: _buildMenuIconWithImage('assets/hadis.png', 'Hadis', const Color(0xFF6B2572)),
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Failed to load Hadis.'),
+                          duration: Duration(seconds: 4),
+                        ),
+                      );
+                    }
+                  },
+                  child: _buildMenuIconWithImage('assets/hadis.png', 'Hadis', const Color(0xFF6B2572)),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to  Zikir page
+                  },
+                  child: _buildMenuIconWithImage('assets/zikir.png', 'Zikir', const Color(0xFF6B2572)),
+                ),
+              ],
             ),
-            // GestureDetector(
-            //   onTap: () {
-            //     // Navigate to  Zikir page
-            //   },
-            //   child: _buildMenuIconWithImage('assets/zikir.png', 'Zikir', const Color(0xFF6B2572)),
-            // ),
-          ],
-        ),
+          ),
+          // Positioned(
+          //   right: 0,
+          //   top: 0,
+          //   bottom: 0,
+          //   child: Align(
+          //     alignment: Alignment.centerRight,
+          //     child: Icon(
+          //       Icons.arrow_forward_ios,
+          //       color: Colors.grey.withOpacity(1.0),
+          //       size: 20,
+          //     ),
+          //   ),
+          // ),
+        ],
       ),
     );
   }
@@ -593,7 +592,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         Container(
           padding: const EdgeInsets.all(20),
-          child: Image.asset(assetPath, height: 60, width: 60, color: color),
+          child: Image.asset(assetPath, height: 70, width: 70, color: color),
         ),
         const SizedBox(height: 8),
         Text(
