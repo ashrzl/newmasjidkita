@@ -324,7 +324,7 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => QiblahCompassPage()),
+                      MaterialPageRoute(builder: (context) => QiblahPage()),
                     );
                   },
                   child: _buildMenuIconWithImage('assets/qibla.png', 'Kiblat', const Color(0xFF6B2572)),

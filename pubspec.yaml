@@ -56,6 +56,9 @@ dependencies:
   google_fonts: ^6.2.1
   hadith: ^1.0.0
   flutter_debouncer: ^2.0.0
+  sensors_plus: ^5.0.1
+  compassx: ^1.0.1
+
 
 dev_dependencies:
   flutter_test:
