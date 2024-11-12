@@ -1,7 +1,11 @@
+import 'dart:math' show pi;
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:compassx/compassx.dart';
+import 'package:loading_indicator/loading_indicator.dart';
+import 'package:new_mk_v3/model/qibla_model.dart';
+import 'package:new_mk_v3/pages/home_pages.dart';
+import 'package:new_mk_v3/utils/loading_error_widget.dart';
 
 class QiblahPage extends StatefulWidget {
   @override
@@ -9,159 +13,180 @@ class QiblahPage extends StatefulWidget {
 }
 
 class _QiblahPageState extends State<QiblahPage> {
-  double? deviceHeading;  // The current heading of the device (from the compass)
-  double? userLat;
-  double? userLon;
-  double? qiblahDirection;  // The calculated Qiblah direction (bearing)
-  bool isLocationFetched = false; // Flag to track if location and direction are fetched
-
-  // Qiblah coordinates (Kaaba's lat, lon)
-  final double qiblahLat = 21.4225;
-  final double qiblahLon = 39.8262;
+  final QiblahModel _qiblahModel = QiblahModel();
+  late Future<bool> _deviceSupport;
 
   @override
   void initState() {
     super.initState();
-    _startCompassListener();
+    _deviceSupport = _qiblahModel.getDeviceSupport();
+    _qiblahModel.checkLocationStatus();
+
+    // Show calibration message when the page loads
+    WidgetsBinding.instance.addPostFrameCallback((_) => _showCalibrationDialog());
   }
 
-  // Start listening to the compass
-  void _startCompassListener() {
-    CompassX.events.listen((CompassXEvent event) {
-      setState(() {
-        deviceHeading = event.heading;
-      });
-    });
-  }
-
-  // Get current location and calculate Qiblah direction
-  Future<void> _getLocationAndCalculateQiblah() async {
-    // If location has been already fetched, no need to fetch again
-    if (isLocationFetched) return;
-
-    // Get current location
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    setState(() {
-      userLat = position.latitude;
-      userLon = position.longitude;
-      isLocationFetched = true; // Mark location as fetched
-    });
-
-    if (userLat != null && userLon != null) {
-      // Calculate the Qiblah direction (bearing) using the Haversine formula
-      double qiblahBearing = _calculateQiblahBearing(userLat!, userLon!, qiblahLat, qiblahLon);
-      setState(() {
-        qiblahDirection = qiblahBearing;
-      });
-    }
-  }
-
-  // Calculate the Qiblah bearing from the user's location to the Kaaba
-  double _calculateQiblahBearing(double userLat, double userLon, double qiblahLat, double qiblahLon) {
-    // Convert degrees to radians
-    double lat1 = userLat * pi / 180;
-    double lon1 = userLon * pi / 180;
-    double lat2 = qiblahLat * pi / 180;
-    double lon2 = qiblahLon * pi / 180;
-
-    // Calculate the bearing using the formula
-    double deltaLon = lon2 - lon1;
-    double x = sin(deltaLon) * cos(lat2);
-    double y = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(deltaLon);
-
-    // Calculate the angle (bearing) and convert to degrees
-    double bearing = atan2(x, y) * 180 / pi;
-
-    // Normalize the bearing to be between 0 and 360
-    if (bearing < 0) {
-      bearing += 360;
-    }
-
-    return bearing;
+  @override
+  void dispose() {
+    _qiblahModel.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Qiblah Direction")),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Button to fetch location and calculate Qiblah
-            ElevatedButton(
-              onPressed: () async {
-                // Fetch location and calculate Qiblah only if not fetched before
-                if (!isLocationFetched) {
-                  await _getLocationAndCalculateQiblah();
-                }
-              },
-              child: Text("Get Qiblah Direction"),
-            ),
-            SizedBox(height: 30),
-            // Show current location (latitude and longitude)
-            userLat == null || userLon == null
-                ? CircularProgressIndicator()
-                : Column(
-              children: [
-                Text("Current Location:"),
-                Text("Latitude: ${userLat!.toStringAsFixed(4)}"),
-                Text("Longitude: ${userLon!.toStringAsFixed(4)}"),
-              ],
-            ),
-            SizedBox(height: 30),
-            // Show Qiblah direction and the arrow
-            qiblahDirection == null || deviceHeading == null
-                ? CircularProgressIndicator()
-                : Column(
-              children: [
-                // Rotate the arrow to show the Qiblah direction
-                Transform.rotate(
-                  angle: _calculateRotationAngle(),
-                  child: Icon(
-                    Icons.arrow_forward,
-                    size: 100,
-                    color: _isHeadingTowardsQiblah()
-                        ? Colors.green // Green when pointing towards Qiblah
-                        : Colors.blue, // Default color
-                  ),
-                ),
-                SizedBox(height: 20),
-                Text(
-                  "Qiblah Direction: ${qiblahDirection!.toStringAsFixed(2)}°",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ],
+      appBar: AppBar(
+        backgroundColor: Color(0xFF5C0065),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => HomePage()));
+          },
         ),
+        title: const Text('Arah Kiblat', style: TextStyle(color: Colors.white)),
+      ),
+      body: FutureBuilder<bool>(
+        future: _deviceSupport,
+        builder: (_, AsyncSnapshot<bool> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: LoadingIndicator(
+                indicatorType: Indicator.ballClipRotate,
+                backgroundColor: Colors.blue,
+              ),
+            );
+          }
+          if (snapshot.hasError) {
+            return Center(child: Text("Error: ${snapshot.error.toString()}"));
+          }
+
+          if (snapshot.data == true) {
+            return _buildQiblahCompassWidget();
+          } else {
+            return Center(child: Text('Error: Device not supported.'));
+          }
+        },
       ),
     );
   }
 
-  // Calculate the rotation angle for the arrow to point towards Qiblah
-  double _calculateRotationAngle() {
-    if (deviceHeading != null && qiblahDirection != null) {
-      // Normalize the heading difference to be between 0 and 360 degrees
-      double headingDifference = (deviceHeading! - qiblahDirection!);
-      if (headingDifference < 0) {
-        headingDifference += 360;
-      }
-      return headingDifference * pi / 180;  // Convert to radians for Transform.rotate
-    }
-    return 0.0;
+  Widget _buildQiblahCompassWidget() {
+    return StreamBuilder<LocationStatus>(
+      stream: _qiblahModel.stream,
+      builder: (context, AsyncSnapshot<LocationStatus> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: LoadingIndicator(
+              indicatorType: Indicator.ballClipRotate,
+            ),
+          );
+        }
+
+        if (snapshot.data?.enabled == true) {
+          switch (snapshot.data!.status) {
+            case LocationPermission.always:
+            case LocationPermission.whileInUse:
+              return StreamBuilder<QiblahDirection>(
+                stream: FlutterQiblah.qiblahStream,
+                builder: (_, AsyncSnapshot<QiblahDirection> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: LoadingIndicator(
+                        indicatorType: Indicator.ballClipRotate,
+                      ),
+                    );
+                  }
+
+                  final qiblahDirection = snapshot.data;
+                  double direction = qiblahDirection?.qiblah ?? 0.0;
+
+                  // Normalize the direction to be within 0-360 degrees
+                  direction = direction % 360;
+
+                  // Format direction to two decimal places
+                  String directionText = direction.toStringAsFixed(2);
+
+                  // Debug log to confirm angle value
+                  print("Normalized Qiblah angle in degrees: $directionText");
+
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Transform.rotate(
+                          // Convert angle to radians and apply negative rotation for compass alignment
+                          angle: (direction * (pi / 180)),
+                          alignment: Alignment.center,
+                          child: Image.asset(
+                            'assets/qiblah.png',
+                            fit: BoxFit.contain,
+                            height: 300, // Adjust size as needed
+                            alignment: Alignment.center,
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          "Qiblah Angle: $directionText°",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+
+            case LocationPermission.denied:
+            case LocationPermission.deniedForever:
+              return LocationErrorWidget(
+                error: "Please enable Location service",
+                callback: _qiblahModel.checkLocationStatus,
+              );
+            default:
+              return const SizedBox();
+          }
+        } else {
+          return LocationErrorWidget(
+            error: "Please enable Location service",
+            callback: _qiblahModel.checkLocationStatus,
+          );
+        }
+      },
+    );
   }
 
-  // Determine if the device is pointing towards the Qiblah
-  bool _isHeadingTowardsQiblah() {
-    if (deviceHeading != null && qiblahDirection != null) {
-      // Calculate the angle difference between the device heading and Qiblah direction
-      double angleDifference = (deviceHeading! + qiblahDirection!).abs();
-      if (angleDifference > 180) {
-        angleDifference = 360 - angleDifference;  // Ensure the smallest angle difference
-      }
-      return angleDifference < 10.0;  // Tolerance of 10 degrees
-    }
-    return false;
+  void _showCalibrationDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Kalibrasi Kompas Anda"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.asset('assets/compassgif.gif'),
+              Text(
+                  'Untuk memastikan arah Kiblat yang tepat, '
+                      'sila kalibrasi kompas anda dengan memutar peranti anda dalam gerakan lapan.'
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Tutup"),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

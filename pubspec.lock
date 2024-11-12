@@ -65,14 +65,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
-  compassx:
-    dependency: "direct main"
-    description:
-      name: compassx
-      sha256: "4ac6d726b00491ea6361be4e0a17fb630fbe4051b744582d0c28eb0191e77f5a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
   cross_file:
     dependency: transitive
     description:
@@ -568,6 +560,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
+  loading_indicator:
+    dependency: "direct main"
+    description:
+      name: loading_indicator
+      sha256: a101ffb2aa3e646137d7810bfa90b50525dd3f72c01235b6df7491cf6af6f284
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
   logging:
     dependency: transitive
     description:
