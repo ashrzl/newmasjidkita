@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -9,6 +8,7 @@ import 'package:new_mk_v3/model/mosque_model.dart';
 import 'package:new_mk_v3/model/user_model.dart';
 import 'package:new_mk_v3/navigationdrawer.dart';
 import 'package:new_mk_v3/pages/carianmasjid_pages.dart';
+import 'package:new_mk_v3/pages/dzikir.dart';
 import 'package:new_mk_v3/pages/login_pages.dart';
 import 'package:new_mk_v3/pages/prayertimes_pages.dart';
 import 'package:new_mk_v3/pages/qiblah_pages.dart';
@@ -253,44 +253,48 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 // Pencil icon for updating profile picture
-                // Positioned(
-                //   bottom: 0,
-                //   right: 0,
-                //   child: Container(
-                //     height: 40.0,
-                //     width: 40.0,
-                //     decoration: BoxDecoration(
-                //       shape: BoxShape.circle,
-                //       border: Border.all(color: Color(0xFF5C0065), width: 3),
-                //       color: Colors.white,
-                //     ),
-                //     child: IconButton(
-                //       icon: Icon(Icons.edit, color: Color(0xFF6B2572), size: 20.0),
-                //       onPressed: () {
-                //         // Define the action when the icon is pressed
-                //         // For example, show a dialog to update the profile picture
-                //       },
-                //     ),
-                //   ),
-                // ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: Container(
+                    height: 40.0,
+                    width: 40.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Color(0xFF5C0065), width: 3),
+                      color: Colors.white,
+                    ),
+                    child: IconButton(
+                      icon: Icon(Icons.edit, color: Color(0xFF6B2572), size: 20.0),
+                      onPressed: () {
+                        // Define the action when the icon is pressed
+                        // For example, show a dialog to update the profile picture
+                      },
+                    ),
+                  ),
+                ),
               ],
             ),
             SizedBox(width: 12),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(_user?.username ?? "No Name", style: TextStyle(fontSize: 15)),
-                  SizedBox(height: 8),
-                  Text(_user?.email ?? "No Email", style: TextStyle(fontSize: 15)),
-                  SizedBox(height: 8),
-                  Text(_user?.phoneNo ?? "No Phone", style: TextStyle(fontSize: 15)),
-                ],
+              child: Center( // This will vertically center the content
+                child: Column(
+                  mainAxisSize: MainAxisSize.min, // This ensures the column takes minimum vertical space
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(_user?.username ?? "No Name", style: TextStyle(fontSize: 15)),
+                    SizedBox(height: 8),
+                    Text(_user?.email ?? "No Email", style: TextStyle(fontSize: 15)),
+                    SizedBox(height: 8),
+                    Text(_user?.phoneNo ?? "No Phone", style: TextStyle(fontSize: 15)),
+                  ],
+                ),
               ),
             ),
           ],
         ),
       ),
+
     );
   }
 
@@ -372,26 +376,16 @@ class _HomePageState extends State<HomePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // Navigate to  Zikir page
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DzikirPagi())
+                    );
                   },
                   child: _buildMenuIconWithImage('assets/zikir.png', 'Zikir', const Color(0xFF6B2572)),
                 ),
               ],
             ),
           ),
-          // Positioned(
-          //   right: 0,
-          //   top: 0,
-          //   bottom: 0,
-          //   child: Align(
-          //     alignment: Alignment.centerRight,
-          //     child: Icon(
-          //       Icons.arrow_forward_ios,
-          //       color: Colors.grey.withOpacity(1.0),
-          //       size: 20,
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );
@@ -592,7 +586,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         Container(
           padding: const EdgeInsets.all(20),
-          child: Image.asset(assetPath, height: 70, width: 70, color: color),
+          child: Image.asset(assetPath, height: 38, width: 38, color: color),
         ),
         const SizedBox(height: 8),
         Text(
