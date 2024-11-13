@@ -127,7 +127,9 @@ class _HomePageState extends State<HomePage> {
           _currentPosition = position; // Update _currentPosition here
           // Optionally, update the address as well if placemarks is not empty
           _currentAddress = placemarks.isNotEmpty
-              ? '${placemarks[0].locality}, ${placemarks[0].administrativeArea}'
+              ? '${placemarks[0].locality}, '
+              '${placemarks[0].administrativeArea}, '
+              '${placemarks[0].country}'
               : 'Address not found';
         });
       }
@@ -586,7 +588,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         Container(
           padding: const EdgeInsets.all(20),
-          child: Image.asset(assetPath, height: 38, width: 38, color: color),
+          child: Image.asset(assetPath, height: 60, width: 60, color: color),
         ),
         const SizedBox(height: 8),
         Text(

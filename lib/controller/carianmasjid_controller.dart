@@ -2,33 +2,37 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/cupertino.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:new_mk_v3/model/mosque_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:new_mk_v3/model/mosque_model.dart';
 
 class CarianMasjidController extends ChangeNotifier {
+  static const apiEndpoint = 'https://api.cmsb-env2.com.my/api/Tnmosques';
+
   bool isLoading = false;
   String errorMessage = '';
   String currentAddress = 'Lokasi...';
   List<Mosque> mosqueResults = [];
+  List<Mosque> filteredMosques = [];
   String searchText = '';
-  Timer? _debounce;
 
   // Selected index for BottomNavigationBar
-  int _selectedIndex = 1; // Default index
+  int selectedIndex = 1;
 
-  int get selectedIndex => _selectedIndex;
+  // Initialize provider data
+  CarianMasjidController() {
+    getCurrentAddress();
+  }
 
+  // Update selected index and notify listeners
   void updateSelectedIndex(int index) {
-    _selectedIndex = index;
+    selectedIndex = index;
     notifyListeners();
   }
 
   // Fetch mosques by search term
-  Future<void> searchMosques(String mosName) async {
-    print('searchMosques called with keyword: $mosName');
+  Future<void> fetchMosques(String searchQuery) async {
     isLoading = true;
     errorMessage = '';
     notifyListeners();
@@ -37,111 +41,89 @@ class CarianMasjidController extends ChangeNotifier {
       // Retrieve token from SharedPreferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('token');
-
-      print('Retrieved token: $token');
+      print('Token after store: $token');
+      print('Token retrived: $token');  // Add this line for debugging
 
       if (token == null || token.isEmpty) {
         throw Exception('No token found');
       }
 
+      // Test SharedPreferences functionality by passing the token
+      await testSharedPreferences(token);  // Pass the token here
+
       // API request
-      final url = Uri.parse('https://api.cmsb-env2.com.my/api/Tnmosques?search= $mosName');
-      print('Making GET request to: $url');
+      final url = Uri.parse('$apiEndpoint?search=$searchQuery');
       final response = await http.get(
         url,
         headers: {'Authorization': 'Bearer $token'},
       );
 
       // Handle the response
-      print('Response status: ${response.statusCode}');
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        print('Response data: $responseData');
         List data = responseData['data'] ?? [];
         mosqueResults = data.map((json) => Mosque.fromJson(json)).toList();
-        print('Found ${mosqueResults.length} mosques');
+        filteredMosques = List.from(mosqueResults); // Initialize filtered results
       } else {
         throw Exception('API Error: ${response.statusCode}');
       }
     } catch (e) {
-      errorMessage = e.toString();
+      errorMessage = 'Error fetching data: $e';
       mosqueResults = [];
-      print('Error during searchMosques: $e');
     } finally {
       isLoading = false;
-      print('searchMosques completed');
       notifyListeners();
     }
   }
 
-  Future<void> checkAndSearchMosques(String mosName) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
 
-    if (token == null || token.isEmpty) {
-      print('No token found, please log in first');
-      return; // Exit if no token
-    }
-
-    // Proceed with search if token exists
-    await searchMosques(mosName);
-  }
-
-
-  // Retrieve current location address
+  // Retrieve and set current location address
   Future<void> getCurrentAddress() async {
-    print('getCurrentAddress called');
     try {
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      print('Location service enabled: $serviceEnabled');
       if (!serviceEnabled) throw Exception('Location services are disabled.');
 
       LocationPermission permission = await Geolocator.checkPermission();
-      print('Location permission status: $permission');
-      if (permission == LocationPermission.denied) {
+      if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
         permission = await Geolocator.requestPermission();
-        print('Requested location permission: $permission');
         if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
           throw Exception('Location permissions are denied');
         }
       }
 
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      print('Retrieved position: Latitude = ${position.latitude}, Longitude = ${position.longitude}');
-
       List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
-      if (placemarks.isNotEmpty) {
-        currentAddress = '${placemarks[0].locality}, ${placemarks[0].administrativeArea}';
-        print('Current address: $currentAddress');
-      } else {
-        currentAddress = 'Address not found';
-        print('No placemarks found');
-      }
+      currentAddress = placemarks.isNotEmpty
+          ? '${placemarks[0].locality}, ${placemarks[0].administrativeArea}, ${placemarks[0].country}'
+          : 'Address not found';
     } catch (e) {
       currentAddress = 'Failed to get location: $e';
-      print('Error in getCurrentAddress: $e');
     } finally {
       notifyListeners();
     }
   }
 
-  // Set search text and apply debounce
+  // Update filtered mosques based on search text
   void updateSearchText(String text) {
-    print('updateSearchText called with: $text');
     searchText = text;
-    if (_debounce?.isActive ?? false) _debounce!.cancel();
-    _debounce = Timer(const Duration(milliseconds: 500), () {
-      print('Executing search for: $searchText');
-      searchMosques(searchText);
-      checkAndSearchMosques(searchText);  // Use checkAndSearchMosques instead of searchMosques
-    });
+    filteredMosques = mosqueResults.where((mosque) => mosque.mosName.toLowerCase().contains(text.toLowerCase())).toList();
+    notifyListeners();
   }
 
-  // Clean up resources
-  @override
-  void dispose() {
-    print('CarianMasjidController disposed');
-    _debounce?.cancel();
-    super.dispose();
+  // Test SharedPreferences functionality
+// Test SharedPreferences functionality with token passed as parameter
+  Future<void> testSharedPreferences(String tokenToStore) async {
+    // Save the token
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('token', tokenToStore);
+
+    // Retrieve the token
+    String? tokenAfterStore = prefs.getString('token');
+    print("Token after store: $tokenAfterStore");
+
+    // Retrieve the token again
+    String? tokenRetrieved = prefs.getString('token');
+    print("Token retrieved = $tokenRetrieved");
   }
+
 }

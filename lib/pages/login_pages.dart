@@ -94,6 +94,7 @@ class _LoginPageState extends State<LoginPage> {
           print('Token stored: $token');
           print('UserName stored: $userNameFromApi');
           print('UserId stored: ${userIdFromApi.toString()}');
+          print('Token after stored: $token');
 
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content:

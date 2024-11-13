@@ -10,25 +10,14 @@ class CarianMasjid extends StatefulWidget {
 }
 
 class _CarianMasjidState extends State<CarianMasjid> {
-
-  int selectedIndex = 1;
-
   @override
   void initState() {
     super.initState();
-    final provider = Provider.of<CarianMasjidController>(context, listen: false);
-
-    // Get current address first
-    provider.getCurrentAddress();
-
-    // Defer searchMosques to after the build phase
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Call searchMosques after the build phase
-      provider.searchMosques("");  // Pass an empty string or the actual query
+      final provider = Provider.of<CarianMasjidController>(context, listen: false);
+      provider.fetchMosques(provider.searchText); // Initial fetch with any search term or empty string
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +72,6 @@ class _CarianMasjidState extends State<CarianMasjid> {
           provider.updateSelectedIndex(index);
         },
       ),
-
     );
   }
 
@@ -96,7 +84,10 @@ class _CarianMasjidState extends State<CarianMasjid> {
             padding: const EdgeInsets.all(16.0),
             color: const Color(0xFF5C0065),
             child: TextField(
-              onChanged: provider.updateSearchText,
+              onChanged: (text) {
+                provider.updateSearchText(text);
+                provider.fetchMosques(text); // Fetch mosques whenever search text changes
+              },
               decoration: InputDecoration(
                 hintText: 'Carian Masjid',
                 prefixIcon: const Icon(Icons.search, color: Colors.grey),
@@ -111,9 +102,9 @@ class _CarianMasjidState extends State<CarianMasjid> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0), // Adjust padding to 16 for a consistent margin
+            padding: const EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, // Align inner content to the left
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Carian Masjid',
@@ -121,27 +112,21 @@ class _CarianMasjidState extends State<CarianMasjid> {
                 ),
                 SizedBox(height: 20.0),
                 Text(
-                  'Jumlah Masjid Dijumpai: ${provider.mosqueResults.length}',
+                  'Jumlah Masjid Dijumpai: ${provider.filteredMosques.length}',
                   style: TextStyle(fontSize: 16.0),
                 ),
                 SizedBox(height: 10.0),
-
-                // Full-width Divider
-                Container(
-                  width: double.infinity, // Makes the Divider span full width
-                  child: Divider(thickness: 1, color: Colors.grey),
-                ),
-
+                Divider(thickness: 1, color: Colors.grey),
                 SizedBox(height: 20.0),
-                provider.mosqueResults.isNotEmpty
+                provider.filteredMosques.isNotEmpty
                     ? ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: provider.mosqueResults.length,
+                  itemCount: provider.filteredMosques.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      title: Text(provider.mosqueResults[index].mosName),
-                      subtitle: Text(provider.mosqueResults[index].address),
+                      title: Text(provider.filteredMosques[index].mosName),
+                      subtitle: Text(provider.filteredMosques[index].address),
                     );
                   },
                 )
@@ -153,5 +138,4 @@ class _CarianMasjidState extends State<CarianMasjid> {
       ),
     );
   }
-
 }

@@ -36,7 +36,7 @@ class _QiblahPageState extends State<QiblahPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF5C0065),
+        backgroundColor: Color(0xFF4A024F),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
@@ -46,28 +46,38 @@ class _QiblahPageState extends State<QiblahPage> {
         ),
         title: const Text('Arah Kiblat', style: TextStyle(color: Colors.white)),
       ),
-      body: FutureBuilder<bool>(
-        future: _deviceSupport,
-        builder: (_, AsyncSnapshot<bool> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: LoadingIndicator(
-                indicatorType: Indicator.ballClipRotate,
-                backgroundColor: Colors.blue,
-              ),
-            );
-          }
-          if (snapshot.hasError) {
-            return Center(child: Text("Error: ${snapshot.error.toString()}"));
-          }
 
-          if (snapshot.data == true) {
-            return _buildQiblahCompassWidget();
-          } else {
-            return Center(child: Text('Error: Device not supported.'));
-          }
-        },
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/islam_background.jpg'), // Path to your background image
+            fit: BoxFit.cover, // Ensures the image covers the whole screen
+          ),
+        ),
+        child: FutureBuilder<bool>(
+          future: _deviceSupport,
+          builder: (_, AsyncSnapshot<bool> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: LoadingIndicator(
+                  indicatorType: Indicator.ballClipRotate,
+                  backgroundColor: Colors.blue,
+                ),
+              );
+            }
+            if (snapshot.hasError) {
+              return Center(child: Text("Error: ${snapshot.error.toString()}"));
+            }
+
+            if (snapshot.data == true) {
+              return _buildQiblahCompassWidget();
+            } else {
+              return Center(child: Text('Error: Device not supported.'));
+            }
+          },
+        ),
       ),
+
     );
   }
 
@@ -107,16 +117,26 @@ class _QiblahPageState extends State<QiblahPage> {
                   // Format direction to two decimal places
                   String directionText = direction.toStringAsFixed(2);
 
-                  // Debug log to confirm angle value
-                  print("Normalized Qiblah angle in degrees: $directionText");
+                  // Check if the direction is within the correct range
+                  bool isCorrectDirection = (direction.abs() <= 1);
 
                   return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        // Text widget is now above the icon
+                        Text(
+                          "Sudut Kiblat: $directionText°",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: isCorrectDirection ? Colors.yellow[600] : Colors.white,
+                          ),
+                        ),
+                        SizedBox(height: 20), // Space between the text and the icon
                         Transform.rotate(
                           // Convert angle to radians and apply negative rotation for compass alignment
-                          angle: (direction * (pi / 180)),
+                          angle: - (direction * (pi / 180)),
                           alignment: Alignment.center,
                           child: Image.asset(
                             'assets/qiblah.png',
@@ -125,18 +145,10 @@ class _QiblahPageState extends State<QiblahPage> {
                             alignment: Alignment.center,
                           ),
                         ),
-                        SizedBox(height: 20),
-                        Text(
-                          "Qiblah Angle: $directionText°",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
                       ],
                     ),
                   );
+
                 },
               );
 
