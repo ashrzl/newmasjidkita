@@ -11,7 +11,7 @@ class QuranPage extends StatelessWidget {
         title: Text(
           "Al-Quran",
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 26,
             fontWeight: FontWeight.bold,
             fontFamily: 'Scheherazade', // Customize font for Arabic context
             color: Colors.white,
@@ -25,39 +25,45 @@ class QuranPage extends StatelessWidget {
         ),
         backgroundColor: Color(0xFF6B2572),
         centerTitle: true,
+        elevation: 10, // Added elevation for a modern shadow effect
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0), // Adjusted padding for better spacing
         child: ListView.builder(
           itemCount: quran.totalSurahCount,
           itemBuilder: (context, index) {
             int surahNumber = index + 1;
 
             return Card(
-              elevation: 4,
-              margin: const EdgeInsets.symmetric(vertical: 8.0),
+              elevation: 8, // Slightly higher elevation for more prominence
+              margin: const EdgeInsets.symmetric(vertical: 10.0),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(20), // More rounded corners
               ),
+              color: Colors.deepPurple[50], // Soft background color for the card
               child: ListTile(
-                contentPadding: const EdgeInsets.all(16.0),
+                contentPadding: const EdgeInsets.all(18.0),
                 title: Text(
                   quran.getSurahName(surahNumber),
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Scheherazade', // Customize font for Surah Name
+                    color: Color(0xFF6B2572), // Bold and complementary text color
                   ),
                 ),
                 subtitle: Text(
-                  "Surah ${quran.getSurahName(surahNumber)}", // This will show the Surah name in Malay
+                  "Surah ${quran.getSurahName(surahNumber)}", // Showing Surah name in Malay
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 18,
                     fontStyle: FontStyle.italic,
-                    color: Colors.grey[600],
+                    color: Colors.grey[700],
                   ),
                 ),
-
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Color(0xFF6B2572), // Arrow icon to indicate navigation
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
