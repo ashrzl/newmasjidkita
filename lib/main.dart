@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:new_mk_v3/splashscreen.dart';
 import 'package:provider/provider.dart';
-import 'package:new_mk_v3/pages/carianmasjid_pages.dart';
 import 'package:new_mk_v3/controller/carianmasjid_controller.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-            create: (context) => CarianMasjidController()),
+        ChangeNotifierProvider(create: (_) => CarianMasjidController()),
       ],
       child: MyApp(),
     ),

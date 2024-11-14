@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:new_mk_v3/controller/carianmasjid_controller.dart';
 import 'package:provider/provider.dart';
@@ -10,12 +12,23 @@ class CarianMasjid extends StatefulWidget {
 }
 
 class _CarianMasjidState extends State<CarianMasjid> {
+  final TextEditingController _searchController = TextEditingController();
+  Timer? _debounce; // Add this line to declare the Timer
+
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+  void dispose() {
+    _searchController.dispose();
+    _debounce?.cancel();
+    super.dispose();
+  }
+
+  void _onSearchChanged(String text) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      // Only call fetchMosques when the user stops typing for 500ms
       final provider = Provider.of<CarianMasjidController>(context, listen: false);
-      provider.fetchMosques(provider.searchText); // Initial fetch with any search term or empty string
+      provider.updateSearchText(text);
+      provider.fetchMosquesByKeyword(text);
     });
   }
 
@@ -78,16 +91,14 @@ class _CarianMasjidState extends State<CarianMasjid> {
   Widget _buildBody(CarianMasjidController provider) {
     return SingleChildScrollView(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,  // Align everything to the left
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             padding: const EdgeInsets.all(16.0),
             color: const Color(0xFF5C0065),
             child: TextField(
-              onChanged: (text) {
-                provider.updateSearchText(text);
-                provider.fetchMosques(text); // Fetch mosques whenever search text changes
-              },
+              controller: _searchController,
+              onChanged: _onSearchChanged, // Use the debounced function
               decoration: InputDecoration(
                 hintText: 'Carian Masjid',
                 prefixIcon: const Icon(Icons.search, color: Colors.grey),
@@ -133,7 +144,7 @@ class _CarianMasjidState extends State<CarianMasjid> {
                     : Text('Tiada Masjid dijumpai.'),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

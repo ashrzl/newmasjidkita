@@ -3,6 +3,7 @@ class Mosque {
   final int tenantId;
   final int moduleId;
   final String mosName;
+  final String mosEmail;
   final String address;
   final String tnName; // Assuming TnName is the mosque name
   final String moduleName;
@@ -13,6 +14,7 @@ class Mosque {
     required this.tenantId,
     required this.moduleId,
     required this.mosName,
+    required this.mosEmail,
     required this.address,
     required this.tnName,
     required this.moduleName,
@@ -25,6 +27,7 @@ class Mosque {
       tenantId: json['TenantId'] ?? 0, // Default to 0 if null
       moduleId: json['ModuleId'] ?? 0, // Default to 0 if null
       mosName: json['MosName'] ?? 'Unknown Mosque', // Default if null
+      mosEmail: json['MosEmail'] ?? 'Unknown Email',
       address: json['AddressLine1'] ?? 'No Address', // Default if null
       tnName: json['TnName'] ?? 'Unknown Mosque', // Default if null
       moduleName: json['ModuleName'] ?? '', // Default if null

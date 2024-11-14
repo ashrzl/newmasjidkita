@@ -3,16 +3,19 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:new_mk_v3/controller/carianmasjid_controller.dart';
 import 'package:new_mk_v3/controller/home_controller.dart';
 import 'package:new_mk_v3/model/mosque_model.dart';
 import 'package:new_mk_v3/model/user_model.dart';
 import 'package:new_mk_v3/navigationdrawer.dart';
 import 'package:new_mk_v3/pages/carianmasjid_pages.dart';
+import 'package:new_mk_v3/pages/doa.dart';
 import 'package:new_mk_v3/pages/dzikir.dart';
 import 'package:new_mk_v3/pages/login_pages.dart';
 import 'package:new_mk_v3/pages/prayertimes_pages.dart';
 import 'package:new_mk_v3/pages/qiblah_pages.dart';
 import 'package:new_mk_v3/pages/quran/quran_pages.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -24,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   User? _user;
   List<Mosque> _favoriteMosques = [];
   List<Mosque> _subscribeMosques = [];
-  String _currentAddress = 'Fetching location...';
+  String _currentAddress = 'Lokasi...';
   Position? _currentPosition;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _selectedIndex = 0;
@@ -100,7 +103,13 @@ class _HomePageState extends State<HomePage> {
         break;
       case 1:
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => CarianMasjid()));
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChangeNotifierProvider(create: (_) => CarianMasjidController(),
+                child: CarianMasjid(),
+              ),
+            ),
+        );
         break;
       case 2:
       // Navigate to the profile page (you'll need to create this)
@@ -324,7 +333,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     );
                   },
-                  child: _buildMenuIconWithImage('assets/solat.png', 'Waktu Solat', const Color(0xFF6B2572)),
+                  child: _buildMenuIconWithImage('assets/mosque.png', 'Waktu Solat', const Color(0xFF6B2572)),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -378,12 +387,84 @@ class _HomePageState extends State<HomePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => DzikirPagi())
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Center(
+                              child: Text("Zikir & Doa")
+                          ),
+                          actions: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center, // Center the row
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pop(); // Close the dialog
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => DzikirPagi()),
+                                    );
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/zikir.png', // Image for Zikir Harian
+                                        width: 80, // You can adjust the width/height
+                                        height: 80,
+                                      ),
+                                      SizedBox(height: 8), // Space between icon and text
+                                      Text(
+                                        "Zikir Harian", // Text under the icon
+                                        style: TextStyle(
+                                          color: Colors.black, // Text color
+                                          fontSize: 14, // Font size
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(width: 50), // Space between the two icons
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pop(); // Close the dialog
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => DoaPage()),
+                                    );
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/praying.png', // Image for Doa Harian
+                                        width: 80, // You can adjust the width/height
+                                        height: 80,
+                                      ),
+                                      SizedBox(height: 8), // Space between icon and text
+                                      Text(
+                                        "Doa Harian", // Text under the icon
+                                        style: TextStyle(
+                                          color: Colors.black, // Text color
+                                          fontSize: 14, // Font size
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      },
                     );
                   },
-                  child: _buildMenuIconWithImage('assets/zikir.png', 'Zikir', const Color(0xFF6B2572)),
+                  child: _buildMenuIconWithImage(
+                    'assets/tasbih.png',
+                    'Amalan Harian',
+                    const Color(0xFF6B2572),
+                  ),
                 ),
               ],
             ),
