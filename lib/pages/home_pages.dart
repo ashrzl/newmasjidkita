@@ -11,6 +11,7 @@ import 'package:new_mk_v3/navigationdrawer.dart';
 import 'package:new_mk_v3/pages/carianmasjid_pages.dart';
 import 'package:new_mk_v3/pages/doa.dart';
 import 'package:new_mk_v3/pages/dzikir.dart';
+import 'package:new_mk_v3/pages/hadith/hadith_pages.dart';
 import 'package:new_mk_v3/pages/login_pages.dart';
 import 'package:new_mk_v3/pages/prayertimes_pages.dart';
 import 'package:new_mk_v3/pages/qiblah_pages.dart';
@@ -354,34 +355,11 @@ class _HomePageState extends State<HomePage> {
                   child: _buildMenuIconWithImage('assets/read-quran.png', 'Al-Quran', const Color(0xFF6B2572)),
                 ),
                 GestureDetector(
-                  onTap: () async {
-                    try {
-                      String hadis = await fetchHadis(); // Fetch Hadis from API
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text('Satu Hari, Satu Hadis'),
-                            content: Text(hadis),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('Close'),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Failed to load Hadis.'),
-                          duration: Duration(seconds: 4),
-                        ),
-                      );
-                    }
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HadithPages()),
+                    );
                   },
                   child: _buildMenuIconWithImage('assets/hadis.png', 'Hadis', const Color(0xFF6B2572)),
                 ),
