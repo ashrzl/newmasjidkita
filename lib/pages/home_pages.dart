@@ -3,16 +3,33 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:new_mk_v3/controller/carianmasjid_controller.dart';
 import 'package:new_mk_v3/controller/home_controller.dart';
 import 'package:new_mk_v3/model/mosque_model.dart';
 import 'package:new_mk_v3/model/user_model.dart';
 import 'package:new_mk_v3/navigationdrawer.dart';
 import 'package:new_mk_v3/pages/carianmasjid_pages.dart';
+import 'package:new_mk_v3/pages/doa.dart';
 import 'package:new_mk_v3/pages/dzikir.dart';
+import 'package:new_mk_v3/pages/hadith/hadith_pages.dart';
 import 'package:new_mk_v3/pages/login_pages.dart';
 import 'package:new_mk_v3/pages/prayertimes_pages.dart';
 import 'package:new_mk_v3/pages/qiblah_pages.dart';
 import 'package:new_mk_v3/pages/quran/quran_pages.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
+
+/*
+* Project: MasjidKita Mobile App - V3
+* Description: Personal Task Center - PTC
+* Author: AIMAN SHARIZAL
+* Date: 19 November 20204
+* Version: 1.0
+* Additional Notes:
+* - Display User Profile
+* - List of subscription and favourite
+* - My Istiqomah Features: Solat, Al-quran, Hadis & Amalan Harian
+*/
 
 class HomePage extends StatefulWidget {
   @override
@@ -24,7 +41,7 @@ class _HomePageState extends State<HomePage> {
   User? _user;
   List<Mosque> _favoriteMosques = [];
   List<Mosque> _subscribeMosques = [];
-  String _currentAddress = 'Fetching location...';
+  String _currentAddress = 'Lokasi...';
   Position? _currentPosition;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _selectedIndex = 0;
@@ -33,6 +50,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _getCurrentLocation();
+    _requestLocationPermission();
     _initialize();
   }
 
@@ -100,11 +118,29 @@ class _HomePageState extends State<HomePage> {
         break;
       case 1:
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => CarianMasjid()));
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChangeNotifierProvider(create: (_) => CarianMasjidController(),
+                child: CarianMasjid(),
+              ),
+            ),
+        );
         break;
       case 2:
       // Navigate to the profile page (you'll need to create this)
         break;
+    }
+  }
+
+  Future<void> _requestLocationPermission() async {
+    PermissionStatus status = await Permission.location.request();
+    if (status.isGranted) {
+      // Permission granted, proceed with accessing location
+      _getCurrentLocation();
+    } else if (status.isDenied || status.isPermanentlyDenied) {
+      // Handle denied permission
+      // You can show a dialog or inform the user to grant permission from settings
+      openAppSettings();
     }
   }
 
@@ -324,17 +360,17 @@ class _HomePageState extends State<HomePage> {
                       ),
                     );
                   },
-                  child: _buildMenuIconWithImage('assets/solat.png', 'Waktu Solat', const Color(0xFF6B2572)),
+                  child: _buildMenuIconWithImage('assets/mosque.png', 'Waktu Solat', const Color(0xFF6B2572)),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => QiblahPage()),
-                    );
-                  },
-                  child: _buildMenuIconWithImage('assets/qibla.png', 'Kiblat', const Color(0xFF6B2572)),
-                ),
+                // GestureDetector(
+                //   onTap: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(builder: (context) => QiblahPage()),
+                //     );
+                //   },
+                //   child: _buildMenuIconWithImage('assets/qibla.png', 'Kiblat', const Color(0xFF6B2572)),
+                // ),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -345,45 +381,94 @@ class _HomePageState extends State<HomePage> {
                   child: _buildMenuIconWithImage('assets/read-quran.png', 'Al-Quran', const Color(0xFF6B2572)),
                 ),
                 GestureDetector(
-                  onTap: () async {
-                    try {
-                      String hadis = await fetchHadis(); // Fetch Hadis from API
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text('Satu Hari, Satu Hadis'),
-                            content: Text(hadis),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('Close'),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Failed to load Hadis.'),
-                          duration: Duration(seconds: 4),
-                        ),
-                      );
-                    }
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HadithPages()),
+                    );
                   },
                   child: _buildMenuIconWithImage('assets/hadis.png', 'Hadis', const Color(0xFF6B2572)),
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => DzikirPagi())
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Center(
+                              child: Text("Zikir & Doa")
+                          ),
+                          actions: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center, // Center the row
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pop(); // Close the dialog
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => DzikirPagi()),
+                                    );
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/zikir.png', // Image for Zikir Harian
+                                        width: 80, // You can adjust the width/height
+                                        height: 80,
+                                      ),
+                                      SizedBox(height: 8), // Space between icon and text
+                                      Text(
+                                        "Zikir Harian", // Text under the icon
+                                        style: TextStyle(
+                                          color: Colors.black, // Text color
+                                          fontSize: 14, // Font size
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(width: 50), // Space between the two icons
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pop(); // Close the dialog
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => DoaPage()),
+                                    );
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/praying.png', // Image for Doa Harian
+                                        width: 80, // You can adjust the width/height
+                                        height: 80,
+                                      ),
+                                      SizedBox(height: 8), // Space between icon and text
+                                      Text(
+                                        "Doa Harian", // Text under the icon
+                                        style: TextStyle(
+                                          color: Colors.black, // Text color
+                                          fontSize: 14, // Font size
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      },
                     );
                   },
-                  child: _buildMenuIconWithImage('assets/zikir.png', 'Zikir', const Color(0xFF6B2572)),
+                  child: _buildMenuIconWithImage(
+                    'assets/tasbih.png',
+                    'Amalan Harian',
+                    const Color(0xFF6B2572),
+                  ),
                 ),
               ],
             ),
@@ -588,7 +673,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         Container(
           padding: const EdgeInsets.all(20),
-          child: Image.asset(assetPath, height: 60, width: 60, color: color),
+          child: Image.asset(assetPath, height: 50, width: 50, color: color),
         ),
         const SizedBox(height: 8),
         Text(

@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:new_mk_v3/pages/home_pages.dart';
 
-class DzikirPagi extends StatefulWidget {
+class DoaPage extends StatefulWidget {
   @override
-  _DzikirPagiState createState() => _DzikirPagiState();
+  _DoaPageState createState() => _DoaPageState();
 }
 
-class _DzikirPagiState extends State<DzikirPagi> {
-  Future<List<dynamic>> loadDzikirPagi() async {
+class _DoaPageState extends State<DoaPage> {
+  Future<List<dynamic>> loadDoaPage() async {
     try {
-      var response = await rootBundle.loadString('data/dzikir_pagi.json');
+      var response = await rootBundle.loadString('data/doa.json'); // Corrected file path
       if (response.isNotEmpty) {
         var res = json.decode(response);
         return res['data'] ?? [];
@@ -30,7 +30,7 @@ class _DzikirPagiState extends State<DzikirPagi> {
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
         title: Text(
-          'ZIKIR HARIAN',
+          'DOA',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20.0,
@@ -39,7 +39,7 @@ class _DzikirPagiState extends State<DzikirPagi> {
           ),
         ),
         centerTitle: true,
-        backgroundColor:Color(0xFF6B2572),
+        backgroundColor: Color(0xFF6B2572),
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
@@ -50,15 +50,14 @@ class _DzikirPagiState extends State<DzikirPagi> {
       ),
       body: Stack(
         children: [
-          // Background image
           Positioned.fill(
-              child: Image.asset(
-                'assets/purple_background.jpg', // Ensure this image is in assets and declared in pubspec.yaml
-                fit: BoxFit.cover,
-              ),
+            child: Image.asset(
+              'assets/purple_background.jpg',
+              fit: BoxFit.cover,
             ),
+          ),
           FutureBuilder<List<dynamic>>(
-            future: loadDzikirPagi(),
+            future: loadDoaPage(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
@@ -74,7 +73,13 @@ class _DzikirPagiState extends State<DzikirPagi> {
                 shrinkWrap: true,
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
-                  var dzikirItem = snapshot.data![index];
+                  var doaItem = snapshot.data![index];
+
+                  // Use `?? ''` to provide a default empty string if any field is null
+                  String title = doaItem['title'] ?? '';
+                  String arab = doaItem['arab'] ?? '';
+                  String malay = doaItem['malay'] ?? '';
+
                   return Card(
                     margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
                     color: Colors.white.withOpacity(0.9),
@@ -82,9 +87,9 @@ class _DzikirPagiState extends State<DzikirPagi> {
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     child: ExpansionTile(
-                      leading: Icon(Icons.book, color:Color(0xFF6B2572)),
+                      leading: Icon(Icons.book, color: Color(0xFF6B2572)),
                       title: Text(
-                        dzikirItem['title'],
+                        title,
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.w600,
@@ -98,7 +103,7 @@ class _DzikirPagiState extends State<DzikirPagi> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
                               Text(
-                                dzikirItem['arabic'],
+                                arab,
                                 style: TextStyle(
                                   fontSize: 24.0,
                                   height: 1.5,
@@ -110,21 +115,12 @@ class _DzikirPagiState extends State<DzikirPagi> {
                               ),
                               SizedBox(height: 15.0),
                               Text(
-                                dzikirItem['latin'],
+                                malay,
                                 style: TextStyle(
                                   fontSize: 15.0,
                                   height: 1.4,
                                   color: Colors.teal[900],
                                   fontStyle: FontStyle.italic,
-                                ),
-                              ),
-                              SizedBox(height: 15.0),
-                              Text(
-                                dzikirItem['translation'],
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  height: 1.4,
-                                  color: Colors.black87,
                                 ),
                               ),
                             ],
@@ -135,6 +131,7 @@ class _DzikirPagiState extends State<DzikirPagi> {
                   );
                 },
               );
+
             },
           ),
         ],

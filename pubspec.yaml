@@ -96,11 +96,15 @@ flutter:
     - assets/mosque.png
     - assets/MasjidKITALogo.png
     - assets/compassgif.gif
-    - data/dzikir_pagi.json
     - assets/purple_background.jpg
     - assets/qiblah.png
     - assets/qibla.png
     - assets/islam_background.jpg
+    - assets/tasbih.png
+    - assets/praying.png
+    - data/dzikir_pagi.json
+    - data/doa.json
+    - data/hadith/nawawi40.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:

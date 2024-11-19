@@ -16,68 +16,73 @@ class CarianMasjidController extends ChangeNotifier {
   List<Mosque> mosqueResults = [];
   List<Mosque> filteredMosques = [];
   String searchText = '';
-
-  // Selected index for BottomNavigationBar
   int selectedIndex = 1;
 
-  // Initialize provider data
   CarianMasjidController() {
-    getCurrentAddress();
+    _initializeController();
   }
 
-  // Update selected index and notify listeners
+  Future<void> _initializeController() async {
+    await _checkAndStoreToken();
+    await getCurrentAddress();
+  }
+
+  Future<void> _checkAndStoreToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    if (token == null || token.isEmpty) {
+      token = '$token'; // Replace with actual token retrieval
+      await prefs.setString('token', token);
+    }
+  }
+
   void updateSelectedIndex(int index) {
     selectedIndex = index;
     notifyListeners();
   }
 
-  // Fetch mosques by search term
-  Future<void> fetchMosques(String searchQuery) async {
+  // Modified function to allow searching by keyword across multiple fields
+  Future<void> fetchMosquesByKeyword(String keyword) async {
     isLoading = true;
     errorMessage = '';
     notifyListeners();
 
     try {
-      // Retrieve token from SharedPreferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('token');
-      print('Token after store: $token');
-      print('Token retrived: $token');  // Add this line for debugging
 
       if (token == null || token.isEmpty) {
         throw Exception('No token found');
       }
 
-      // Test SharedPreferences functionality by passing the token
-      await testSharedPreferences(token);  // Pass the token here
-
-      // API request
-      final url = Uri.parse('$apiEndpoint?search=$searchQuery');
+      // Use the keyword in the query string
+      final url = Uri.parse('$apiEndpoint?keyword=$keyword');
       final response = await http.get(
         url,
         headers: {'Authorization': 'Bearer $token'},
       );
 
-      // Handle the response
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         List data = responseData['data'] ?? [];
+
+        // Map the results to Mosque objects and update both mosqueResults and filteredMosques
         mosqueResults = data.map((json) => Mosque.fromJson(json)).toList();
-        filteredMosques = List.from(mosqueResults); // Initialize filtered results
+        filteredMosques = List.from(mosqueResults); // Display all initially
+        print('$apiEndpoint?keyword=$keyword');
       } else {
         throw Exception('API Error: ${response.statusCode}');
       }
     } catch (e) {
       errorMessage = 'Error fetching data: $e';
       mosqueResults = [];
+      filteredMosques = [];
     } finally {
       isLoading = false;
       notifyListeners();
     }
   }
 
-
-  // Retrieve and set current location address
   Future<void> getCurrentAddress() async {
     try {
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -103,27 +108,15 @@ class CarianMasjidController extends ChangeNotifier {
     }
   }
 
-  // Update filtered mosques based on search text
+  // Modify the search function to check for keyword matches in various fields
   void updateSearchText(String text) {
     searchText = text;
-    filteredMosques = mosqueResults.where((mosque) => mosque.mosName.toLowerCase().contains(text.toLowerCase())).toList();
+    filteredMosques = mosqueResults
+        .where((mosque) =>
+    mosque.mosName.toLowerCase().contains(text.toLowerCase()) ||
+        mosque.address.toLowerCase().contains(text.toLowerCase()) ||
+        mosque.mosEmail.toLowerCase().contains(text.toLowerCase()))
+        .toList();
     notifyListeners();
   }
-
-  // Test SharedPreferences functionality
-// Test SharedPreferences functionality with token passed as parameter
-  Future<void> testSharedPreferences(String tokenToStore) async {
-    // Save the token
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('token', tokenToStore);
-
-    // Retrieve the token
-    String? tokenAfterStore = prefs.getString('token');
-    print("Token after store: $tokenAfterStore");
-
-    // Retrieve the token again
-    String? tokenRetrieved = prefs.getString('token');
-    print("Token retrieved = $tokenRetrieved");
-  }
-
 }
