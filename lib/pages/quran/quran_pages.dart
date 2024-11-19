@@ -3,6 +3,14 @@ import 'package:new_mk_v3/pages/home_pages.dart';
 import 'package:new_mk_v3/pages/quran/surahdetail_pages.dart';
 import 'package:quran/quran.dart' as quran;
 
+/*
+* Project: MasjidKita Mobile App - V3
+* Description: View List of Surah in Al-Quran
+* Author: AIMAN SHARIZAL
+* Date: 19 November 20204
+* Version: 1.0
+*/
+
 class QuranPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -104,7 +104,7 @@ flutter:
     - assets/praying.png
     - data/dzikir_pagi.json
     - data/doa.json
-    - data/hadith/nawawi40.json
+    - data/nawawi.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:new_mk_v3/controller/hadith_controller.dart';
 import 'package:new_mk_v3/pages/home_pages.dart';
 
+/*
+* Project: MasjidKita Mobile App - V3
+* Description: View Hadith Collection
+* Author: AIMAN SHARIZAL
+* Date: 19 November 20204
+* Version: 1.0
+*/
+
 class HadithPages extends StatefulWidget {
   @override
   _HadithPagesState createState() => _HadithPagesState();
@@ -73,19 +81,20 @@ class _HadithPagesState extends State<HadithPages> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Arab: ${hadith['arabic']}',
+                                '${hadith['arabic']}',
                                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center,
+                                textAlign: TextAlign.right,
                               ),
-                              SizedBox(height: 10),
+                              SizedBox(height: 15),
                               Text(
                                 '${hadith['englishNarrator']}',
                                 style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
                               ),
-                              SizedBox(height: 5),
+                              SizedBox(height: 10),
                               Text(
                                 hadith['englishText'],
                                 style: TextStyle(fontSize: 16),
+                                textAlign: TextAlign.justify,
                               ),
                             ],
                           ),

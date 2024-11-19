@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 class HadithController {
   static Future<List<Map<String, dynamic>>> loadHadiths() async {
     try {
-      var response = await rootBundle.loadString('data/hadith/nawawi40.json');
+      var response = await rootBundle.loadString('data/nawawi.json');
       if (response.isNotEmpty) {
         var res = json.decode(response);
         List<dynamic> hadithList = res['hadiths'] ?? [];

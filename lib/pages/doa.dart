@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:new_mk_v3/pages/home_pages.dart';
 
+/*
+* Project: MasjidKita Mobile App - V3
+* Description: List of Daily Doa
+* Author: AIMAN SHARIZAL
+* Date: 19 November 20204
+* Version: 1.0
+*/
+
 class DoaPage extends StatefulWidget {
   @override
   _DoaPageState createState() => _DoaPageState();
