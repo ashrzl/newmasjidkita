@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:new_mk_v3/controller/carianmasjid_controller.dart';
 import 'package:provider/provider.dart';
@@ -13,24 +11,6 @@ class CarianMasjid extends StatefulWidget {
 
 class _CarianMasjidState extends State<CarianMasjid> {
   final TextEditingController _searchController = TextEditingController();
-  Timer? _debounce; // Add this line to declare the Timer
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    _debounce?.cancel();
-    super.dispose();
-  }
-
-  void _onSearchChanged(String text) {
-    if (_debounce?.isActive ?? false) _debounce?.cancel();
-    _debounce = Timer(const Duration(milliseconds: 500), () {
-      // Only call fetchMosques when the user stops typing for 500ms
-      final provider = Provider.of<CarianMasjidController>(context, listen: false);
-      provider.updateSearchText(text);
-      provider.fetchMosquesByKeyword(text);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +78,12 @@ class _CarianMasjidState extends State<CarianMasjid> {
             color: const Color(0xFF5C0065),
             child: TextField(
               controller: _searchController,
-              onChanged: _onSearchChanged, // Use the debounced function
+              onChanged: (value) {
+                provider.updateSearchText(value); // Real-time local filtering
+              },
+              onSubmitted: (value) {
+                provider.fetchMosquesByKeyword(value); // Fetch from API
+              },
               decoration: InputDecoration(
                 hintText: 'Carian Masjid',
                 prefixIcon: const Icon(Icons.search, color: Colors.grey),

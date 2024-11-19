@@ -536,15 +536,7 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         // Display the mosque logo
-                        Image.asset(
-                          mosque.mosLogoUrl?.isNotEmpty == true
-                              ? mosque.mosLogoUrl!
-                              : 'assets/MasjidKITALogo.png', // Fallback image
-                          width: 60, // Adjust size as needed
-                          height: 60, // Adjust size as needed
-                          fit: BoxFit.cover, // Adjust fit as needed
-                        ),
-                        const SizedBox(width: 12), // Space between logo and name
+                        // Space between logo and name
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
