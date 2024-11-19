@@ -291,26 +291,26 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 // Pencil icon for updating profile picture
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: Container(
-                    height: 40.0,
-                    width: 40.0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Color(0xFF5C0065), width: 3),
-                      color: Colors.white,
-                    ),
-                    child: IconButton(
-                      icon: Icon(Icons.edit, color: Color(0xFF6B2572), size: 20.0),
-                      onPressed: () {
-                        // Define the action when the icon is pressed
-                        // For example, show a dialog to update the profile picture
-                      },
-                    ),
-                  ),
-                ),
+                // Positioned(
+                //   bottom: 0,
+                //   right: 0,
+                //   child: Container(
+                //     height: 40.0,
+                //     width: 40.0,
+                //     decoration: BoxDecoration(
+                //       shape: BoxShape.circle,
+                //       border: Border.all(color: Color(0xFF5C0065), width: 3),
+                //       color: Colors.white,
+                //     ),
+                //     child: IconButton(
+                //       icon: Icon(Icons.edit, color: Color(0xFF6B2572), size: 20.0),
+                //       onPressed: () {
+                //         // Define the action when the icon is pressed
+                //         // For example, show a dialog to update the profile picture
+                //       },
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             SizedBox(width: 12),

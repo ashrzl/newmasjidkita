@@ -4,6 +4,14 @@ import 'package:new_mk_v3/controller/prayertime_controller.dart';
 import 'package:new_mk_v3/model/location_model.dart';
 import 'package:new_mk_v3/model/prayer_model.dart';
 
+/*
+* Project: MasjidKita Mobile App - V3
+* Description: View Prayers Time
+* Author: AIMAN SHARIZAL
+* Date: 19 November 20204
+* Version: 1.0
+*/
+
 class PrayerTimesPage extends StatefulWidget {
   final double latitude;
   final double longitude;

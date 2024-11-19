@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:new_mk_v3/pages/quran/quran_pages.dart';
 import 'package:quran/quran.dart' as quran;
 
+/*
+* Project: MasjidKita Mobile App - V3
+* Description: Read Details of Surah in Al-Quran
+* Author: AIMAN SHARIZAL
+* Date: 19 November 20204
+* Version: 1.0
+*/
+
 class SurahDetailPage extends StatelessWidget {
   final int surahNumber;
 

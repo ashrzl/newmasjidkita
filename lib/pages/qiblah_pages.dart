@@ -7,6 +7,14 @@ import 'package:new_mk_v3/model/qibla_model.dart';
 import 'package:new_mk_v3/pages/home_pages.dart';
 import 'package:new_mk_v3/utils/loading_error_widget.dart';
 
+/*
+* Project: MasjidKita Mobile App - V3
+* Description: Determine and view direction of the kiblat
+* Author: AIMAN SHARIZAL
+* Date: 19 November 20204
+* Version: 1.0
+*/
+
 class QiblahPage extends StatefulWidget {
   @override
   _QiblahPageState createState() => _QiblahPageState();
