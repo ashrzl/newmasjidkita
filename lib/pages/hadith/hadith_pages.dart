@@ -8,21 +8,13 @@ class HadithPages extends StatefulWidget {
 }
 
 class _HadithPagesState extends State<HadithPages> {
-  // Method to load both Hadith collections
-  // Future<List<String>> loadAllHadiths() async {
-  //   List<String> allHadiths = [];
-  //   try {
-  //     List<String> bukhariTitles = await HadithController.loadHadithBukhari();
-  //     allHadiths.addAll(bukhariTitles);
-  //
-  //     List<String> nawawiTitles = await HadithController.loadHadithNawawi();
-  //     allHadiths.addAll(nawawiTitles);
-  //   } catch (e) {
-  //     print("Error loading hadith collections: $e");
-  //   }
-  //
-  //   return allHadiths;
-  // }
+  late Future<List<Map<String, dynamic>>> _hadiths;
+
+  @override
+  void initState() {
+    super.initState();
+    _hadiths = HadithController.loadHadiths();  // Load the list of hadiths
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +22,10 @@ class _HadithPagesState extends State<HadithPages> {
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
         title: Text(
-          'KOLEKSI HADIS SAHIH',
+          'HADIS SAHIH IMAM an-NAWAWI',  // Set your desired static title here
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 20.0,
+            fontSize: 18.0,
             letterSpacing: 2.0,
             color: Colors.white,
           ),
@@ -59,49 +51,54 @@ class _HadithPagesState extends State<HadithPages> {
               fit: BoxFit.cover,
             ),
           ),
-          // FutureBuilder<List<String>>(
-          //   // future: loadAllHadiths(),  // Call the combined method
-          //   builder: (context, snapshot) {
-          //     if (snapshot.connectionState == ConnectionState.waiting) {
-          //       return Center(child: CircularProgressIndicator());
-          //     } else if (snapshot.hasError) {
-          //       print("FutureBuilder error: ${snapshot.error}");
-          //       return Center(child: Text('Error loading titles'));
-          //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          //       return Center(child: Text('No titles found'));
-          //     }
-          //
-          //     return ListView.builder(
-          //       physics: BouncingScrollPhysics(),
-          //       padding: EdgeInsets.all(8.0),
-          //       itemCount: snapshot.data!.length,
-          //       itemBuilder: (context, index) {
-          //         return Card(
-          //           margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-          //           color: Colors.white.withOpacity(0.9),
-          //           shape: RoundedRectangleBorder(
-          //             borderRadius: BorderRadius.circular(12.0),
-          //           ),
-          //           elevation: 4.0,
-          //           child: ListTile(
-          //             leading: Icon(Icons.book, color: Color(0xFF6B2572)),
-          //             title: Text(
-          //               snapshot.data![index],
-          //               style: TextStyle(
-          //                 fontSize: 16.0,
-          //                 fontWeight: FontWeight.w600,
-          //                 color: Colors.black,
-          //               ),
-          //             ),
-          //           ),
-          //         );
-          //       },
-          //     );
-          //   },
-          // ),
+          Center(
+            child: FutureBuilder<List<Map<String, dynamic>>>(  // This is correct for loading the list of hadiths
+              future: _hadiths,  // Loads the hadiths from the controller
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Text('No Hadiths available');
+                } else {
+                  var hadithList = snapshot.data!;
+                  return ListView.builder(
+                    itemCount: hadithList.length,
+                    itemBuilder: (context, index) {
+                      var hadith = hadithList[index];
+                      return Card(
+                        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Arab: ${hadith['arabic']}',
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                '${hadith['englishNarrator']}',
+                                style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                hadith['englishText'],
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
+              },
+            ),
+          ),
         ],
       ),
     );
   }
-
 }

@@ -16,7 +16,20 @@ import 'package:new_mk_v3/pages/login_pages.dart';
 import 'package:new_mk_v3/pages/prayertimes_pages.dart';
 import 'package:new_mk_v3/pages/qiblah_pages.dart';
 import 'package:new_mk_v3/pages/quran/quran_pages.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+
+/*
+* Project: MasjidKita Mobile App - V3
+* Description: Personal Task Center - PTC
+* Author: AIMAN SHARIZAL
+* Date: 19 November 20204
+* Version: 1.0
+* Additional Notes:
+* - Display User Profile
+* - List of subscription and favourite
+* - My Istiqomah Features: Solat, Al-quran, Hadis & Amalan Harian
+*/
 
 class HomePage extends StatefulWidget {
   @override
@@ -37,6 +50,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _getCurrentLocation();
+    _requestLocationPermission();
     _initialize();
   }
 
@@ -115,6 +129,18 @@ class _HomePageState extends State<HomePage> {
       case 2:
       // Navigate to the profile page (you'll need to create this)
         break;
+    }
+  }
+
+  Future<void> _requestLocationPermission() async {
+    PermissionStatus status = await Permission.location.request();
+    if (status.isGranted) {
+      // Permission granted, proceed with accessing location
+      _getCurrentLocation();
+    } else if (status.isDenied || status.isPermanentlyDenied) {
+      // Handle denied permission
+      // You can show a dialog or inform the user to grant permission from settings
+      openAppSettings();
     }
   }
 
@@ -336,15 +362,15 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: _buildMenuIconWithImage('assets/mosque.png', 'Waktu Solat', const Color(0xFF6B2572)),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => QiblahPage()),
-                    );
-                  },
-                  child: _buildMenuIconWithImage('assets/qibla.png', 'Kiblat', const Color(0xFF6B2572)),
-                ),
+                // GestureDetector(
+                //   onTap: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(builder: (context) => QiblahPage()),
+                //     );
+                //   },
+                //   child: _buildMenuIconWithImage('assets/qibla.png', 'Kiblat', const Color(0xFF6B2572)),
+                // ),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -647,7 +673,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         Container(
           padding: const EdgeInsets.all(20),
-          child: Image.asset(assetPath, height: 60, width: 60, color: color),
+          child: Image.asset(assetPath, height: 50, width: 50, color: color),
         ),
         const SizedBox(height: 8),
         Text(
