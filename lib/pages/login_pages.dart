@@ -289,7 +289,7 @@ class _LoginPageState extends State<LoginPage> {
                 //     // Implement Google Sign-In feature here
                 //   },
                 //   icon: Image.asset(
-                //     'assets/google.png',
+                //     'assets/icon/google.png',
                 //     height: 50,
                 //   ), // Update with your logo path
                 // ),

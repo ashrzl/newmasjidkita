@@ -61,7 +61,7 @@ class _DzikirPagiState extends State<DzikirPagi> {
           // Background image
           Positioned.fill(
               child: Image.asset(
-                'assets/purple_background.jpg', // Ensure this image is in assets and declared in pubspec.yaml
+                'assets/background/purple_background.jpg', // Ensure this image is in assets and declared in pubspec.yaml
                 fit: BoxFit.cover,
               ),
             ),

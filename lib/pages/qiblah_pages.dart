@@ -58,7 +58,7 @@ class _QiblahPageState extends State<QiblahPage> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/islam_background.jpg'), // Path to your background image
+            image: AssetImage('assets/background/islam_background.jpg'), // Path to your background image
             fit: BoxFit.cover, // Ensures the image covers the whole screen
           ),
         ),
@@ -147,7 +147,7 @@ class _QiblahPageState extends State<QiblahPage> {
                           angle: - (direction * (pi / 180)),
                           alignment: Alignment.center,
                           child: Image.asset(
-                            'assets/qiblah.png',
+                            'assets/icon/qiblah.png',
                             fit: BoxFit.contain,
                             height: 300, // Adjust size as needed
                             alignment: Alignment.center,

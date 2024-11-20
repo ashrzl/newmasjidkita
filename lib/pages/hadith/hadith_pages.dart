@@ -16,13 +16,6 @@ class HadithPages extends StatefulWidget {
 }
 
 class _HadithPagesState extends State<HadithPages> {
-  late Future<List<Map<String, dynamic>>> _hadiths;
-
-  @override
-  void initState() {
-    super.initState();
-    _hadiths = HadithController.loadHadiths();  // Load the list of hadiths
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +23,10 @@ class _HadithPagesState extends State<HadithPages> {
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
         title: Text(
-          'HADIS SAHIH IMAM an-NAWAWI',  // Set your desired static title here
+          'Hadis Sahih Imam an-Nawawi',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 18.0,
+            fontSize: 20.0,
             letterSpacing: 2.0,
             color: Colors.white,
           ),
@@ -44,10 +37,7 @@ class _HadithPagesState extends State<HadithPages> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage()),
-            );
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
           },
         ),
       ),
@@ -55,57 +45,79 @@ class _HadithPagesState extends State<HadithPages> {
         children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/purple_background.jpg',
+              'assets/background/purple_background.jpg',
               fit: BoxFit.cover,
             ),
           ),
-          Center(
-            child: FutureBuilder<List<Map<String, dynamic>>>(  // This is correct for loading the list of hadiths
-              future: _hadiths,  // Loads the hadiths from the controller
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                } else if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Text('No Hadiths available');
-                } else {
-                  var hadithList = snapshot.data!;
-                  return ListView.builder(
-                    itemCount: hadithList.length,
-                    itemBuilder: (context, index) {
-                      var hadith = hadithList[index];
-                      return Card(
-                        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '${hadith['arabic']}',
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.right,
-                              ),
-                              SizedBox(height: 15),
-                              Text(
-                                '${hadith['englishNarrator']}',
-                                style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
-                              ),
-                              SizedBox(height: 10),
-                              Text(
-                                hadith['englishText'],
-                                style: TextStyle(fontSize: 16),
-                                textAlign: TextAlign.justify,
-                              ),
-                            ],
+          FutureBuilder<List<Map<String, dynamic>>>(
+            future: HadithController.loadHadiths(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error loading Hadith'));
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return Center(child: Text('No Hadith found'));
+              } else {
+                List<Map<String, dynamic>> hadiths = snapshot.data!;
+                return ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: hadiths.length,
+                  itemBuilder: (context, index) {
+                    var hadith = hadiths[index];
+                    return Card(
+                      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                      color: Colors.white.withOpacity(0.9),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: ExpansionTile(
+                        leading: Icon(Icons.book, color: Color(0xFF6B2572)),
+                        title: Text(
+                          hadith['englishTitle'],
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
                           ),
                         ),
-                      );
-                    },
-                  );
-                }
-              },
-            ),
-          ),
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: <Widget>[
+                                Text(
+                                  hadith['englishNarrator'],
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                    height: 1.4,
+                                    color: Colors.teal[900],
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                                SizedBox(height: 15.0),
+                                Text(
+                                  hadith['englishText'],
+                                  textAlign: TextAlign.justify,
+                                  style: TextStyle(
+                                    fontSize: 14.0,
+                                    height: 1.5,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              }
+            },
+          )
         ],
       ),
     );

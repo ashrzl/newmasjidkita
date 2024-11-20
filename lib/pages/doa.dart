@@ -60,7 +60,7 @@ class _DoaPageState extends State<DoaPage> {
         children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/purple_background.jpg',
+              'assets/background/purple_background.jpg',
               fit: BoxFit.cover,
             ),
           ),

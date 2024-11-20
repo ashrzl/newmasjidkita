@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen>
         height: MediaQuery.of(context).size.height, // Use MediaQuery for full height
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/background2.jpg'),
+            image: AssetImage('assets/background/background2.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -66,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      'assets/copyright.png',
+                      'assets/icon/copyright.png',
                       width: 10,
                       height: 10,
                       color: Colors.white,

@@ -4,13 +4,20 @@ import 'package:flutter/services.dart';
 class HadithController {
   static Future<List<Map<String, dynamic>>> loadHadiths() async {
     try {
-      var response = await rootBundle.loadString('data/');
+      // Load the JSON file from assets
+      var response = await rootBundle.loadString('data/nawawi40.json');
       if (response.isNotEmpty) {
+        // Decode the JSON data
         var res = json.decode(response);
+
+        // Extract the 'hadiths' list from the decoded JSON
         List<dynamic> hadithList = res['hadiths'] ?? [];
+
+        // Map the data to the desired structure
         return hadithList.map((hadith) {
           return {
             'arabic': hadith['arabic'],
+            'englishTitle': hadith['english']['title'],
             'englishNarrator': hadith['english']['narrator'],
             'englishText': hadith['english']['text']
           };

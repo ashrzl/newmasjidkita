@@ -84,24 +84,25 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/background1.jpg
-    - assets/background2.jpg
-    - assets/copyright.png
-    - assets/google.png
-    - assets/hadis.png
-    - assets/read-quran.png
-    - assets/solat.png
-    - assets/user.png
-    - assets/zikir.png
-    - assets/mosque.png
-    - assets/MasjidKITALogo.png
+    - assets/background/background1.jpg
+    - assets/background/background2.jpg
+    - assets/background/quran-background.jpg
+    - assets/background/purple_background.jpg
+    - assets/background/islam_background.jpg
+    - assets/icon/qiblah.png
+    - assets/icon/copyright.png
+    - assets/icon/google.png
+    - assets/icon/hadis.png
+    - assets/icon/read-quran.png
+    - assets/icon/solat.png
+    - assets/icon/user.png
+    - assets/icon/zikir.png
+    - assets/icon/mosque.png
+    - assets/icon/MasjidKITALogo.png
+    - assets/icon/qibla.png
+    - assets/icon/tasbih.png
+    - assets/icon/praying.png
     - assets/compassgif.gif
-    - assets/purple_background.jpg
-    - assets/qiblah.png
-    - assets/qibla.png
-    - assets/islam_background.jpg
-    - assets/tasbih.png
-    - assets/praying.png
     - data/dzikir_pagi.json
     - data/doa.json
     - data/nawawi40.json

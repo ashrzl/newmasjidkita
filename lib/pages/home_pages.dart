@@ -62,47 +62,6 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
-  static const String hadisApiUrl = 'https://hadis.my/api/hadisharian';
-
-  Future<String> fetchHadis() async {
-    try {
-      // Log the start of the API call
-      print('Fetching Hadis from $hadisApiUrl');
-
-      final response = await http.get(Uri.parse(hadisApiUrl));
-
-      // Log the status code received
-      print('Response status code: ${response.statusCode}');
-
-      if (response.statusCode == 200) {
-        // Log the response body for debugging
-        print('Response body: ${response.body}');
-
-        final data = json.decode(response.body);
-
-        // Log the decoded data
-        print('Decoded data: $data');
-
-        // Access the list of Hadis from the "data" key
-        if (data.containsKey('data') && data['data'].isNotEmpty) {
-          // Extract the first Hadis from the list
-          String hadis = data['data'][0]['hadis'];
-          return hadis;
-        } else {
-          throw Exception('No Hadis found in the response data');
-        }
-      } else {
-        // Handle unexpected status codes
-        print('Error: Received status code ${response.statusCode}');
-        throw Exception('Failed to load Hadis: ${response.reasonPhrase}');
-      }
-    } catch (e) {
-      // Log any exceptions that occur during the process
-      print('Exception occurred: $e');
-      throw Exception('Failed to fetch Hadis due to an error: $e');
-    }
-  }
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index; // Update the selected index
@@ -286,7 +245,7 @@ class _HomePageState extends State<HomePage> {
                   child: CircleAvatar(
                     backgroundImage: _user?.imageUrl != null
                         ? NetworkImage(_user!.imageUrl!)
-                        : AssetImage('assets/user.png') as ImageProvider,
+                        : AssetImage('assets/icon/user.png') as ImageProvider,
                     radius: 40.0,
                   ),
                 ),
@@ -360,7 +319,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     );
                   },
-                  child: _buildMenuIconWithImage('assets/mosque.png', 'Waktu Solat', const Color(0xFF6B2572)),
+                  child: _buildMenuIconWithImage('assets/icon/mosque.png', 'Waktu Solat', const Color(0xFF6B2572)),
                 ),
                 // GestureDetector(
                 //   onTap: () {
@@ -369,7 +328,7 @@ class _HomePageState extends State<HomePage> {
                 //       MaterialPageRoute(builder: (context) => QiblahPage()),
                 //     );
                 //   },
-                //   child: _buildMenuIconWithImage('assets/qibla.png', 'Kiblat', const Color(0xFF6B2572)),
+                //   child: _buildMenuIconWithImage('assets/icon/qibla.png', 'Kiblat', const Color(0xFF6B2572)),
                 // ),
                 GestureDetector(
                   onTap: () {
@@ -378,7 +337,7 @@ class _HomePageState extends State<HomePage> {
                       MaterialPageRoute(builder: (context) => QuranPage()),
                     );
                   },
-                  child: _buildMenuIconWithImage('assets/read-quran.png', 'Al-Quran', const Color(0xFF6B2572)),
+                  child: _buildMenuIconWithImage('assets/icon/read-quran.png', 'Al-Quran', const Color(0xFF6B2572)),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -387,7 +346,7 @@ class _HomePageState extends State<HomePage> {
                         MaterialPageRoute(builder: (context) => HadithPages()),
                     );
                   },
-                  child: _buildMenuIconWithImage('assets/hadis.png', 'Hadis', const Color(0xFF6B2572)),
+                  child: _buildMenuIconWithImage('assets/icon/hadis.png', 'Hadis', const Color(0xFF6B2572)),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -414,7 +373,7 @@ class _HomePageState extends State<HomePage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Image.asset(
-                                        'assets/zikir.png', // Image for Zikir Harian
+                                        'assets/icon/zikir.png', // Image for Zikir Harian
                                         width: 80, // You can adjust the width/height
                                         height: 80,
                                       ),
@@ -442,7 +401,7 @@ class _HomePageState extends State<HomePage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Image.asset(
-                                        'assets/praying.png', // Image for Doa Harian
+                                        'assets/icon/praying.png', // Image for Doa Harian
                                         width: 80, // You can adjust the width/height
                                         height: 80,
                                       ),
@@ -465,7 +424,7 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                   child: _buildMenuIconWithImage(
-                    'assets/tasbih.png',
+                    'assets/icon/tasbih.png',
                     'Amalan Harian',
                     const Color(0xFF6B2572),
                   ),
@@ -536,7 +495,15 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         // Display the mosque logo
-                        // Space between logo and name
+                        Image.asset(
+                          mosque.mosLogoUrl?.isNotEmpty == true
+                              ? mosque.mosLogoUrl!
+                              : 'assets/icon/MasjidKITALogo.png', // Fallback image
+                          width: 60, // Adjust size as needed
+                          height: 60, // Adjust size as needed
+                          fit: BoxFit.cover, // Adjust fit as needed
+                        ),
+                        const SizedBox(width: 12),// Space between logo and name
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -616,7 +583,7 @@ class _HomePageState extends State<HomePage> {
                         Image.asset(
                           mosque.mosLogoUrl?.isNotEmpty == true
                               ? mosque.mosLogoUrl!
-                              : 'assets/MasjidKITALogo.png', // Fallback image
+                              : 'assets/icon/MasjidKITALogo.png', // Fallback image
                           width: 60, // Adjust size as needed
                           height: 60, // Adjust size as needed
                           fit: BoxFit.cover, // Adjust fit as needed
