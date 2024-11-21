@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:new_mk_v3/controller/hadith_controller.dart';
+import 'package:new_mk_v3/pages/hadith/hadith_details.dart';
 import 'package:new_mk_v3/pages/home_pages.dart';
 
 /*
 * Project: MasjidKita Mobile App - V3
 * Description: View Hadith Collection
 * Author: AIMAN SHARIZAL
-* Date: 19 November 20204
+* Date: 21 November 2024
 * Version: 1.0
 */
 
@@ -16,11 +17,10 @@ class HadithPages extends StatefulWidget {
 }
 
 class _HadithPagesState extends State<HadithPages> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
         title: Text(
           '40 Hadis Sahih',
@@ -37,7 +37,8 @@ class _HadithPagesState extends State<HadithPages> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => HomePage()));
           },
         ),
       ),
@@ -72,12 +73,13 @@ class _HadithPagesState extends State<HadithPages> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
-                      child: ExpansionTile(
+                      child: ListTile(
                         leading: CircleAvatar(
                           backgroundColor: Color(0xFF6B2572),
                           child: Text(
                             '${index + 1}', // Display the Hadith number
-                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                color: Colors.white, fontWeight: FontWeight.bold),
                           ),
                         ),
                         title: Text(
@@ -88,40 +90,19 @@ class _HadithPagesState extends State<HadithPages> {
                             color: Colors.black,
                           ),
                         ),
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(16.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: <Widget>[
-                                Text(
-                                  hadith['englishNarrator'],
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    height: 1.4,
-                                    color: Colors.teal[900],
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                                ),
-                                SizedBox(height: 15.0),
-                                Text(
-                                  hadith['englishText'],
-                                  textAlign: TextAlign.justify,
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    height: 1.5,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                              ],
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  HadithDetailsPage(hadith: hadith),
                             ),
-                          ),
-                        ],
+                          );
+                        },
                       ),
                     );
                   },
                 );
-
               }
             },
           )
