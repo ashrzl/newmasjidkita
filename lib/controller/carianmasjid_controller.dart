@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:new_mk_v3/model/mosque_model.dart';
 
 class CarianMasjidController extends ChangeNotifier {
-  static const apiEndpoint = 'https://test.cmsbstaging.com.my/web-api/api/Tnmosques';
+  static const apiEndpoint = 'https://api.cmsb-env2.com.my/api/Tnmosques';
 
   bool isLoading = false;
   String errorMessage = '';

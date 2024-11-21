@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_mk_v3/controller/carianmasjid_controller.dart';
 import 'package:new_mk_v3/pages/home_pages.dart';
+import 'package:new_mk_v3/pages/mosque_details.dart';
 import 'package:provider/provider.dart';
 import 'package:new_mk_v3/navigationdrawer.dart';
 
@@ -198,7 +199,11 @@ class _CarianMasjidState extends State<CarianMasjid> {
                               IconButton(
                                 icon: Icon(Icons.location_on, color: Color(0xFF6B2572)), // Pin location icon
                                 onPressed: () {
-                                  // Implement functionality for pin click (e.g., show map, open location)
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => MasjidDetails())
+                                  );
+
                                 },
                               ),
                               // Heart icon
