@@ -11,7 +11,7 @@ import 'package:new_mk_v3/utils/loading_error_widget.dart';
 * Project: MasjidKita Mobile App - V3
 * Description: Determine and view direction of the kiblat
 * Author: AIMAN SHARIZAL
-* Date: 19 November 20204
+* Date: 21 November 2024
 * Version: 1.0
 */
 
@@ -58,7 +58,7 @@ class _QiblahPageState extends State<QiblahPage> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/islam_background.jpg'), // Path to your background image
+            image: AssetImage('assets/background/islam_background.jpg'), // Path to your background image
             fit: BoxFit.cover, // Ensures the image covers the whole screen
           ),
         ),
@@ -122,41 +122,38 @@ class _QiblahPageState extends State<QiblahPage> {
                   // Normalize the direction to be within 0-360 degrees
                   direction = direction % 360;
 
-                  // Format direction to two decimal places
-                  String directionText = direction.toStringAsFixed(2);
-
-                  // Check if the direction is within the correct range
-                  bool isCorrectDirection = (direction.abs() <= 1);
+                  // Define the acceptable range for correct direction
+                  const double tolerance = 5.0; // Acceptable range ±1°
+                  bool isCorrectDirection = direction.abs() <= tolerance;
 
                   return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Text widget is now above the icon
+                        // Fixed Qiblah angle display
                         Text(
-                          "Sudut Kiblat: $directionText°",
+                          "Arah Kiblat: 292.6°",
                           style: TextStyle(
-                            fontSize: 30,
+                            fontSize: 24,
                             fontWeight: FontWeight.bold,
-                            color: isCorrectDirection ? Colors.yellow[600] : Colors.white,
+                            color: isCorrectDirection ? Colors.green[400] : Colors.white,
                           ),
                         ),
-                        SizedBox(height: 20), // Space between the text and the icon
+                        SizedBox(height: 20), // Space between text and compass
+                        // Rotating compass with dynamic border
                         Transform.rotate(
-                          // Convert angle to radians and apply negative rotation for compass alignment
-                          angle: - (direction * (pi / 180)),
+                          angle: -(direction * (pi / 180)), // Rotate by negative radians
                           alignment: Alignment.center,
                           child: Image.asset(
-                            'assets/qiblah.png',
-                            fit: BoxFit.contain,
-                            height: 300, // Adjust size as needed
-                            alignment: Alignment.center,
+                              'assets/icon/qiblah.png',
+                              fit: BoxFit.contain,
+                              height: 300, // Adjust size as needed
+                              alignment: Alignment.center,
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   );
-
                 },
               );
 
@@ -178,6 +175,7 @@ class _QiblahPageState extends State<QiblahPage> {
       },
     );
   }
+
 
   void _showCalibrationDialog() {
     showDialog(

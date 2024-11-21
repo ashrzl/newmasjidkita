@@ -7,7 +7,7 @@ import 'package:new_mk_v3/pages/home_pages.dart';
 * Project: MasjidKita Mobile App - V3
 * Description: List of Daily Zikir
 * Author: AIMAN SHARIZAL
-* Date: 19 November 20204
+* Date: 21 November 20204
 * Version: 1.0
 */
 
@@ -61,7 +61,7 @@ class _DzikirPagiState extends State<DzikirPagi> {
           // Background image
           Positioned.fill(
               child: Image.asset(
-                'assets/purple_background.jpg', // Ensure this image is in assets and declared in pubspec.yaml
+                'assets/background/purple_background.jpg', // Ensure this image is in assets and declared in pubspec.yaml
                 fit: BoxFit.cover,
               ),
             ),
@@ -119,6 +119,7 @@ class _DzikirPagiState extends State<DzikirPagi> {
                               SizedBox(height: 15.0),
                               Text(
                                 dzikirItem['latin'],
+                                textAlign: TextAlign.justify,
                                 style: TextStyle(
                                   fontSize: 15.0,
                                   height: 1.4,
@@ -129,6 +130,7 @@ class _DzikirPagiState extends State<DzikirPagi> {
                               SizedBox(height: 15.0),
                               Text(
                                 dzikirItem['translation'],
+                                textAlign: TextAlign.justify,
                                 style: TextStyle(
                                   fontSize: 14.0,
                                   height: 1.4,

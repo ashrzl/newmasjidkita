@@ -7,7 +7,7 @@ import 'package:new_mk_v3/pages/home_pages.dart';
 * Project: MasjidKita Mobile App - V3
 * Description: List of Daily Doa
 * Author: AIMAN SHARIZAL
-* Date: 19 November 20204
+* Date: 20 November 20204
 * Version: 1.0
 */
 
@@ -17,9 +17,16 @@ class DoaPage extends StatefulWidget {
 }
 
 class _DoaPageState extends State<DoaPage> {
+
   Future<List<dynamic>> loadDoaPage() async {
     try {
-      var response = await rootBundle.loadString('data/doa.json'); // Corrected file path
+      // Load the JSON file
+      var response = await rootBundle.loadString('data/doa.json');
+
+      // Clean up potential problematic characters or line breaks
+      response = response.replaceAll('\r\n', '').replaceAll('\n', '').replaceAll('\t', '');
+
+      // Parse the JSON
       if (response.isNotEmpty) {
         var res = json.decode(response);
         return res['data'] ?? [];
@@ -60,7 +67,7 @@ class _DoaPageState extends State<DoaPage> {
         children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/purple_background.jpg',
+              'assets/background/purple_background.jpg',
               fit: BoxFit.cover,
             ),
           ),
@@ -124,6 +131,7 @@ class _DoaPageState extends State<DoaPage> {
                               SizedBox(height: 15.0),
                               Text(
                                 malay,
+                                textAlign: TextAlign.justify,
                                 style: TextStyle(
                                   fontSize: 15.0,
                                   height: 1.4,

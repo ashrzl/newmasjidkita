@@ -8,6 +8,7 @@ class Mosque {
   final String tnName; // Assuming TnName is the mosque name
   final String moduleName;
   final String mosLogoUrl;
+  final List<dynamic> tnkariahMembers; // Correct type
 
   Mosque({
     required this.mosId,
@@ -18,7 +19,8 @@ class Mosque {
     required this.address,
     required this.tnName,
     required this.moduleName,
-    required this.mosLogoUrl
+    required this.mosLogoUrl,
+    required this.tnkariahMembers, // Updated type
   });
 
   factory Mosque.fromJson(Map<String, dynamic> json) {
@@ -32,7 +34,7 @@ class Mosque {
       tnName: json['TnName'] ?? 'Unknown Mosque', // Default if null
       moduleName: json['ModuleName'] ?? '', // Default if null
       mosLogoUrl: json['mosLogoUrl'] ?? '',
+      tnkariahMembers: json['Tnkariahmembers']?['\$values'] ?? [], // Handle nested data
     );
   }
 }
-

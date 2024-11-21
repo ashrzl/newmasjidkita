@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:new_mk_v3/model/mosque_model.dart';
 
 class CarianMasjidController extends ChangeNotifier {
-  static const apiEndpoint = 'https://api.cmsb-env2.com.my/api/Tnmosques';
+  static const apiEndpoint = 'https://test.cmsbstaging.com.my/web-api/api/Tnmosques';
 
   bool isLoading = false;
   String errorMessage = '';
@@ -55,7 +55,7 @@ class CarianMasjidController extends ChangeNotifier {
         throw Exception('No token found');
       }
 
-      // Use the keyword in the query string
+      // Construct the API endpoint
       final url = Uri.parse('$apiEndpoint?keyword=$keyword');
       final response = await http.get(
         url,
@@ -64,12 +64,15 @@ class CarianMasjidController extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        List data = responseData['data'] ?? [];
+        print('API Response: $responseData'); // Debugging
 
-        // Map the results to Mosque objects and update both mosqueResults and filteredMosques
-        mosqueResults = data.map((json) => Mosque.fromJson(json)).toList();
-        filteredMosques = List.from(mosqueResults); // Display all initially
-        print('$apiEndpoint?keyword=$keyword');
+        // Extract the list of mosques from the "$values" key
+        final List<dynamic> mosqueData = responseData['\$values'] ?? [];
+
+        // Parse the mosque data
+        mosqueResults = mosqueData.map((json) => Mosque.fromJson(json)).toList();
+        filteredMosques = List.from(mosqueResults);
+        print('Mosque Results Count: ${mosqueResults.length}'); // Debugging
       } else {
         throw Exception('API Error: ${response.statusCode}');
       }
@@ -77,11 +80,14 @@ class CarianMasjidController extends ChangeNotifier {
       errorMessage = 'Error fetching data: $e';
       mosqueResults = [];
       filteredMosques = [];
+      print(errorMessage); // Debugging
     } finally {
       isLoading = false;
       notifyListeners();
     }
   }
+
+
 
   Future<void> getCurrentAddress() async {
     try {
@@ -113,9 +119,7 @@ class CarianMasjidController extends ChangeNotifier {
     searchText = text;
     filteredMosques = mosqueResults
         .where((mosque) =>
-    mosque.mosName.toLowerCase().contains(text.toLowerCase()) ||
-        mosque.address.toLowerCase().contains(text.toLowerCase()) ||
-        mosque.mosEmail.toLowerCase().contains(text.toLowerCase()))
+    mosque.mosName.toLowerCase().contains(text.toLowerCase()))
         .toList();
     notifyListeners();
   }
