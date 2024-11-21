@@ -23,7 +23,7 @@ class _HadithPagesState extends State<HadithPages> {
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
         title: Text(
-          'Hadis Sahih Imam an-Nawawi',
+          '40 Hadis Sahih',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20.0,
@@ -45,7 +45,7 @@ class _HadithPagesState extends State<HadithPages> {
         children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/background/purple_background.jpg',
+              'assets/background/quran-background.jpg',
               fit: BoxFit.cover,
             ),
           ),
@@ -73,7 +73,13 @@ class _HadithPagesState extends State<HadithPages> {
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: ExpansionTile(
-                        leading: Icon(Icons.book, color: Color(0xFF6B2572)),
+                        leading: CircleAvatar(
+                          backgroundColor: Color(0xFF6B2572),
+                          child: Text(
+                            '${index + 1}', // Display the Hadith number
+                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                         title: Text(
                           hadith['englishTitle'],
                           style: TextStyle(
@@ -115,6 +121,7 @@ class _HadithPagesState extends State<HadithPages> {
                     );
                   },
                 );
+
               }
             },
           )

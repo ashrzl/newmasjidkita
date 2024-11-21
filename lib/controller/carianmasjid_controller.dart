@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:new_mk_v3/model/mosque_model.dart';
 
 class CarianMasjidController extends ChangeNotifier {
-  static const apiEndpoint = 'https://api.cmsb-env2.com.my/api/Tnmosques';
+  static const apiEndpoint = 'https://test.cmsbstaging.com.my/web-api/api/Tnmosques';
 
   bool isLoading = false;
   String errorMessage = '';
@@ -119,9 +119,7 @@ class CarianMasjidController extends ChangeNotifier {
     searchText = text;
     filteredMosques = mosqueResults
         .where((mosque) =>
-    mosque.mosName.toLowerCase().contains(text.toLowerCase()) ||
-        mosque.address.toLowerCase().contains(text.toLowerCase()) ||
-        mosque.mosEmail.toLowerCase().contains(text.toLowerCase()))
+    mosque.mosName.toLowerCase().contains(text.toLowerCase()))
         .toList();
     notifyListeners();
   }
