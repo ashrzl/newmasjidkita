@@ -31,10 +31,10 @@ import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
   final HomeController _controller = HomeController();
   User? _user;
   List<Mosque> _favoriteMosques = [];
@@ -289,12 +289,11 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-
     );
   }
 
   Widget _buildFeatureIcons(BuildContext context) {
-    final ScrollController _scrollController = ScrollController();
+    final ScrollController scrollController = ScrollController();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -305,8 +304,8 @@ class _HomePageState extends State<HomePage> {
               GestureDetector(
                 onTap: () {
                   // Scroll left when the left arrow is clicked
-                  _scrollController.animateTo(
-                    _scrollController.offset - 150,
+                  scrollController.animateTo(
+                    scrollController.offset - 150,
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
                   );
@@ -316,7 +315,7 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  controller: _scrollController,
+                  controller: scrollController,
                   child: Row(
                     children: [
                       GestureDetector(
@@ -340,19 +339,19 @@ class _HomePageState extends State<HomePage> {
                           const Color(0xFF6B2572),
                         ),
                       ),
-                      // GestureDetector(
-                      //   onTap: () {
-                      //     Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(builder: (context) => QiblahPage()),
-                      //     );
-                      //   },
-                      //   child: _buildMenuIconWithImage(
-                      //     'assets/icon/qibla.png',
-                      //     'Kiblat',
-                      //     const Color(0xFF6B2572),
-                      //   ),
-                      // ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => QiblahPage()),
+                          );
+                        },
+                        child: _buildMenuIconWithImage(
+                          'assets/icon/qibla.png',
+                          'Kiblat',
+                          const Color(0xFF6B2572),
+                        ),
+                      ),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -470,8 +469,8 @@ class _HomePageState extends State<HomePage> {
               GestureDetector(
                 onTap: () {
                   // Scroll right when the right arrow is clicked
-                  _scrollController.animateTo(
-                    _scrollController.offset + 150,
+                  scrollController.animateTo(
+                    scrollController.offset + 150,
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
                   );
@@ -484,7 +483,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
 
   Widget _buildTabBarSection() {
     return DefaultTabController(

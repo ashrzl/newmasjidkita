@@ -1,67 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:new_mk_v3/controller/carianmasjid_controller.dart';
-import 'package:new_mk_v3/navigationdrawer.dart';
+import 'package:new_mk_v3/model/mosque_model.dart';
 import 'package:new_mk_v3/pages/carianmasjid_pages.dart';
-import 'package:new_mk_v3/pages/home_pages.dart';
 import 'package:provider/provider.dart';
 
 /*
 * Project: MasjidKita Mobile App - V3
-* Description: Carian Masjid Page
+* Description: Masjid Details Page
 * Author: AIMAN SHARIZAL
-* Date: 21 November 2024
+* Date: 22 November 2024
 * Version: 1.0
 * Additional Notes:
-* - Display List of tenants
+* - Display location, activity and information
 */
 
 class MasjidDetails extends StatefulWidget {
-  const MasjidDetails({super.key});
+  final Mosque mosque;
+
+  const MasjidDetails({required this.mosque, Key? key}) : super(key: key);
+
   @override
   MasjidDetailsState createState() => MasjidDetailsState();
 }
 
-class MasjidDetailsState extends State<MasjidDetails>{
 
-  int _selectedIndex = 1;
-
-  void _onItemTapped(int index) {
-    if (_selectedIndex == index) return; // Prevent redundant navigation
-
-    setState(() {
-      _selectedIndex = index;
-    });
-
-    switch (index) {
-      case 0:
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
-        );
-        break;
-      case 1:
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ChangeNotifierProvider(
-              create: (_) => CarianMasjidController(),
-              child: CarianMasjid(),
-            ),
-          ),
-        );
-        break;
-      case 2:
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => ProfilePage()), // Replace with your profile page
-      // );
-        break;
-    }
-  }
+class MasjidDetailsState extends State<MasjidDetails> {
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<CarianMasjidController>(context);
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
@@ -72,7 +40,7 @@ class MasjidDetailsState extends State<MasjidDetails>{
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => CarianMasjid()),
             );
           },
         ),
@@ -80,30 +48,115 @@ class MasjidDetailsState extends State<MasjidDetails>{
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Lokasi Anda:", style: TextStyle(color: Colors.white)),
-            Text(provider.currentAddress, style: TextStyle(fontSize: 14, color: Colors.white)),
+            Text(provider.currentAddress,
+                style: TextStyle(fontSize: 14, color: Colors.white)),
           ],
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Scaffold.of(context).openEndDrawer();
-            },
-            icon: Icon(Icons.menu, color: Colors.white),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              "Masjid",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(height: 20.0),
+          Card(
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: ListTile(
+              leading: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  widget.mosque.mosLogoUrl,
+                  width: 60,
+                  height: 60,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset('assets/icon/MasjidKITALogo.png');
+                  },
+                ),
+              ),
+              title: Text(widget.mosque.mosName),
+              subtitle: Text(widget.mosque.address),
+              trailing: IconButton(
+                icon: Icon(Icons.favorite_border, color: Colors.red),
+                onPressed: () {
+                // Add to favorites
+                },
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                // ElevatedButton(
+                //   style: ElevatedButton.styleFrom(
+                //     backgroundColor: Colors.purple,
+                //     shape: StadiumBorder(),
+                //   ),
+                //   onPressed: () {
+                //     // KhairatKITA functionality
+                //   },
+                //   child: Text("KhairatKITA"),
+                // ),
+                // ElevatedButton(
+                //   style: ElevatedButton.styleFrom(
+                //     backgroundColor: Colors.purple,
+                //     shape: StadiumBorder(),
+                //   ),
+                //   onPressed: () {
+                //     // KariahKITA functionality
+                //   },
+                //   child: Text("KariahKITA"),
+                // ),
+              ],
+            ),
+          ),
+          SizedBox(height: 20.0),
+          Expanded(
+            child: DefaultTabController(
+              length: 2,
+              child: Column(
+                children: [
+                  TabBar(
+                    labelColor: Colors.purple,
+                    unselectedLabelColor: Colors.grey,
+                    indicatorColor: Colors.purple,
+                    tabs: [
+                      Tab(text: "Aktiviti Masjid"),
+                      Tab(text: "Lokasi Masjid"),
+                    ],
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      children: [
+                        //AktivitiMasjid Tab
+                        Center(
+                          child: Text("Aktiviti Masjid content here"),
+                        ),
+                        Center(
+                          //Lokasi Tab
+                          child: Image.network(
+                            'https://via.placeholder.com/350x150', // Replace with map image URL
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
-      ),
-      endDrawer: Drawer(child: ProfileScreen()),
-      body: Center(child: Text('Masjid Details')),  // Replace with your body widget
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Utama'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Carian Masjid'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
-        ],
-        currentIndex: _selectedIndex, // The currently selected index
-        selectedItemColor: Color(0xFF6B2572),
-        unselectedItemColor: Colors.grey,
-        onTap: _onItemTapped,
       ),
     );
   }

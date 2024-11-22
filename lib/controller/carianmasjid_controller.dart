@@ -41,8 +41,18 @@ class CarianMasjidController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Modified function to allow searching by keyword across multiple fields
   Future<void> fetchMosquesByKeyword(String keyword) async {
+    // Trim the keyword to remove leading/trailing whitespaces
+    keyword = keyword.trim();
+
+    // If the keyword is empty, clear the results and return early
+    if (keyword.isEmpty) {
+      mosqueResults = [];
+      filteredMosques = [];
+      notifyListeners();
+      return;
+    }
+
     isLoading = true;
     errorMessage = '';
     notifyListeners();
@@ -64,15 +74,18 @@ class CarianMasjidController extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        print('API Response: $responseData'); // Debugging
 
         // Extract the list of mosques from the "$values" key
         final List<dynamic> mosqueData = responseData['\$values'] ?? [];
 
         // Parse the mosque data
         mosqueResults = mosqueData.map((json) => Mosque.fromJson(json)).toList();
-        filteredMosques = List.from(mosqueResults);
-        print('Mosque Results Count: ${mosqueResults.length}'); // Debugging
+
+        // Filter mosques to include only exact matches for the keyword in mosName
+        filteredMosques = mosqueResults
+            .where((mosque) =>
+            mosque.mosName.toLowerCase().contains(keyword.toLowerCase()))
+            .toList();
       } else {
         throw Exception('API Error: ${response.statusCode}');
       }
@@ -80,13 +93,11 @@ class CarianMasjidController extends ChangeNotifier {
       errorMessage = 'Error fetching data: $e';
       mosqueResults = [];
       filteredMosques = [];
-      print(errorMessage); // Debugging
     } finally {
       isLoading = false;
       notifyListeners();
     }
   }
-
 
 
   Future<void> getCurrentAddress() async {
@@ -116,11 +127,14 @@ class CarianMasjidController extends ChangeNotifier {
 
   // Modify the search function to check for keyword matches in various fields
   void updateSearchText(String text) {
-    searchText = text;
-    filteredMosques = mosqueResults
-        .where((mosque) =>
-    mosque.mosName.toLowerCase().contains(text.toLowerCase()))
-        .toList();
-    notifyListeners();
+    searchText = text.trim();
+
+    // Clear results when the search field is empty
+    if (searchText.isEmpty) {
+      mosqueResults = [];
+      filteredMosques = [];
+      notifyListeners();
+      return;
+    }
   }
 }
