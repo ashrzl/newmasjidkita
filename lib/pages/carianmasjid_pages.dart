@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:new_mk_v3/controller/carianmasjid_controller.dart';
 import 'package:new_mk_v3/pages/home_pages.dart';
+import 'package:new_mk_v3/pages/mosque_details.dart';
 import 'package:provider/provider.dart';
-import 'package:new_mk_v3/navigationdrawer.dart';
 
 /*
 * Project: MasjidKita Mobile App - V3
@@ -16,10 +16,10 @@ import 'package:new_mk_v3/navigationdrawer.dart';
 
 class CarianMasjid extends StatefulWidget {
   @override
-  _CarianMasjidState createState() => _CarianMasjidState();
+  CarianMasjidState createState() => CarianMasjidState();
 }
 
-class _CarianMasjidState extends State<CarianMasjid> {
+class CarianMasjidState extends State<CarianMasjid> {
   final TextEditingController _searchController = TextEditingController();
   int _selectedIndex = 1;
 
@@ -81,16 +81,7 @@ class _CarianMasjidState extends State<CarianMasjid> {
             Text(provider.currentAddress, style: TextStyle(fontSize: 14, color: Colors.white)),
           ],
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Scaffold.of(context).openEndDrawer();
-            },
-            icon: Icon(Icons.menu, color: Colors.white),
-          ),
-        ],
       ),
-      endDrawer: Drawer(child: ProfileScreen()),
       body: provider.isLoading
           ? Center(child: CircularProgressIndicator())
           : provider.errorMessage.isNotEmpty
@@ -195,13 +186,18 @@ class _CarianMasjidState extends State<CarianMasjid> {
                                 ),
                               ),
                               // Pin location icon
-                              IconButton(
-                                icon: Icon(Icons.location_on, color: Color(0xFF6B2572)), // Pin location icon
-                                onPressed: () {
-                                  // Implement functionality for pin click (e.g., show map, open location)
-                                },
+                        IconButton(
+                          icon: Icon(Icons.location_on, color: Color(0xFF6B2572)),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MasjidDetails(mosque: mosque),
                               ),
-                              // Heart icon
+                            );
+                          },
+                        ),
+                        // Heart icon
                               IconButton(
                                 icon: Icon(Icons.favorite_border, color: Colors.red), // Heart icon
                                 onPressed: () {
@@ -217,8 +213,6 @@ class _CarianMasjidState extends State<CarianMasjid> {
                         ],
                       ),
                     );
-
-
                   },
                 )
                     : Text('Tiada Masjid dijumpai.'),

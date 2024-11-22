@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
 
     try {
       final response = await http.post(
-        Uri.parse('https://test.cmsbstaging.com.my/web-api/api/Authentication/login'),
+        Uri.parse('https://api.cmsb-env2.com.my/api/Authentication/login'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'UserName': UserName, 'password': password}),
       );
