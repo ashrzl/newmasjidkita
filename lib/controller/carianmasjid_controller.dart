@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
 import 'package:new_mk_v3/model/mosque_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CarianMasjidController extends ChangeNotifier {
   static const apiEndpoint = 'https://api.cmsb-env2.com.my/api/Tnmosques';
@@ -17,6 +17,8 @@ class CarianMasjidController extends ChangeNotifier {
   List<Mosque> filteredMosques = [];
   String searchText = '';
   int selectedIndex = 1;
+
+  Timer? _debounce;
 
   CarianMasjidController() {
     _initializeController();
@@ -41,17 +43,37 @@ class CarianMasjidController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchMosquesByKeyword(String keyword) async {
-    // Trim the keyword to remove leading/trailing whitespaces
-    keyword = keyword.trim();
+  // Modify the search function to dynamically show results
+  void updateSearchText(String text) {
+    searchText = text.trim();
 
-    // If the keyword is empty, clear the results and return early
-    if (keyword.isEmpty) {
-      mosqueResults = [];
+    // Clear results when the search field is empty
+    if (searchText.isEmpty) {
       filteredMosques = [];
       notifyListeners();
       return;
     }
+
+    // Cancel any existing debounce timer
+    _debounce?.cancel();
+
+    // Show instant results from current mosqueResults
+    filteredMosques = mosqueResults
+        .where((mosque) =>
+        mosque.mosName.toLowerCase().contains(searchText.toLowerCase()))
+        .toList();
+    notifyListeners();
+
+    // Set up debounce to fetch new results
+    _debounce = Timer(const Duration(milliseconds: 300), () {
+      fetchMosquesByKeyword(searchText);
+    });
+  }
+
+  Future<void> fetchMosquesByKeyword(String keyword) async {
+    keyword = keyword.trim();
+
+    if (keyword.isEmpty) return;
 
     isLoading = true;
     errorMessage = '';
@@ -65,7 +87,6 @@ class CarianMasjidController extends ChangeNotifier {
         throw Exception('No token found');
       }
 
-      // Construct the API endpoint
       final url = Uri.parse('$apiEndpoint?keyword=$keyword');
       final response = await http.get(
         url,
@@ -74,14 +95,10 @@ class CarianMasjidController extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-
-        // Extract the list of mosques from the "$values" key
         final List<dynamic> mosqueData = responseData['\$values'] ?? [];
-
-        // Parse the mosque data
         mosqueResults = mosqueData.map((json) => Mosque.fromJson(json)).toList();
 
-        // Filter mosques to include only exact matches for the keyword in mosName
+        // Update filteredMosques with the latest results
         filteredMosques = mosqueResults
             .where((mosque) =>
             mosque.mosName.toLowerCase().contains(keyword.toLowerCase()))
@@ -98,7 +115,6 @@ class CarianMasjidController extends ChangeNotifier {
       notifyListeners();
     }
   }
-
 
   Future<void> getCurrentAddress() async {
     try {
@@ -122,19 +138,6 @@ class CarianMasjidController extends ChangeNotifier {
       currentAddress = 'Failed to get location: $e';
     } finally {
       notifyListeners();
-    }
-  }
-
-  // Modify the search function to check for keyword matches in various fields
-  void updateSearchText(String text) {
-    searchText = text.trim();
-
-    // Clear results when the search field is empty
-    if (searchText.isEmpty) {
-      mosqueResults = [];
-      filteredMosques = [];
-      notifyListeners();
-      return;
     }
   }
 }

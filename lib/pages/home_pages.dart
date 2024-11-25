@@ -543,8 +543,8 @@ class HomePageState extends State<HomePage> {
                       children: [
                         // Display the mosque logo
                         Image.asset(
-                          mosque.mosLogoUrl?.isNotEmpty == true
-                              ? mosque.mosLogoUrl!
+                          mosque.mosLogoUrl.isNotEmpty == true
+                              ? mosque.mosLogoUrl
                               : 'assets/icon/MasjidKITALogo.png', // Fallback image
                           width: 60, // Adjust size as needed
                           height: 60, // Adjust size as needed
@@ -559,7 +559,7 @@ class HomePageState extends State<HomePage> {
                                 mosque.mosName,
                                 style: const TextStyle(fontSize: 18),
                               ),
-                              if (mosque.address.isNotEmpty ?? false)
+                              if (mosque.address.isNotEmpty != false)
                                 Column(
                                   children: [
                                     const SizedBox(height: 4),
@@ -628,8 +628,8 @@ class HomePageState extends State<HomePage> {
                       children: [
                         // Display the mosque logo
                         Image.asset(
-                          mosque.mosLogoUrl?.isNotEmpty == true
-                              ? mosque.mosLogoUrl!
+                          mosque.mosLogoUrl.isNotEmpty == true
+                              ? mosque.mosLogoUrl
                               : 'assets/icon/MasjidKITALogo.png', // Fallback image
                           width: 60, // Adjust size as needed
                           height: 60, // Adjust size as needed

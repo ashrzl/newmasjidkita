@@ -45,7 +45,7 @@ class _DoaPageState extends State<DoaPage> {
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
         title: Text(
-          'DOA',
+          'DOA HARIAN',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20.0,
@@ -102,7 +102,14 @@ class _DoaPageState extends State<DoaPage> {
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     child: ExpansionTile(
-                      leading: Icon(Icons.book, color: Color(0xFF6B2572)),
+                      leading: CircleAvatar(
+                        backgroundColor: Color(0xFF6B2572),
+                        child: Text(
+                          '${index + 1}', // Display the Hadith number
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ),
                       title: Text(
                         title,
                         style: TextStyle(
@@ -147,7 +154,6 @@ class _DoaPageState extends State<DoaPage> {
                   );
                 },
               );
-
             },
           ),
         ],
