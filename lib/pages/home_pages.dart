@@ -339,19 +339,19 @@ class HomePageState extends State<HomePage> {
                           const Color(0xFF6B2572),
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => QiblahPage()),
-                          );
-                        },
-                        child: _buildMenuIconWithImage(
-                          'assets/icon/qibla.png',
-                          'Kiblat',
-                          const Color(0xFF6B2572),
-                        ),
-                      ),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(builder: (context) => QiblahPage()),
+                      //     );
+                      //   },
+                      //   child: _buildMenuIconWithImage(
+                      //     'assets/icon/qibla.png',
+                      //     'Kiblat',
+                      //     const Color(0xFF6B2572),
+                      //   ),
+                      // ),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -610,11 +610,14 @@ class HomePageState extends State<HomePage> {
               final mosque = mosques[index];
 
               // Determine the button color based on moduleName
-              Color buttonColor;
+              Color? buttonColor;
+              String ahliText = '';
               if (mosque.moduleName == 'KariahKITA') {
                 buttonColor = const Color(0xFF6B2572);
+                ahliText = 'Ahli';
               } else if (mosque.moduleName == 'KhairatKITA') {
-                buttonColor = Colors.green;
+                buttonColor = Colors.green[400];
+                ahliText = 'Ahli';
               } else {
                 buttonColor = Colors.grey;
               }
@@ -651,15 +654,31 @@ class HomePageState extends State<HomePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end, // Align button to the right
                       children: [
-                        TextButton(
-                          onPressed: () {
-                            // Define the action when the button is pressed
-                          },
-                          style: TextButton.styleFrom(
-                            backgroundColor: buttonColor,
-                            foregroundColor: Colors.white, // Set text color to white
-                          ),
-                          child: Text(mosque.moduleName ?? 'Default Module'),
+                        Column(
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                // Define the action when the button is pressed
+                              },
+                              style: TextButton.styleFrom(
+                                backgroundColor: buttonColor,
+                                foregroundColor: Colors.white, // Set text color to white
+                              ),
+                              child: Text(mosque.moduleName ?? 'Default Module'),
+                            ),
+                            if (ahliText.isNotEmpty) // Conditionally display the "Ahli" text
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Text(
+                                  ahliText,
+                                  style: TextStyle(
+                                    color: Colors.grey[700],
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
                       ],
                     ),

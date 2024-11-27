@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       } else {
         // Handle different status codes appropriately
-        String errorMessage = 'Nama Pengguna atau Katalaluan salah!';
+        String errorMessage = 'Nama Pengguna atau Katalaluan tidak sah!';
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content:
           Text(errorMessage,
@@ -134,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
       });
       print('Error during login: $error');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred. Please try again later.')),
+        SnackBar(content: Text('Sila Cuba Lagi!!!')),
       );
     }
   }
