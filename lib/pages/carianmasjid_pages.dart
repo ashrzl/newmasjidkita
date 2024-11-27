@@ -1,18 +1,9 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:new_mk_v3/controller/carianmasjid_controller.dart';
 import 'package:new_mk_v3/pages/home_pages.dart';
 import 'package:new_mk_v3/pages/mosque_details.dart';
 import 'package:provider/provider.dart';
-
-/*
-* Project: MasjidKita Mobile App - V3
-* Description: Carian Masjid Page
-* Author: AIMAN SHARIZAL
-* Date: 21 November 20204
-* Version: 1.0
-* Additional Notes:
-* - Display List of tenants
-*/
 
 class CarianMasjid extends StatefulWidget {
   @override
@@ -21,7 +12,17 @@ class CarianMasjid extends StatefulWidget {
 
 class CarianMasjidState extends State<CarianMasjid> {
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+  Timer? _debounce; // Timer for debouncing input
   int _selectedIndex = 1;
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    _focusNode.dispose();
+    _debounce?.cancel();
+    super.dispose();
+  }
 
   void _onItemTapped(int index) {
     if (_selectedIndex == index) return; // Prevent redundant navigation
@@ -49,12 +50,23 @@ class CarianMasjidState extends State<CarianMasjid> {
         );
         break;
       case 2:
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => ProfilePage()), // Replace with your profile page
-        // );
+      // Implement Profile navigation here
         break;
     }
+  }
+
+  void _onSearchChanged(String value) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+
+    // Debounce API calls to avoid spamming requests
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      final provider = Provider.of<CarianMasjidController>(context, listen: false);
+      if (value.trim().isEmpty) {
+        provider.updateSearchText(value); // Local filtering
+      } else {
+        provider.fetchMosquesByKeyword(value); // Fetch from API
+      }
+    });
   }
 
   @override
@@ -93,12 +105,11 @@ class CarianMasjidState extends State<CarianMasjid> {
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Carian Masjid'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
         ],
-        currentIndex: _selectedIndex, // The currently selected index
+        currentIndex: _selectedIndex,
         selectedItemColor: Color(0xFF6B2572),
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
       ),
-
     );
   }
 
@@ -112,12 +123,8 @@ class CarianMasjidState extends State<CarianMasjid> {
             color: const Color(0xFF5C0065),
             child: TextField(
               controller: _searchController,
-              onChanged: (value) {
-                provider.updateSearchText(value); // Real-time local filtering
-              },
-              onSubmitted: (value) {
-                provider.fetchMosquesByKeyword(value); // Fetch from API
-              },
+              focusNode: _focusNode,
+              onChanged: _onSearchChanged, // Debounced search
               decoration: InputDecoration(
                 hintText: 'Carian Masjid',
                 prefixIcon: const Icon(Icons.search, color: Colors.grey),
@@ -136,15 +143,9 @@ class CarianMasjidState extends State<CarianMasjid> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Carian Masjid',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-                ),
+                Text('Carian Masjid', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
                 SizedBox(height: 20.0),
-                Text(
-                  'Jumlah Masjid Dijumpai: ${provider.filteredMosques.length}',
-                  style: TextStyle(fontSize: 16.0),
-                ),
+                Text('Jumlah Masjid Dijumpai: ${provider.filteredMosques.length}', style: TextStyle(fontSize: 16.0)),
                 SizedBox(height: 10.0),
                 Divider(thickness: 1, color: Colors.grey),
                 SizedBox(height: 20.0),
@@ -157,60 +158,47 @@ class CarianMasjidState extends State<CarianMasjid> {
                     final mosque = provider.filteredMosques[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Image.asset(
-                                mosque.mosLogoUrl.isNotEmpty == true
-                                    ? mosque.mosLogoUrl
-                                    : 'assets/icon/MasjidKITALogo.png', // Fallback image
-                                width: 60,
-                                height: 60,
-                                fit: BoxFit.cover,
-                              ),
-                              const SizedBox(width: 10), // Add spacing between image and ListTile
-                              Expanded(
-                                child: ListTile(
-                                  title: Text(
-                                    mosque.mosName,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis, // Prevent text overflow
-                                  ),
-                                  subtitle: Text(
-                                    mosque.address,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis, // Prevent text overflow
-                                  ),
-                                ),
-                              ),
-                              // Pin location icon
-                        IconButton(
-                          icon: Icon(Icons.location_on, color: Color(0xFF6B2572)),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MasjidDetails(mosque: mosque),
-                              ),
-                            );
-                          },
+                      child: ListTile(
+                        leading: Image.asset(
+                          mosque.mosLogoUrl.isNotEmpty
+                              ? mosque.mosLogoUrl
+                              : 'assets/icon/MasjidKITALogo.png', // Fallback image
+                          width: 60,
+                          height: 60,
+                          fit: BoxFit.cover,
                         ),
-                        // Heart icon
-                              IconButton(
-                                icon: Icon(Icons.favorite_border, color: Colors.red), // Heart icon
-                                onPressed: () {
-                                  // Implement functionality for heart click (e.g., mark as favorite)
-                                },
-                              ),
-                            ],
-                          ),
-                          const Divider( // Divider added below each result
-                            thickness: 1,
-                            color: Colors.grey,
-                          ),
-                        ],
+                        title: Text(
+                          mosque.mosName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        subtitle: Text(
+                          mosque.address,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.location_on, color: Color(0xFF6B2572)),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MasjidDetails(mosque: mosque),
+                                  ),
+                                );
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.favorite_border, color: Colors.red),
+                              onPressed: () {
+                                // Implement functionality for favorite
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -223,5 +211,4 @@ class CarianMasjidState extends State<CarianMasjid> {
       ),
     );
   }
-
 }

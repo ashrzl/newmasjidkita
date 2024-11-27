@@ -1,453 +1,283 @@
 {
     "data": [
         {
+            "count" : "1",
             "arab": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
             "malay": "Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat, dan lindungilah kami dari azab neraka.",
             "title": "Doa Mohon Kebaikan Dunia dan Akhirat",
             "source": "quran"
         },
         {
-            "arab": "رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْرًا وَثَبِّتْ أَقْدَامَنَا وَانْصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ",
-            "malay": "Ya Tuhan, limpahkanlah kesabaran atas diri kami, kukuhkanlah pendirian kami, serta tolonglah kami dalam mengalahkan orang-orang kafir.",
-            "title": "Doa Tabah Menghadapi Lawan",
-            "source": "quran"
-        },
-        {
-            "arab": "رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِنْ لَدُنْكَ رَحْمَةً ۚ إِنَّكَ أَنْتَ الْوَهَّابُ",
-            "malay": "Ya Tuhan, janganlah Engkau jadikan hati kami condong kepada kesesatan sesudah Engkau berikan petunjuk kepada kami, dan karuniakanlah kepada kami rahmat dari sisiMu. Sungguh hanya Engkaulah Yang Maha Pemberi karunia.",
-            "title": "Doa Diberi Keteguhan Iman",
-            "source": "quran"
-        },
-        {
+            "count" : "2",
             "arab": "رَبَّنَآ إِنَّنَآ ءَامَنَّا فَٱغْفِرْ لَنَا ذُنُوبَنَا وَقِنَا عَذَابَ ٱلنَّارِ",
             "malay": "Ya Allah, sungguh kami telah beriman, maka ampunilah segala dosa kami dan selamatkanlah kami dari siksa neraka.",
             "title": "Doa Kekuatan Iman",
             "source": "quran"
         },
         {
+            "count" : "3",
             "arab": "رَّبَّنَآ إِنَّنَا سَمِعْنَا مُنَادِيًا يُنَادِى لِلْإِيمَٰنِ أَنْ ءَامِنُوا۟ بِرَبِّكُمْ فَـَٔامَنَّا ۚ رَبَّنَا فَٱغْفِرْ لَنَا ذُنُوبَنَا وَكَفِّرْ عَنَّا سَيِّـَٔاتِنَا وَتَوَفَّنَا مَعَ ٱلْأَبْرَارِ • رَبَّنَا وَءَاتِنَا مَا وَعَدتَّنَا عَلَىٰ رُسُلِكَ وَلَا تُخْزِنَا يَوْمَ ٱلْقِيَٰمَةِ ۗ إِنَّكَ لَا تُخْلِفُ ٱلْمِيعَادَ",
             "malay": "Ya Tuhan kami, sesungguhnya kami mendengar (seruan) yang menyeru kepada iman, (yaitu): \"Berimanlah kamu kepada Tuhanmu\", maka kamipun beriman. Ya Tuhan kami, ampunilah bagi kami dosa-dosa kami dan hapuskanlah dari kami kesalahan-kesalahan kami, dan wafatkanlah kami beserta orang-orang yang banyak berbakti. Ya Tuhan kami, berilah kami apa yang telah Engkau janjikan kepada kami dengan perantaraan rasul-rasul Engkau. Dan janganlah Engkau hinakan kami di hari kiamat. Sesungguhnya Engkau tidak menyalahi janji.",
-            "title": "Doa Husnul Khatimah",
+            "title": "Doa Husnul Khotimah",
             "source": "quran"
         },
         {
-            "arab": "رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ",
-            "malay": "Wahai Tuhan kami, kami telah berlaku dzalim pada diri kami. Jika Engkau tidak mengampuni kami dan mengasihi kami, niscaya kami termasuk orang-orang yang rugi.",
-            "title": "Doa Penyesalan ( Istighfar Nabi Adam )",
-            "source": "quran"
-        },
-        {
+            "count" : "4",
             "arab": "رَبَّنَا لَا تَجْعَلْنَا مَعَ الْقَوْمِ الظّٰلِمِيْنَ",
             "malay": "Ya Tuhan, janganlah Engkau \r\ntempatkan kami bersama-sama dengan orang-orang zhalim.",
             "title": "Doa Mohon Perlindungan dari Api Neraka",
             "source": "quran"
         },
         {
-            "arab": "رَبَّنَا لَا تَجْعَلْنَا فِتْنَةً لِّلْقَوْمِ ٱلظَّٰلِمِينَ • وَنَجِّنَا بِرَحْمَتِكَ مِنَ ٱلْقَوْمِ ٱلْكَٰفِرِينَ",
-            "malay": "Ya Tuhan, janganlah Engkau \r\njadikan kami sasaran fitnah bagi kaum yang \r\nzhalim, dan selamatkanlah kami dengan curahan \r\nrahmat-Mu dari tipu daya orang- orang yang \r\nkafir.",
-            "title": "Doa Mohon Keselamatan",
-            "source": "quran"
-        },
-        {
+            "count" : "5",
             "arab": "رَبِّ إِنِّىٓ أَعُوذُ بِكَ أَنْ أَسْـَٔلَكَ مَا لَيْسَ لِى بِهِۦ عِلْمٌ ۖ وَإِلَّا تَغْفِرْ لِى وَتَرْحَمْنِىٓ أَكُن مِّنَ ٱلْخَٰسِرِينَ",
             "malay": "Ya Tuhanku, sesungguhnya aku berlindung kepada Engkau dan memohon kepada Engkau sesuatu yang aku tiada mengetahui (hakikat)nya. Dan sekiranya Engkau tidak memberi ampun kepadaku, dan (tidak) menaruh belas kasihan kepadaku, niscaya aku akan termasuk orang-orang yang merugi.",
             "title": "Doa Mohon Perlindungan",
             "source": "quran"
         },
         {
+            "count" : "6",
             "arab": "رَبَّنَا اغْفِرْ لِي وَلِوَالِدَيَّ وَلِلْمُؤْمِنِينَ يَوْمَ يَقُومُ الْحِسَابُ",
             "malay": "Wahai Tuhanku, ampunilah aku dan kedua orangtuaku serta orang-orang mukmin pada hari perhitungan amal di akhirat.",
             "title": "Doa Memohon Keampunan",
             "source": "quran"
         },
         {
+            "count" : "7",
             "arab": "رَبَّنَآ اٰتِنَا مِنْ لَّدُنْكَ رَحْمَةً وَّهَيِّئْ لَنَا مِنْ اَمْرِنَا رَشَدًا",
             "malay": "Ya Tuhan kami, berikanlah rahmat kepada kami dari sisi -Mu dan sempurnakanlah bagi kami petunjuk yang lurus dalam urusan kami ini.",
             "title": "Doa Mohon diberi Kemudahan",
             "source": "quran"
         },
         {
+            "count" : "8",
             "arab": "رَبِّ اشْرَحْ لِيْ صَدْرِيْ ۙ • وَيَسِّرْ لِيْٓ اَمْرِيْ ۙ • وَاحْلُلْ عُقْدَةً مِّنْ لِّسَانِيْ ۙ • يَفْقَهُوْا قَوْلِيْ",
             "malay": "Wahai Tuhanku, lapangkanlah dadaku, mudahkanlah untukku urusanku, dan lepaskanlah kekakuan dari lidahku, agar mereka mengerti perkataanku.",
             "title": "Doa Kelapangan Hati",
             "source": "quran"
         },
         {
-            "arab": "رَبِّ لَا تَذَرْنِيْ فَرْدًا وَ أَنْتَ خَيْرُ الْوَارِثِيْنَ • رَبِّ هَبْ لِيْ مِنْ لَّدُنْكَ ذُرِّيَّةً طَيِّبَةًۚ اِنَّكَ سَمِيْعُ الدُّعَاۤءِ",
-            "malay": "Ya Tuhanku, janganlah Engkau biarkan aku hidup seorang diri (tanpa keturunan) dan Engkaulah ahli waris yang terbaik • Ya Tuhanku, berilah aku keturunan yang baik dari sisi-Mu, sesungguhnya Engkau Maha Mendengar doa.",
-            "title": "Doa Mohon Jodoh dan Keturunan yang Baik",
-            "source": "quran"
-        },
-        {
+            "count" : "9",
             "arab": "رَبِّ أَعُوذُ بِكَ مِنْ هَمَزَاتِ الشَّيَاطِينِ • وَأَعُوذُ بِكَ رَبِّ أَنْ يَحْضُرُونِ",
             "malay": "Ya Tuhanku aku berlindung kepada Engkau dari bisikan-bisikan syaitan • Dan aku berlindung (pula) kepada Engkau ya Tuhanku, dari kedatangan mereka kepadaku",
             "title": "Doa Terhindar dari Godaan Syaitan",
             "source": "quran"
         },
         {
-            "arab": "رَبَّنَا اصْرِفْ عَنَّا عَذَابَ جَهَنَّمَ ۖ اِنَّ عَذَابَهَا كَانَ غَرَامًا",
-            "malay": "Ya Tuhan kami, jauhkanlah azab Jahanam dari kami, sungguh azab itu adalah kebinasaan yang kekal.",
-            "title": "Doa Mohon Perlindungan dari Azab Neraka Jahannam",
-            "source": "quran"
-        },
-        {
-            "arab": "رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ الَّتِي أَنْعَمْتَ عَلَيَّ وَعَلَى وَالِدَيَّ وَأَنْ أَعْمَلَ صَالِحًا تَرْضَاهُ وَأَصْلِحْ لِي فِي ذُرِّيَّتِي إِنِّي تُبْتُ إِلَيْكَ وَإِنِّي مِنَ الْمُسْلِمِينَ",
-            "malay": "Ya Tuhanku berilah aku ilham untuk tetap mensyukuri nikmat-Mu yang telah Engkau anugerahkan kepadaku dan kepada dua orang ibu bapakku dan untuk mengerjakan amal saleh yang Engkau ridai; dan masukkanlah aku dengan rahmat-Mu ke dalam golongan hamba-hamba-Mu yang saleh.",
-            "title": "Doa Mensyukuri Ni'mat",
-            "source": "quran"
-        },
-        {
+            "count" : "10",
             "arab": "رَبَّنَا وَسِعْتَ كُلَّ شَيْءٍ رَّحْمَةً وَّعِلْمًا فَاغْفِرْ لِلَّذِيْنَ تَابُوْا وَاتَّبَعُوْا سَبِيْلَكَ وَقِهِمْ عَذَابَ الْجَحِيْمِ • رَبَّنَا وَاَدْخِلْهُمْ جَنّٰتِ عَدْنِ ِۨالَّتِيْ وَعَدْتَّهُمْ وَمَنْ صَلَحَ مِنْ اٰبَاۤىِٕهِمْ وَاَزْوَاجِهِمْ وَذُرِّيّٰتِهِمْ ۗاِنَّكَ اَنْتَ الْعَزِيْزُ الْحَكِيْمُۙ",
             "malay": "Ya Tuhan kami, rahmat dan ilmu yang ada pada-Mu meliputi segala sesuatu, maka berilah ampunan kepada orang-orang yang bertobat dan mengikuti jalan (agama)-Mu dan peliharalah mereka dari azab neraka yang menyala-nyala. Ya Tuhan kami, masukkanlah mereka ke dalam surga ‘Adn yang telah Engkau janjikan kepada mereka, dan orang yang saleh di antara nenek moyang mereka, istri-istri, dan keturunan mereka. Sungguh, Engkaulah Yang Mahaperkasa, Mahabijaksana.",
             "title": "Doa Mohon Keluasan Rahmat",
             "source": "quran"
         },
         {
-            "arab": "رَّبَّنَا عَلَيْكَ تَوَكَّلْنَا وَإِلَيْكَ أَنَبْنَا وَإِلَيْكَ ٱلْمَصِيرُ رَبَّنَا لَا تَجْعَلْنَا فِتْنَةً لِّلَّذِينَ كَفَرُوا۟ وَٱغْفِرْ لَنَا رَبَّنَآ ۖ إِنَّكَ أَنتَ ٱلْعَزِيزُ ٱلْحَكِيمُ",
-            "malay": "Ya Tuhan kami, hanya kepada Engkaulah kami bertawakal, hanya kepada Engkaulah kami bertaubat, dan hanya kepada Engkaulah kami kembali. Ya Tuhan kami, janganlah Engkau jadikan kami sasaran fitnah bagi orang-orang kafir. Ya Tuhan kami, ampunilah dosa-dosa kami. Sungguh hanya Engkau Yang Maha Perkasa lagi Maha Bijaksana.",
-            "title": "Doa Bertawakkal Kepada Allah",
-            "source": "quran"
-        },
-        {
+            "count" : "11",
             "arab": "رَبَّنَآ اَخْرِجْنَا مِنْ هٰذِهِ الْقَرْيَةِ الظَّالِمِ اَهْلُهَاۚ وَاجْعَلْ لَّنَا مِنْ لَّدُنْكَ وَلِيًّاۚ وَاجْعَلْ لَّنَا مِنْ لَّدُنْكَ نَصِيْرًا",
             "malay": "Ya Tuhan kami, keluarkanlah kami dari negeri ini (Mekah) yang penduduknya zalim. Berilah kami pelindung dari sisi-Mu, dan berilah kami penolong dari sisi-Mu.",
             "title": "Doa Mohon Perlindungan dari Orang-orang Zalim",
             "source": "quran"
         },
         {
+            "count" : "12",
             "arab": "اللّٰهُمَّ رَبَّنَآ اَنْزِلْ عَلَيْنَا مَاۤىِٕدَةً مِّنَ السَّمَاۤءِ تَكُوْنُ لَنَا عِيْدًا لِّاَوَّلِنَا وَاٰخِرِنَا وَاٰيَةً مِّنْكَ وَارْزُقْنَا وَاَنْتَ خَيْرُ الرّٰزِقِيْنَ",
             "malay": "Ya Allah Tuhan kami, turunkanlah kepada kami hidangan dari langit (yang hari turunnya) akan menjadi hari raya bagi kami, yaitu bagi orang-orang yang sekarang bersama kami maupun yang datang setelah kami, dan menjadi tanda bagi kekuasaan-Mu. Berilah kami rezeki. Engkaulah sebaik-baik pemberi rezeki.",
             "title": "Doa Mohon Rezeki",
             "source": "quran"
         },
         {
+            "count" : "13",
             "arab": "رَبِّ أَنْزِلْنِي مُنْزَلًا مُبَارَكًا وَأَنْتَ خَيْرُ الْمُنْزِلِينَ",
             "malay": "Ya Tuhanku, tempatkanlah aku pada tempat yang diberkati, dan Engkau adalah sebaik-baik Yang memberi tempat.",
             "title": "Doa Agar Diberi Kedudukan yang Mulia",
             "source": "quran"
         },
         {
+            "count" : "14",
             "arab": "رَبِّ هَبْ لِى حُكْمًا وَأَلْحِقْنِى بِٱلصَّٰلِحِينَ وَٱجْعَل لِّى لِسَانَ صِدْقٍ فِى ٱلْءَاخِرِينَ وَٱجْعَلْنِى مِن وَرَثَةِ جَنَّةِ ٱلنَّعِيمِ",
             "malay": "Ya Tuhanku, berikanlah kepadaku hikmah dan pertemukanlah aku dengan orang-orang yang shalih, serta jadikanlah aku buah tutur yang baik bagi orang yang datang kemudian. Dan jadikanlah aku termasuk golongan orang-orang yang mewarisi sorga yang penuh nikmat.",
             "title": "Doa Agar Diberi Hikmah",
             "source": "quran"
         },
         {
-            "arab": "رَّبِّ ٱغْفِرْ لِى وَلِوَٰلِدَىَّ وَلِمَن دَخَلَ بَيْتِىَ مُؤْمِنًا وَلِلْمُؤْمِنِينَ وَٱلْمُؤْمِنَٰتِ وَلَا تَزِدِ ٱلظَّٰلِمِينَ إِلَّا تَبَارًۢا",
-            "malay": "Ya Tuhanku, ampunilah dosa- dosaku dan dosa kedua ibu-bapakku, serta dosa orang yang masuk ke rumahku dengan membawa iman, dan orang beriman laki-laki maupun perempuan. Dan janganlah Engkau tambahkan bagi orang-orang yang zalim itu selain kebinasaan.",
-            "title": "Doa Agar Terhindar dari orang-orang Zhalim",
-            "source": "quran"
-        },
-        {
+            "count" : "15",
             "arab": "لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ",
             "malay": "Tidak ada tuhan selain Engkau, Maha Suci Engkau. Sungguh, aku termasuk orang-orang yang zalim.",
             "title": "Doa Agar Terlepas dari Kesulitan / Istigfar \r\nNabi Yunus",
             "source": "quran"
         },
         {
+            "count" : "16",
             "arab": "اَللَّهُمَّ اِغْفِرْ لِي مَا قَدَّمْتُ وَمَا أَخَّرْتُ وَمَا أَسْرَرْتُ وَمَا أَعْلَنْتُ وَمَا أَنْتَ أَعْلَمُ بِهِ مِنِّي",
             "malay": "Ya Allah, ampunilah kesalahan, \r\nkebodohan dan keterlaluanku dalam segala \r\nurusan, dan ampuni pula segala dosa yang \r\nEngkau lebih mengetahui daripada aku.",
             "title": "Doa Mohon Diampunkan Dosa",
             "source": "hadits"
         },
         {
+            "count" : "17",
             "arab": "اللَّهُمَّ أصْلِحْ لِي دِيْنِيَ الَّذِي هُوَ عِصْمَةُ أَمْرِي ، وَأَصْلِحْ لِي دُنْيَايَ الَّتِي فِيهَا مَعَاشِي ، وَأَصْلِحْ لِي آخِرتِي الَّتي فِيهَا مَعَادِي ، وَاجْعَلِ الحَيَاةَ زِيَادَةً لِي فِي كُلِّ خَيْرٍ ، وَاجْعَلِ المَوتَ رَاحَةً لِي مِنْ كُلِّ شَرٍّ",
             "malay": "Ya Allah, perbaikilah urusan \r\nagamaku yang menjadi pegangan bagi setiap \r\nurusanku. Perbaikilah duniaku yang di situlah \r\nurusan kehidupanku. Perbaikilah akhiratku yang \r\nke sanalah aku akan kembali. Jadikanlah hidupku \r\nini sebagai tambahan kesempatan untuk \r\nmemperbanyak amal kebajikan, dan jadikanlah\r\nkematianku sebagai tempat peristirahatan dari \r\nsetiap kejahatan.",
             "title": "Doa Kebaikan Dunia Akhirat",
             "source": "hadits"
         },
         {
+            "count" : "18",
             "arab": "اَللَّهُمَّ اِنِّى اَسْأَلُكَ رَحمَةً مِنْ عِنْدِكَ تُهْدِى بِهَا قلْبِى، وَتَجْمَعُ بِها شَمْلِى. وَتَرُدَّ بِهَا الْفِتْنَ عَنِّى وَتُصْلِحُ بِهَا دِيْنِى وَتَحْفَظُ بِها غَائِبِى وَتَرْفَعُ بِهَا شَاهِدِى وَتُزَكِّى بِهَا عَمَلِى.ضُ بِهَا وَجْهِى وَتُلْهِمُنِى بِهَا رُشْدِى وَتُبَيِّ وَتُعْصِمُنِى بِهَا مِنْ كُلِّ سُوْءٍ",
             "malay": "Ya Allah, aku memohon kepada-\r\nMu curahan rahmat dari sisi-Mu, yang \r\ndengannya hatiku mendapat petunjuk, \r\nterkumpul segala yang bercerai-berai dan \r\nterhimpun segala yang terpisah-pisah, tertolak \r\nsegala fitnah atas diriku dan bertambah baik \r\nurusan agamaku, terpelihara segala sesuatu \r\nyang jauh dariku dan terangkat apa yang dekat \r\ndenganku, disucikan segala perbuatanku dan \r\ndicerahkan wajahku, diberi ilham menuju \r\npetunjuk dan terpelihara diriku dari segala \r\nsesuatu yang jelek.",
             "title": "Doa Mohon Petunjuk Allah",
             "source": "hadits"
         },
         {
-            "arab": "اللَّهُمَّ إِنِّي ظَلَمتُ نَفْسِي ظُلْمًا كَثِيرًا، وَلاَ يَغْفِرُ الذُّنُوبَ إِلاَّ أنْتَ، فَاغْفِرْ لي مَغْفِرَةً مِنْ عِنْدِكَ، وارْحَمْنِي، إنَّكَ أنْتَ الغَفُورُ الرَّحِيمُ",
-            "malay": "Ya Allah, aku telah banyak \r\nberbuat zhalim terhadap diriku sendiri, dan \r\ntidak ada yang dapat mengampuni dosa kecuali \r\nEngkau, maka curahkanlah ampunan dan belas \r\nkasih kepadaku dari sisi-Mu. Sungguh Engkau \r\nMaha Pengampun lagi Maha Penyayang.",
-            "title": "Doa Mohon Rahmat dan Keampunan",
-            "source": "hadits"
-        },
-        {
-            "arab": "اَللَّهُمَّ أَنْتَ رَبِّيْ لاَ إِلَـهَ إِلاَّ أَنْتَ، خَلَقْتَنِيْ وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوْذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوْءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوْءُ بِذَنْبِيْ فَاغْفِرْ لِيْ فَإِنَّهُ لاَ يَغْفِرُ الذُّنُوْبَ إِلاَّ أَنْتَ",
-            "malay": "Ya Allah, Engkau adalah \r\nTuhanku, tiada Tuhan yang layak \r\ndisembah melainkan Engkau, yang telah menciptakan diriku.\nAku adalah hamba-Mu, dan aku berada dalam perintah dan perjanjian-Mu, \r\nyang dengan segala kemampuanku perintah-Mu \r\naku laksanakan. Aku berlindung kepada-Mu \r\ndari segala kejelekan yang aku perbuat terhadap-\r\nMu. Engkau telah mencurahkan nikmat-Mu \r\nkepadaku, sementara aku senantiasa berbuat \r\ndosa. Maka ampunilah dosa-dosaku. Sebab tidak \r\nada yang dapat mengampuni dosa kecuali \r\nEngkau.",
-            "title": "Doa Sayyidul Istighfar",
-            "source": "hadits"
-        },
-        {
-            "arab": "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لَا إِلَهَ إِلَّا أَنْتَ",
-            "malay": "Ya Allah, berilah kesehatan \r\npada badanku. Ya Allah, berilah kesehatan pada \r\npendengaranku. Ya Allah, berilah kesehatan \r\npada penglihatanku. Tidak ada Tuhan yang pantas disembah \r\nkecuali Engkau.",
-            "title": "Doa Kesehatan Zahir dan Batin",
-            "source": "hadits"
-        },
-        {
-            "arab": "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي",
-            "malay": "Ya Allah, sesungguhnya Engkau Maha Pemaaf, dan Engkau suka memberi maaf, maka maafkan aku.",
-            "title": "Doa Lailatul Qadar",
-            "source": "hadits"
-        },
-        {
+            "count" : "19",
             "arab": "اَللَّهُمَّ اِنَّا نَسْأَلُكَ مِنْ كُلِّ خَيْرٍ مَا سَأَلَكَ مِنْه نَبِيُّكَ مُحَمَّدٌ، وَنعَوْذُبِكَ مِنْ كُلِّ شَرٍّ مَااسْتَعَاذَكَ مِنْه نَبِيُّكَ مُحَمَّدٌ .وَاَنْتَ الْمُسْتَعَانُ وَعَلَيْكَ الْبَلاَغ وَلاَحَوْلَ ولَا قَوَّة اِلا بِاللهِ",
             "malay": "Ya Allah, aku memohon \r\nkepada-Mu segala kebajikan sebagaimana yang \r\ndimohon oleh nabi-Mu Muhamad. Dan aku \r\nberlindung kepada-Mu dari segala kejelekan \r\nsebagajmana yang nabi-Mu Muhamad mohon \r\nperlindungan. Engkaulah Yang Maha Pemberi \r\nPertolongan, dan kepada-Mulah puncak segala \r\npengharapan. Tiada daya upaya untuk \r\nmeninggalkan ma'siat dan tiada kekuatan untuk\r\nmelakukan ibadah kecuali atas pertolongan \r\nAllah.",
             "title": "Doa Berlindung dari Keburukan",
             "source": "hadits"
         },
         {
-            "arab": "اَللَّهُمَّ اِنِّى اَسْأَلُكَ الثَّبَاتَ فِى الاَمْرِ وَاَسْأَلُكَ الْعَزِيْمَة فِى الرُّشْدِ. وَاَسْأَلُكَ شُكْرَ نِعْمَتِكَ وَحُسْنَ عِبَادَتِكَ وَاَسْأَلُكَ لِسَانًا صَادِقًا وَقَلْبًا سَلِيْمًا وَاَعُوْذُبِكَ مِنْ شَرِّ مَا تَعْلَمُ وَاَسْأَلُكَ مِنْ خَيْرِ مَا تَعْلَمُ، وَاَسْتَغْفِرُكَ مِمَّا تَعْلَمُ اِنَّكَ اَنْتَ عَلاَّمُ الْغُيُوْبِ",
-            "malay": "Ya Allah, aku memohon \r\nkepada-Mu ketegaran dalam menghadapi segala \r\npermasalahan. Aku memohon dengan sangat \r\nkepada-Mu untuk berkenan memberikan \r\ncurahan petunjuk, serta aku memohon kepada-\r\nMu dapat mensyukuri nikmat dan rajin \r\nmelakukan ibadah. Aku mernohon kepada-Mu \r\nlisan yang jujur dan hati yang lurus. Aku \r\nberlindung kepada-Mu dari kejelekan yang \r\nEngkau ketahui, dan aku memohon kepada-Mu \r\nkebaikan yang Engkau ketahui, serta aku \r\nmemohon kepada-Mu curahan ampunan dari \r\nsegala dosa yang Engkau ketahui. Sebab hanya \r\nEngkaulah Yang Maha Mengetahui segala yang \r\nghaib.",
-            "title": "Doa Teguh Pendirian",
-            "source": "hadits"
-        },
-        {
+            "count" : "20",
             "arab": "اَللَّهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍعَدَدَ اَنْوَاعِ الرِّزْقِ وَالْفُتُوْحَاتِ، بَابَاسِطَ الَّذِيْ يبَْسُطُ الرِّزْقَ لِمَنْ يَشَآء بِغَيْرِحِسَابٍ اُبْسُطْ عَلَي رِزْقًا كَثِيْرًا مِنْ كُلِّ جِهَةٍ مِنْ خَزَائِنِ رِزْقِكَ بِغَيْرمِنَّةٍ مَخْلُوْقٍ بِفَضْلِكَ وَكَرَمِكَ وَعَلَى اَلِهِ وَصَحْبِهِ وَسَلَّمَ",
             "malay": "Wahai Allah limpahkanlah \r\nrahmat atas junjungan kita Nabi Muhammad \r\nSaw; sebanyak aneka rupa rizqi. Wahai Dzat \r\nYang Maha Meluaskan rizqi kepada orang yang \r\ndikehendaki-Nya tanpa hisab. Luaskan dan \r\nbanyakanlah rizqiku dari segenap setiap penjuru \r\ndan perbendaharaan rizqi-Mu tanpa pemberian \r\ndari makhluk, berkat kemurahan-Mu jua. Dan \r\nlimpahkanlah pula rahmat dan salam atas dan \r\npara sahabat beliau.",
             "title": "Doa Pembuka Rezeki dari Setiap Penjuru",
             "source": "pilihan"
         },
         {
+            "count" : "21",
             "arab": "اَللَّهُمَّ يَاغَنِيُّ يَاحمِيْدُ يَامُبْدِئُ يَامُعِيْدُ يَارَحِيْمُ يَاوَدُوْدُ اَغْنِنِى بِحَلاَلِكَ عَنْ حَرَامِكَ وَاكْفِنِى بِفَضْلِكَ عَمَّنْ سِوَاكَ وَصَلَّى اللهُ عَلَى مُحَمَّدٍ وَاَلِهِ وَصَحْبِهِ وَسَلَّمَ",
             "malay": "Wahai Allah, wahai Dzat Yang \r\nMaha Kaya, wahai Dzat Yang Maha Terpuji, \r\nwahai Dzat Yang memulai, wahai Dzat Yang Mengembalikan, wahai Dzat Yang Maha \r\nPenyayang, wahai Dzat Yang Maha Mencintai. \r\nCukupilah kami dengan kehalalan-Mu dari \r\nkeharaman-Mu. Cukupilah kami dengan \r\nanugerah-Mu dari selain Engkau. Semoga Allah \r\nmelimpahkan rahmat dan salam atas junjungan \r\nkita Nabi Muhammad Saw. keluarga dan \r\nsahabat beliau.",
             "title": "Doa untuk Mendapatkan Rezeki yang Halal",
             "source": "pilihan"
         },
         {
-            "arab": "اللَّهُمَّ رَبَّ النَّاسِ مُذْهِبَ الْبَاسِ اشْفِ أَنْتَ الشَّافِى لاَ شَافِىَ إِلاَّ أَنْتَ ، شِفَاءً لاَ يُغَادِرُ سَقَمًا",
-            "malay": "Ya Allah Wahai Tuhan segala manusia, hilangkanlah penyakitnya, sembukanlah ia. (Hanya) Engkaulah yang dapat menyembuhkannya, tidak ada kesembuhan melainkan kesembuhan dariMu, kesembuhan yang tidak kambuh lagi.",
-            "title": "Doa Menjenguk Orang Sakit",
-            "source": "pilihan"
-        },
-        {
+            "count" : "22",
             "arab": "اللَّهُمَّ إنِّي أسْألُكَ مُوجِبَاتِ رَحْمَتِكَ، وَعَزَائِمَ مَغْفِرَتِكَ، والسَّلامَةَ مِنْ كُلِّ إثْمٍ، والغَنِيمَةَ مِنْ كُلِّ بِرٍّ ، والفَوْزَ بالجَنَّةِ ، والنَّجَاةَ مِنَ النَّارِ",
             "malay": "Ya Allah aku mohon kepada-\r\nMu segala hal yang mendatangkan rahmat-Mu \r\ndan keteguhan ampunan-Mu selamat dari segala dosa dan beruntung dengan mendapat berbagai \r\nkebaikan, beruntung memperoleh surge, \r\nterhindar dari siksa neraka.",
             "title": "Doa Mohon Rahmat dan Keampunan",
             "source": "pilihan"
         },
         {
+            "count" : "23",
             "arab": "اَلْحَمْدُ ِللهِ الَّذِى أَحْيَانَا بَعْدَمَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ",
             "malay": "Segala puji bagi Allah yang menghidupkan kami kembali setelah mematikan kami dan kepada Allah kami akan dibangkitkan.",
             "title": "Doa Ketika Bangun Tidur",
             "source": "harian"
         },
         {
-            "arab": "اَلْحَمْدُ ِللهِ الَّذِيْ قَطْلَ الْحَاجَتِ",
-            "malay": "Segala puji bagi Allah yang telah memberi hajatku",
-            "title": "Doa Ketika Mimpi Baik",
-            "source": "harian"
-        },
-        {
-            "arab": "أَللَّهُمَّ إِنِّى أَعُوْذُ بِكَ مِنْ عَمَلِ الشَّيْطَان وَسَيِّئاَتِ اْلأَحْلاَمِ",
-            "malay": "Ya Allah, sesungguhnya aku berlindung kepada-Mu dari perbuatan setan dan dari mimpi-mimpi buruk.",
-            "title": "Doa Ketika Mimpi Buruk",
-            "source": "harian"
-        },
-        {
+            "count" : "24",
             "arab": "اللَّهُمَّ إِنِّى أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِث",
             "malay": "Ya Allah, sesungguhnya aku berlindung kepada-Mu dari setan-setan lelaki dan setan-setan perempuan.",
             "title": "Doa Masuk Tandas",
             "source": "harian"
         },
         {
+            "count" : "25",
             "arab": "الْحَمْدُ الِلّٰهِ الَّذِىْ اَذْهَبَ عَنِّى اْلاَذَى وَعَافَانِىْ",
             "malay": "Segala puji milik Allah yang telah menghilangkan kotoran dari badanku dan yang telah menyejahterakan.",
             "title": "Doa Keluar Tandas",
             "source": "harian"
         },
         {
-            "arab": "اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ خَيْرِهِ وَخَيْرِ مَا هُوَ لَهُ ، وَأَعُوْذُ بِكَ مِنْ شَرِّهِ وَشَرِّ مَا هُوَ لَهُ",
-            "malay": "Ya Allah, Sesungguhnya aku memohon kepada-Mu kebaikan pakaian ini dan kebaikan sesuatu yang di dalamnya, dan aku berlindung kepada-Mu dari keburukan pakaian ini dan keburukan sesuatu yang ada di dalamnya.",
-            "title": "Doa Hendak Berpakaian",
-            "source": "harian"
-        },
-        {
-            "arab": "اَللّٰهُمَّ كَمَا حَسَّـنْتَ خَلْقِـيْ فَحَسِّـنْ خُلُقِـيْ",
-            "malay": "Ya Allah sebagaimana Engkau telah ciptakan aku dengan baik, maka perbaikilah akhlakku.",
-            "title": "Doa Ketika Bercermin",
-            "source": "harian"
-        },
-        {
+            "count" : "26",
             "arab": "اللَّهُمَّ بارِكْ لَنا فِيما رَزَقْتَنا وَقِنا عَذَابَ النَّارِ",
             "malay": "Ya Allah berkatilah rezeki yang telah kau limpahkan pada kami, dan peliharalah kami dari azab api neraka.",
             "title": "Doa Sebelum Makan",
             "source": "harian"
         },
         {
+            "count" : "27",
             "arab": "اَلْحَمْدُ ِللهِ الَّذِيْنَ اَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مِنَ الْمُسْلِمِيْنَ",
             "malay": "Segala puji bagi Allah yang telah memberi kami makan dan minum serta menjadikan kami termasuk golongan orang muslim.",
-            "title": "Doa Sesudah Makan",
+            "title": "Doa Selepas Makan",
             "source": "harian"
         },
         {
+            "count" : "28",
             "arab": "اَللّٰهُمَّ هَوِّنْ عَلَيْنَا سَفَرَنَا هَذَا وَاطْوِعَنَّابُعْدَهُ اَللّٰهُمَّ اَنْتَ الصَّاحِبُ فِى السَّفَرِوَالْخَلِيْفَةُفِى الْاَهْلِ",
             "malay": "Ya Allah, mudahkanlah kami  perjalanan ini, dan dekatkanlah kejauhannya. Ya Allah yang menemani dalam setiap perjalanan, dan Engkau pula yang melindungi keluarga.",
             "title": "Doa Selamat Perjalanan",
             "source": "harian"
         },
         {
+            "count" : "29",
             "arab": "سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنقَلِبُونَ",
-            "malay": "Maha Suci Rabb yang menundukkan kendaraan ini untuk kami, padahal kami sebelumnya tidak mampu menguasainya. Dan sesungguhnya kami akan kembali kepada Robb kami (di hari kiamat).",
-            "title": "Doa Naik Kendaraan Darat",
+            "malay": "Maha Suci Rabb yang menundukkan kenderaan ini untuk kami, padahal kami sebelumnya tidak mampu menguasainya. Dan sesungguhnya kami akan kembali kepada mu Ya Allah (di hari kiamat).",
+            "title": "Doa Naik Kenderaan",
             "source": "harian"
         },
         {
-            "arab": "بِسْمِ اللهِ مَجْرَهَا وَمُرْسَهَآاِنَّ رَبِّىْ لَغَفُوْرٌرَّحِيْمٌ",
-            "malay": "Dengan nama Allah yang menjalankan kendaraan ini berlayar dan berlabuh. Sesungguhnya Tuhanku benar-benar Maha Pengampun lagi Maha Penyayang.",
-            "title": "Doa Naik Kendaraan Laut",
-            "source": "harian"
-        },
-        {
+            "count" : "30",
             "arab": "اَلْحَمْدُ ِللهِ الَّذِى سَلَمَنِى وَالَّذِى اَوَنِى وَالَّذِى جَمَعَ الشَّمْلَ بِئ",
             "malay": "Segala puji bagi Allah, yang telah menyelamatkan akau dan yang telah melindungiku dan yang mengumpulkanku dengan keluargaku.",
             "title": "Doa Tiba Didestinasi",
             "source": "harian"
         },
         {
-            "arab": "بِسْمِ اللهِ الَّذِيْ لاَ إِلَهَ إِلَّا هُوَ",
-            "malay": "Dengan nama Allah yang tiada Tuhan selain-Nya.",
-            "title": "Doa Melepas Pakaian",
-            "source": "harian"
-        },
-        {
+            "count" : "31",
             "arab": "بِاسْمِكَ اللهُمَّ أَحْيَا وَأَمُوْتُ",
             "malay": "Dengan menyebut nama-Mu, Ya Allah, aku hidup dan dengan menyebut nama-Mu aku mati.",
             "title": "Doa Sebelum Tidur",
             "source": "harian"
         },
         {
-            "arab": "أَعُوْذً بِكَلِمَاتِ اللهِ تَامَّةِ مِنْ غَضَبِهِ وَمِنْ شَرِّ عِبَادِهِ وَمِنْ هَمَزَاتِ الشَّيَاطِيْنِ وَأَنْ يَحْضُرُوْنَ",
-            "malay": "Aku berlindung dengan kalimah Allah yang sempurna dari kemarahan Allah dari kejahatan hamba-hamba-Nya dan dari gangguan setan dan dari kehadiran mereka.",
-            "title": "Doa Terkejut Bangun Dari Tidur",
-            "source": "harian"
-        },
-        {
-            "arab": "اَللَّهُمَّ إِنِّيْ أَعُوْذُ بِكَ مِنْ ضِيْقِ الدُّنْيَا وَضِيْقِ يَوْمِ اْلقِيَامَةِ",
-            "malay": "Ya Allah, sesungguhnya aku berlindung kepada-Mu dari kesempitan dunia dan kesempitan hari kiamat.",
-            "title": "Doa Menjelang Solat Subuh",
-            "source": "harian"
-        },
-        {
+            "count" : "32",
             "arab": "اللَّهُمَّ إنِّي أَسْأَلُكَ عِلْماً نَافِعاً، وَرِزْقاً طَيِّباً، وَعَمَلاً مُتَقَبَّلاً",
             "malay": "Ya Allah, Sesungguhnya aku memohon kepada-Mu ilmu yang bermanfaat, rezeki yang baik dan amalan yang diterima.",
             "title": "Doa Mohon Ilmu yang Bermanfaat",
             "source": "harian"
         },
         {
+            "count" : "33",
             "arab": "اَللهُمَّ اِنّىْ اَسْأَلُكَ خَيْرَالْمَوْلِجِ وَخَيْرَالْمَخْرَجِ بِسْمِ اللهِ وَلَجْنَا وَبِسْمِ اللهِ خَرَجْنَا وَعَلَى اللهِ رَبّنَا تَوَكَّلْنَا",
             "malay": "Ya Allah, sesungguhnya aku mohon kepada-Mu baiknya tempat masuk dan baiknya tempat keluar dengan menyebut nama Allah kami masuk, dan dengan menyebut nama Allah kami keluar dan kepada Allah Tuhan kami, kami bertawakkal.",
             "title": "Doa Masuk Rumah",
             "source": "harian"
         },
         {
+            "count" : "34",
             "arab": "بِسْمِ اللهِ تَوَكَّلْتُ عَلَى اللهِ، لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللهِ",
             "malay": "Dengan nama Allah, aku bertawakkal kepada Allah. Tiada daya dan kekuatan kecuali dengan Allah.",
             "title": "Doa Keluar Rumah",
             "source": "harian"
         },
         {
-            "arab": "اللَّهُمَّ اجْعَلْ فِى قَلْبِى نُورًا وَفِى لِسَانِى نُورًا وَاجْعَلْ فِى سَمْعِى نُورًا وَاجْعَلْ فِى بَصَرِى نُورًا وَاجْعَلْ مِنْ خَلْفِى نُورًا وَمِنْ أَمَامِى نُورًا وَاجْعَلْ مِنْ فَوْقِى نُورًا وَمِنْ تَحْتِى نُورًا. اللَّهُمَّ أَعْطِنِى نُورًا",
-            "malay": "Ya allah jadikanlah hatiku bercahaya, lisanku bercahaya, pendengaranku bercahaya, penglihatanku bercahaya. Jadikanlah Ya Allah belakangku bercahaya, depanku bercahaya, atasku bercahaya dan bawahku bercahaya. Ya Allah, berikanlah cahaya untukku.",
-            "title": "Doa Menuju Masjid",
-            "source": "harian"
-        },
-        {
-            "arab": "اَللّٰهُمَّ افْتَحْ لِيْ اَبْوَابَ رَحْمَتِكَ",
-            "malay": "Ya Allah, bukalah untukku pintu-pintu rahmat-Mu.",
-            "title": "Doa Masuk Masjid",
-            "source": "harian"
-        },
-        {
-            "arab": "اَللّٰهُمَّ اِنِّى اَسْأَلُكَ مِنْ فَضْلِكَ",
-            "malay": "Ya Allah, sesungguhnya aku memohon keutamaan dari-Mu.",
-            "title": "Doa Keluar Masjid",
-            "source": "harian"
-        },
-        {
-            "arab": "بِسْمِ اللهِ اَللّهُمَّ جَنِّبْنَا الشَّيْطَانَ وَجَنِّبِ الشَّيْطَانَ مَا رَزَقْتَنَا",
-            "malay": "Dengan menyebut nama Allah, ya Allah jauhkanlah kami dari (gangguan) setan dan jauhkanlah setan dari rezeki yang Engkau anugerahkan kepada kami.",
-            "title": "Doa Ketika Hendak Bersetubuh",
-            "source": "harian"
-        },
-        {
+            "count" : "35",
             "arab": "اللَّهُمَّ غَارَتِ النُّجُومُ وَهَدَأَتِ الْعُيُونُ وَأَنْتَ حَيٌّ قَيُّومٌ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ يَا حَيُّ يَا قَيُّومُ أَهْدِئْ لَيْلِيْ وَأَنِمْ عَيْنِي",
             "malay": "Ya Allah, sunyilah semua \r\nbintang dan tenanglah semua mata, dan Tuhan \r\nyang hidup dan berdiri sendiri. Tuhan tidak \r\nmengantuk dan tidak tidur. Wahai Tuhan yang \r\nhidup dan berdiri sendiri. Tenangkanlah \r\nmalamku ini dan tidurkanlah mataku.",
             "title": "Doa Susah Tidur",
             "source": "harian"
         },
         {
-            "arab": "اللَّهُمَّ أَحْيِنِي مَا كَانَتِ الْحَيَاةُ خَيْرًا لِي، وَتَوَفَّنِي إِذَا كَانَتِ الْوَفَاةُ خَيْرًا لِي",
-            "malay": "Ya Allah, hidupkanlah aku selama kehidupan itu baik bagiku, dan wafatkanlah aku selama wafat itu baik bagiku.",
-            "title": "Doa Pesakit yang Tidak Ada Harapan Sembuh Lagi (dibaca oleh pesakit)",
-            "source": "harian"
-        },
-        {
+            "count" : "36",
             "arab": "أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ. اللَّهُمَّ اجْعَلْنِى مِنَ التَّوَّابِينَ وَاجْعَلْنِى مِنَ الْمُتَطَهِّرِينَ وَاجْعَلنِى مِن عِبَادِكَ الصَّالِحِيْن",
             "malay": "Aku bersaksi bahwa tiada Tuhan selain Allah yang Maha Esa dan tiada sekutu bagi-Nya. Dan aku bersaksi bahwa Muhammad adalah hamba dan utusan-Nya. Ya Allah, jadikanlah aku termasuk orang yang bertaubat dan jadikanlah aku termasuk orang yang menyucikan diri, dan jadikanlah aku termasuk orang yang soleh.",
             "title": "Doa Selepas Wudhu",
             "source": "ibadah"
         },
         {
+            "count" : "37",
             "arab": "اللّٰهُمَّ رَبَّ هٰذِهِ الدَّعْوَةِ التَّامَّةِ وَالصَّلَاةِ الْقَائِمَةِ آتِ سَيِّدَنَـامُحَمـَّدًا الْوَسِيلَةَ وَالْفَضِيلَةَ وَالدَّرَجَةَ الرَّفِيْعَةَ وَابْعَثْهُ مَقَامًا المَحْمُودًا الَّذِيْ وَعَدْتَهُ إِنَّكَ لَا تُخْلِفُ الْمِيْعَادَ",
             "malay": "Ya Allah, Rabb pemilik seruan yang sempurna ini (adzan), dan sholat yang ditegakkan, berikan lah kepada Nabi Muhammad al-wasilah (kedudukan mulia di sisi-Mu) dan keutamaan, dirikan untuknya tempat terpuji seperti yang telah Engkau janjikan kepadanya.",
             "title": "Doa Setelah Mendengar Azan",
             "source": "ibadah"
         },
         {
-            "arab": "رَبِّ أَعُوذُ بِكَ مِنْ هَمَزَاتِ الشَّيَاطِينِ وَأَعُوذُ بِكَ رَبِّ أَنْ يَحْضُرُونِ",
-            "malay": "Ya Tuhanku aku berlindung kepada Engkau dari bisikan-bisikan setan. Dan aku berlindung (pula) kepada Engkau ya Tuhanku, dari kedatangan mereka kepadaku.",
-            "title": "Doa Sebelum Solat",
-            "source": "ibadah"
-        },
-        {
-            "arab": "اَللّٰهُمَّ اِنَّ الضُّحَآءَ ضُحَاءُكَ وَالْبَهَاءَ بَهَاءُكَ وَالْجَمَالَ جَمَالُكَ وَالْقُوَّةَ قُوَّتُكَ وَالْقُدْرَةَ قُدْرَتُكَ وَالْعِصْمَةَ عِصْمَتُكَ اَللّٰهُمَّ اِنْ كَانَ رِزْقِى فِى السَّمَآءِ فَأَنْزِلْهُ وَاِنْ كَانَ فِى اْلاَرْضِ فَأَخْرِجْهُ وَاِنْ كَانَ مُعَسَّرًا فَيَسِّرْهُ وَاِنْ كَانَ حَرَامًا فَطَهِّرْهُ وَاِنْ كَانَ بَعِيْدًا فَقَرِّبْهُ بِحَقِّ ضُحَاءِكَ وَبَهَاءِكَ وَجَمَالِكَ وَقُوَّتِكَ وَقُدْرَتِكَ آتِنِىْ مَآاَتَيْتَ عِبَادَكَ الصَّالِحِيْنَ",
-            "malay": "Wahai Tuhanku, sesungguhnya waktu Dhuha adalah waktu Dhuha-Mu, keagungan adalah keagungan-Mu, keindahan adalah keindahan-Mu, kekuatan adalah kekuatan-Mu, dan kekuasaan adalah kekuasaan-Mu serta penjagaan adalah penjagaan-Mu. Ya Allah, jika rizqiku masih di atas langit, turunkanlah dan jika ada di dalam bumi, keluarkanlah. Jika sukar mudahkanlah, jika haram sucikanlah, jika masih jauh dekatkanlah, berkat waktu Dhuha, keagungan, keindahan, kekuatan dan kekuasaan-Mu, limpahkanlah kepada kami segala yang telah Engkau limpahkan kepada hamba-hamba-Mu yang saleh.",
-            "title": "Doa Sesudah Solat Dhuha",
-            "source": "ibadah"
-        },
-        {
-            "arab": "اَللّٰهُمَّ إِنِّيْ أَسْتَخِيْرُكَ بِعِلْمِكَ، وَأَسْتَقْدِرُكَ بِقُدْرَتِكَ، وَأَسْأَلُكَ مِنْ فَضْلِكَ الْعَظِيْمِ، فَإِنَّكَ تَقْدِرُ وَلَا أَقْدِرُ، وَتَعْلَمُ وَلَا أَعْلَمُ، وَأَنْتَ عَلَّامُ الْغُيُوْبِ. اَللّٰهُمَّ إِنْ كُنْتَ تَعْلَمُ أَنَّ هٰذَا اْلأَمْرَ .... خَيْرٌ لِيْ فِيْ دِيْنِيْ وَمَعَاشِيْ وَعَاقِبَةِ أَمْرِيْ فَاقْدُرْهُ لِيْ وَيَسِّرْهُ لِيْ ثُمَّ بَارِكْ لِيْ فِيْهِ، وَإِنْ كُنْتَ تَعْلَمُ أَنَّ هٰذَا اْلأَمْرَ شَرٌّ لِيْ فِيْ دِيْنِيْ وَمَعَاشِيْ وَعَاقِبَةِ أَمْرِيْ فَاصْرِفْهُ عَنِّيْ وَاصْرِفْنِيْ عَنْهُ وَاقْدُرْ لِيَ الْخَيْرَ حَيْثُ كَانَ ثُمَّ أَرْضِنِيْ بِهِ",
-            "malay": "Ya Allah, sesungguhnya aku meminta pilihan yang tepat kepada-Mu dengan ilmu pengetahuan-Mu dan aku mohon kekuasaan-Mu (untuk mengatasi persoalanku) dengan kemahakuasaan-Mu. Aku mohon kepada-Mu sesuatu dari anugerah-Mu Yang Maha Agung, sesungguhnya Engkau Mahakuasa, sedang aku tidak kuasa, Engkau mengetahui, sedang aku tidak mengetahuinya dan Engkau adalah Maha Mengetahui hal yang ghaib. Ya Allah, apabila Engkau mengetahui bahwa urusan ini (orang yang mempunyai hajat hendaknya menyebut persoalannya) lebih baik dalam agamaku, dan akibatnya terhadap diriku sukseskanlah untuk ku, mudahkan jalannya, kemudian berilah berkah. Akan tetapi apabila Engkau mengetahui bahwa persoalan ini lebih berbahaya bagiku dalam agama, perekonomian dan akibatnya kepada diriku, maka singkirkan persoalan tersebut, dan jauhkan aku daripadanya, takdirkan kebaikan untuk ku di mana saja kebaikan itu berada, kemudian berilah kerelaan-Mu kepadaku.",
-            "title": "Doa Setelah Solat Istikharah",
-            "source": "ibadah"
-        },
-        {
-            "arab": "اَللهُمَّ رَبَّنَا لَكَ الْحَمْدُ اَنْتَ قَيِّمُ السَّمَوَاتِ وَاْلاَرْضِ وَمَنْ فِيْهِنَّ. وَلَكَ الْحَمْدُ اَنْتَ مَلِكُ السَّمَوَاتِ واْلاَرْضِ وَمَنْ فِيْهِنَّ. وَلَكَ الْحَمْدُ اَنْتَ نُوْرُ السَّمَوَاتِ وَاْلاَرْضِ وَمَنْ فِيْهِنَّ. وَلَكَ الْحَمْدُ اَنْتَ الْحَقُّ وَوَعْدُكَ الْحَقُّ وَلِقَاءُكَ حَقٌّ وَقَوْلُكَ حَقٌّ وَالْجَنَّةُ حَقٌّ وَالنَّارُ حَقٌّ وَالنَّبِيُّوْنَ حَقٌّ وَمُحَمَّدٌ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ حَقٌّ وَالسَّاعَةُ حَقٌّ. اَللهُمَّ لَكَ اَسْلَمْتُ وَبِكَ اَمَنْتُ وَعَلَيْكَ تَوَكَّلْتُ وَاِلَيْكَ اَنَبْتُ وَبِكَ خَاصَمْتُ وَاِلَيْكَ حَاكَمْتُ فَاغْفِرْلِيْ مَاقَدَّمْتُ وَمَا اَخَّرْتُ وَمَا اَسْرَرْتُ وَمَا اَعْلَنْتُ وَمَا اَنْتَ اَعْلَمُ بِهِ مِنِّيْ. اَنْتَ الْمُقَدِّمُ وَاَنْتَ الْمُؤَخِّرُ لاَاِلَهَ اِلاَّ اَنْتَ. وَلاَ حَوْلَ وَلاَ قُوَّةَ اِلاَّ بِاللهِ",
-            "malay": "Ya Allah, Tuhan kami, segala puji bagi-Mu, Engkau penegak langit, bumi, dan makhluk di dalamnya. Segala puji bagi-Mu, Engkau penguasa langit, bumi, dan makhluk di dalamnya. Segala puji bagi-Mu, Engkau cahaya langit, bumi, dan makhluk di dalamnya. Segala puji bagi-Mu, Engkau Maha Benar. Janji-Mu benar. Pertemuan dengan-Mu kelak itu benar. Firman-Mu benar adanya. Surga itu nyata. Neraka pun demikian. Para nabi itu benar. Demikian pula Nabi Muhammad SAW itu benar. Hari Kiamat itu benar. Ya Tuhanku, hanya kepada-Mu aku berserah. Hanya kepada-Mu juga aku beriman. Kepada-Mu aku pasrah. Hanya kepada-Mu aku kembali. Karena-Mu aku rela bertikai. Hanya pada-Mu dasar putusanku. Karenanya ampuni dosaku yang telah lalu dan yang terkemudian, dosa yang kusembunyikan dan yang kunyatakan, dan dosa lain yang lebih Kau ketahui ketimbang aku. Engkau Yang Maha Terdahulu dan Engkau Yang Maha Terkemudian. Tiada Tuhan selain Engkau. Tiada daya upaya dan kekuatan selain pertolongan Allah.",
-            "title": "Doa Setelah Solat Tahajud",
-            "source": "ibadah"
-        },
-        {
-            "arab": "اَللَّهُمَّ إِنِّيْ أَسْتَغْفـِرُكَ مِنْ كُلِّ ذَنْبٍ تُبْتُ إِلَيْكَ مِنْهُ ثُمَّ عُدْتُ فِيْهِ وَأَسْتَغْفِرُكَ لِمَا وَعَدْتُكَ بِهِ مِنْ نَفْسِيْ ثُمَّ أَخْلَفْتُكَ فِيْهِ وَأَسْتَغْفِرُكَ لِمَا أَرَدْتُ بِهِ وَجْهَكَ الْكَرِيْمَ فَخَالَطَهُ غَيْرُكَ وَأَسْتَغْفِرُكَ مِنْ كُلِّ نِعْمَةٍ اَنْعَمْتَ عَلَيْهَا عَلَيَّ فَاسْتَعَنْتُ بِهَا عَلَى مَعْصِيَتِكَ وَأَسْتَغْفِرُكَ يَاعَالِمَ الْغَيْبِ وَالشَّهَادَةِ مِنْ كُلِّ ذَنْبٍ اَتَيْتُهُ فِيْ ضِيَاءِ النَّهَارِ وَسَوَادِ اللَّيْلِ، فِيْ مَلَإٍ وَخَلاَءٍ، وَسِـرٍّ وَعَلاَنِـيَّـةٍ يَاحَلِيْمُ",
-            "malay": "Ya Allah, sesungguhnya aku meminta ampun kepada-Mu dari segala dosa yang mana aku telah bertaubat kepada-Mu namun aku mengulanginya lagi. Sesungguhnya aku meminta ampun kepada-Mu atas apa yang aku telah berjanji kepada-Mu kemudian aku khilaf kepada-Mu. Sesungguhnya aku meminta ampun kepada-Mu atas apa yang telah aku maksudkan untuk berbakti hanya kepada-Mu kemudian ada sesuatu selain dirimu yang mencampurinya. Sesungguhnya aku meminta ampun kepada-Mu atas semua nikmat yang telah Engkau berikan kepadaku namun aku gunakan untuk bermaksiat kepada-Mu. Sesungguhnya aku meminta kepada-Mu, wahai Dzat Yang Maha Mengetahui alam ghaib dan alam nyata, dari setiap dosa yang aku lakukan di siang hari dan di waku malam, dalam keadaan ramai dan keadaan sepi, dalam keadaan sembunyi dan terang-terangan, wahai Dzat Yang Maha Pengampun.",
-            "title": "Istighfar Nabi Khidir As",
-            "source": "lainnya"
-        },
-        {
-            "arab": "صَلَّى اللهُ عَلَى نَبِيِّنَا مُحَمَّدٍ كُلَّمَا ذَكَرَهُ الذَّاكِرُوْنَ وَغَفَلَ عَنْ ذِكْرِهِ الْغَافِلُوْنَ",
-            "malay": "Ya Allah, limpahkanlah selawat atas nabi kami, Nabi Muhammad SAW, selama orang-orang yang ingat menyebut-Mu dan orang-orang yang lalai lupa untuk menyebut-Mu.",
-            "title": "Selawat Pengampun Dosa",
-            "source": "lainnya"
-        },
-        {
+            "count" : "38",
             "arab": "اَللّٰهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَاَنْزِلهُ الْمُنزَلَ الْمُقَرَّبَ مِنكَ يَومَ القِيَامَةِ ",
-            "malay": "Ya Allah, limpahkanlah \r\nshalawat kepada Muhammad dan tempatkanlah \r\nia di tempat yang dekat dengan-Mu di hari \r\nakhirat.",
+            "malay": "Ya Allah, limpahkanlah \r\nselawat kepada Muhammad dan tempatkanlah \r\nia di tempat yang dekat dengan-Mu di hari \r\nakhirat.",
             "title": "Selawat Agar Mendapat Syafaat Rasulullah SAW",
             "source": "lainnya"
         },
         {
+            "count" : "39",
             "arab": "رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ",
             "malay": "Ya Tuhan kami, kami telah menzhalimi diri kami sendiri. Jika Engkau tidak mengampuni kami dan memberi rahmat kepada kami, niscaya kami termasuk orang-orang yang rugi.",
             "title": "Doa Taubat Nasuha (Doa Nabi Adam)",
             "source": "lainnya"
         },
         {
+            "count" : "40",
             "arab": "اللَّهُمَّ إِنِّي ظَلَمْتُ نَفْسِي ظُلْمًا كَثِيرًا، وَلاَ يَغْفِرُ الذُّنُوبَ إِلاَّ أَنْتَ فَاغْفِرْ لِي مَغْفِرَةً مِنْ عِنْدِكَ، وَارْحَمْنِي، إِنَّكَ أَنْتَ الْغَفُورُ الرَّحِيمُ",
             "malay": "Ya Allah, sungguh aku telah menzhalimi diriku sendiri dengan kezhaliman yang banyak, sedangkan tidak ada yang dapat mengampuni dosa-dosa kecuali Engkau. Maka itu ampunilah aku dengan suatu pengampunan dari sisi-Mu, dan rahmatilah aku. Sesungguhnya Engkau Maha Pengampun lagi Maha Penyayang.",
             "title": "Doa Pembersih Seluruh Dosa",
-            "source": "lainnya"
-        },
-        {
-            "arab": "رَّبِّ أَدْخِلْنِى مُدْخَلَ صِدْقٍ وَأَخْرِجْنِى مُخْرَجَ صِدْقٍ وَٱجْعَل لِّى مِن لَّدُنكَ سُلْطَٰنًا نَّصِيرًا",
-            "malay": "Ya Tuhanku, masukkanlah aku ke dalam golongan yang benar dan keluarkanlah aku ke tempat orang-orang yang benar. Dan berikanlah aku di sisi-Mu kekuasaan (pemimpin) yang menolong.",
-            "title": "Doa Mohon Ketenteraman",
             "source": "lainnya"
         }
     ]
