@@ -160,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
             fontSize: 25,
           ),
         ),
-        backgroundColor: const Color(0xFF990099),
+        backgroundColor: const Color(0xFF2F5494),
         elevation: 22,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
