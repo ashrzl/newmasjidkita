@@ -160,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
             fontSize: 25,
           ),
         ),
-        backgroundColor: const Color(0xFF2F5494),
+        backgroundColor: const Color(0xFF20345B),
         elevation: 22,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -262,10 +262,13 @@ class _LoginPageState extends State<LoginPage> {
                       ? const CircularProgressIndicator(color: Colors.white)
                       : const Text(
                     'Log Masuk',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                    ),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF990099),
+                    backgroundColor: const Color(0xFF20345B),
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     textStyle: const TextStyle(fontSize: 18),
                   ),

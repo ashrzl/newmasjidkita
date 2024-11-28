@@ -180,16 +180,26 @@ class CarianMasjidState extends State<CarianMasjid> {
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            IconButton(
-                              icon: Icon(Icons.location_on, color: Color(0xFF6B2572)),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => MasjidDetails(mosque: mosque),
-                                  ),
-                                );
-                              },
+                            Tooltip(
+                              message: 'Klik untuk melihat lokasi masjid.',
+                              decoration: BoxDecoration(
+                                color: Colors.deepPurple,
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              textStyle: TextStyle(color: Colors.white),
+                              preferBelow: false,
+                              verticalOffset: 20,
+                              child: IconButton(
+                                icon: Icon(Icons.location_on, color: Color(0xFF6B2572)),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MasjidDetails(mosque: mosque),
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                             IconButton(
                               icon: Icon(Icons.favorite_border, color: Colors.red),

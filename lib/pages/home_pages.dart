@@ -139,7 +139,7 @@ class HomePageState extends State<HomePage> {
       key: _scaffoldKey,
       backgroundColor: Color(0xFFF5F5F5),
       appBar: AppBar(
-        backgroundColor: Color(0xFF5C0065),
+        backgroundColor:  Color(0xFF20345B),
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
@@ -150,8 +150,19 @@ class HomePageState extends State<HomePage> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Lokasi Anda:", style: TextStyle(color: Colors.white)),
-            Text(_currentAddress, style: TextStyle(fontSize: 14, color: Colors.white)),
+            Text("Lokasi Anda:",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                  ),
+              ),
+            Text(_currentAddress,
+                style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                ),
+            ),
           ],
         ),
         actions: [
@@ -183,7 +194,7 @@ class HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
         ],
         currentIndex: _selectedIndex, // The currently selected index
-        selectedItemColor: Color(0xFF6B2572), // The color of the selected item
+        selectedItemColor:  Color(0xFF20345B), // The color of the selected item
         onTap: _onItemTapped, // Handle the tap on an item
       ),
     );
@@ -192,7 +203,7 @@ class HomePageState extends State<HomePage> {
   Widget _buildSearchBar() {
     return Container(
       padding: EdgeInsets.all(16.0),
-      color: Color(0xFF5C0065),
+      color: Color(0xFF20345B),
       child: TextField(
         decoration: InputDecoration(
           hintText: 'Carian Masjid',
@@ -238,7 +249,7 @@ class HomePageState extends State<HomePage> {
                   height: 80, // Adjust height for the border
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(color: Color(0xFF6B2572), width: 3), // Border color and width
+                    border: Border.all(color: Color(0xFF20345B), width: 3), // Border color and width
                   ),
                   child: CircleAvatar(
                     backgroundImage: _user?.imageUrl != null
@@ -336,22 +347,22 @@ class HomePageState extends State<HomePage> {
                         child: _buildMenuIconWithImage(
                           'assets/icon/mosque.png',
                           'Waktu Solat',
-                          const Color(0xFF6B2572),
+                          const Color(0xFF20345B),
                         ),
                       ),
-                      // GestureDetector(
-                      //   onTap: () {
-                      //     Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(builder: (context) => QiblahPage()),
-                      //     );
-                      //   },
-                      //   child: _buildMenuIconWithImage(
-                      //     'assets/icon/qibla.png',
-                      //     'Kiblat',
-                      //     const Color(0xFF6B2572),
-                      //   ),
-                      // ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => QiblahPage()),
+                          );
+                        },
+                        child: _buildMenuIconWithImage(
+                          'assets/icon/qibla.png',
+                          'Kiblat',
+                          const Color(0xFF20345B),
+                        ),
+                      ),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -362,7 +373,7 @@ class HomePageState extends State<HomePage> {
                         child: _buildMenuIconWithImage(
                           'assets/icon/read-quran.png',
                           'Al-Quran',
-                          const Color(0xFF6B2572),
+                          const Color(0xFF20345B),
                         ),
                       ),
                       GestureDetector(
@@ -375,7 +386,7 @@ class HomePageState extends State<HomePage> {
                         child: _buildMenuIconWithImage(
                           'assets/icon/hadis.png',
                           'Hadis',
-                          const Color(0xFF6B2572),
+                          const  Color(0xFF20345B),
                         ),
                       ),
                       GestureDetector(
@@ -459,7 +470,7 @@ class HomePageState extends State<HomePage> {
                         child: _buildMenuIconWithImage(
                           'assets/icon/tasbih.png',
                           'Amalan Harian',
-                          const Color(0xFF6B2572),
+                          const Color(0xFF20345B),
                         ),
                       ),
                     ],
@@ -490,8 +501,8 @@ class HomePageState extends State<HomePage> {
       child: Column(
         children: [
           const TabBar(
-            indicatorColor: Color(0xFF6B2572),
-            labelColor: Color(0xFF6B2572),
+            indicatorColor: Color(0xFF20345B),
+            labelColor:  Color(0xFF20345B),
             unselectedLabelColor: Colors.black54,
             tabs: [
               Tab(text: 'Masjid Dilanggan'),
