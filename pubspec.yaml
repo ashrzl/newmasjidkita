@@ -92,6 +92,9 @@ flutter:
     - assets/background/homebackground.jpg
     - assets/background/islamic-white.jpg
     - assets/icon/qiblah.png
+    - assets/icon/masjidKITA-logo.png
+    - assets/icon/kariahKITA.png
+    - assets/icon/khairatKITA.png
     - assets/icon/copyright.png
     - assets/icon/google.png
     - assets/icon/hadis.png
