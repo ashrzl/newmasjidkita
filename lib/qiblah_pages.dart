@@ -4,7 +4,7 @@ import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:new_mk_v3/model/qibla_model.dart';
-import 'package:new_mk_v3/pages/home_pages.dart';
+import 'package:new_mk_v3/pages/landing_pages.dart';
 import 'package:new_mk_v3/utils/loading_error_widget.dart';
 
 /*
@@ -49,7 +49,7 @@ class _QiblahPageState extends State<QiblahPage> {
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => HomePage()));
+                context, MaterialPageRoute(builder: (context) => LandingPage()));
           },
         ),
         title: const Text('Arah Kiblat', style: TextStyle(color: Colors.white)),

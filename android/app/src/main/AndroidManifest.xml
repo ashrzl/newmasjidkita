@@ -10,7 +10,7 @@
 
 
     <application
-        android:label="MasjidKita-V3"
+        android:label="MasjidKITA"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

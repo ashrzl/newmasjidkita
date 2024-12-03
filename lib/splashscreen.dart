@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:new_mk_v3/pages/login_pages.dart';
+import 'package:new_mk_v3/pages/landing_pages.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (_) => const LoginPage(title: ''),
+        builder: (_) => LandingPage(),
       ));
     });
   }
@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen>
         height: MediaQuery.of(context).size.height, // Use MediaQuery for full height
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/background/background2.jpg'),
+            image: AssetImage('assets/background/islamic-white.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -47,21 +47,29 @@ class _SplashScreenState extends State<SplashScreen>
           children: [
             Expanded(
               child: Center(
-                child: const Text(
-                  'MasjidKita',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 40,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 200), // Add empty space above
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Logo slightly to the right
+                      Padding(
+                        padding: const EdgeInsets.all(100), // Push the image slightly to the right
+                        child: Image.asset(
+                          'assets/icon/MasjidKITA-Logo.png', // Replace with your logo's path
+                          width: 250, // Adjust the size as needed
+                          height: 250,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
             Column(
               children: [
-                const Text('v1.0.0', style: TextStyle(color: Colors.white)),
-                const Text('Dibina oleh', style: TextStyle(color: Colors.white)),
+                const Text('v1.0.0', style: TextStyle(color: Colors.black)),
+                const Text('Dibina oleh', style: TextStyle(color: Colors.black)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -69,12 +77,12 @@ class _SplashScreenState extends State<SplashScreen>
                       'assets/icon/copyright.png',
                       width: 10,
                       height: 10,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                     const SizedBox(width: 2),
                     const Text(
                       'Custommedia Sdn Bhd',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.black),
                     ),
                   ],
                 ),
