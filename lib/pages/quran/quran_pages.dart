@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:new_mk_v3/pages/home_pages.dart';
+import 'package:new_mk_v3/pages/landing_pages.dart';
 import 'package:new_mk_v3/pages/quran/surahdetail_pages.dart';
+import 'package:new_mk_v3/qiblah_pages.dart';
 import 'package:quran/quran.dart' as quran;
 
 /*
@@ -11,7 +12,52 @@ import 'package:quran/quran.dart' as quran;
 * Version: 1.0
 */
 
-class QuranPage extends StatelessWidget {
+class QuranPage extends StatefulWidget {
+  const QuranPage({super.key});
+
+  @override
+  _QuranPageState createState() => _QuranPageState();
+}
+
+
+class _QuranPageState extends State<QuranPage>{
+
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index; // Update the selected index
+    });
+
+    // Navigate based on the selected index
+    switch (index) {
+      case 0:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => QuranPage()),
+        );
+        break;
+      case 1:
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => PrayerTimesPage()),
+      // );
+        break;
+      case 2:
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LandingPage())
+        );
+        break;
+      case 3:
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => QiblahPage())
+        );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,12 +74,19 @@ class QuranPage extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LandingPage()));
           },
         ),
-        backgroundColor: Color(0xFF6B2572),
+        backgroundColor: Colors.blue[900],
         centerTitle: true,
-        elevation: 10, // Added elevation for a modern shadow effect
+        elevation: 10,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(28.0),
+            bottomRight: Radius.circular(28.0),
+          ),
+        ),
+        toolbarHeight: 120,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0), // Adjusted padding for better spacing
@@ -41,7 +94,6 @@ class QuranPage extends StatelessWidget {
           itemCount: quran.totalSurahCount,
           itemBuilder: (context, index) {
             int surahNumber = index + 1;
-
             return Card(
               elevation: 8, // Slightly higher elevation for more prominence
               margin: const EdgeInsets.symmetric(vertical: 10.0),
@@ -57,7 +109,7 @@ class QuranPage extends StatelessWidget {
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Scheherazade', // Customize font for Surah Name
-                    color: Color(0xFF6B2572), // Bold and complementary text color
+                    color: Colors.blue[800], // Bold and complementary text color
                   ),
                 ),
                 subtitle: Text(
@@ -65,6 +117,7 @@ class QuranPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18,
                     fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
                     color: Colors.grey[700],
                   ),
                 ),
@@ -84,6 +137,95 @@ class QuranPage extends StatelessWidget {
             );
           },
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        selectedItemColor: Color(0xFF20345B),
+        unselectedItemColor: Colors.grey,
+        onTap: _onItemTapped,
+        items: [
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage('assets/icon/read-quran.png'), size: 30),
+            label: 'al-quran',
+          ),
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage('assets/icon/solat.png'), size: 30),
+            label: 'waktu solat',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_rounded, size: 30),
+            label: 'utama',
+          ),
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage('assets/icon/qibla.png'),size: 30),
+            label: 'kiblat',
+          ),
+          BottomNavigationBarItem(
+            icon: PopupMenuButton<int>(
+              icon: Icon(Icons.more_horiz_rounded, size: 30),
+              itemBuilder: (BuildContext context) => [
+                PopupMenuItem<int>(
+                  value: 1,
+                  child: Row(
+                    children: [
+                      Icon(Icons.chat_rounded, color: Colors.grey),
+                      const SizedBox(width: 8),
+                      Text('forum'),
+                    ],
+                  ),
+                ),
+                PopupMenuItem<int>(
+                  value: 2,
+                  child: Row(
+                    children: [
+                      Icon(Icons.calendar_month_outlined, color: Colors.grey),
+                      const SizedBox(width: 8),
+                      Text('kalendar'),
+                    ],
+                  ),
+                ),
+                PopupMenuItem<int>(
+                  value: 3,
+                  child: Row(
+                    children: [
+                      Icon(Icons.bookmark_added_rounded, color: Colors.grey),
+                      const SizedBox(width: 8),
+                      Text('tempahan'),
+                    ],
+                  ),
+                ),
+                PopupMenuItem<int>(
+                  value: 4,
+                  child: Row(
+                    children: [
+                      Icon(Icons.share, color: Colors.grey),
+                      const SizedBox(width: 8),
+                      Text('kongsi'),
+                    ],
+                  ),
+                ),
+              ],
+              onSelected: (value) {
+                // Handle the selected menu item
+                switch (value) {
+                  case 1:
+                    print('Menu Item 1 selected');
+                    break;
+                  case 2:
+                    print('Menu Item 2 selected');
+                    break;
+                  case 3:
+                    print('Menu Item 3 selected');
+                    break;
+                  case 4:
+                    print('Menu Item 4 selected');
+                    break;
+                }
+              },
+            ),
+            label: 'lagi',
+          ),
+        ],
       ),
     );
   }

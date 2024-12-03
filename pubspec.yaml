@@ -51,7 +51,8 @@ dependencies:
   win32: ^5.7.2
   flutter_qiblah: ^3.0.4
   loading_indicator: ^3.1.1
-  prayers_times: ^0.0.6
+  pray_times: ^0.0.1
+  adhan: ^2.0.0+1
   quran: ^1.3.3
   google_fonts: ^6.2.1
   hadith: ^1.0.0
@@ -73,7 +74,7 @@ flutter_launcher_icons:
   image_path: "assets/icon/MasjidKITALogo.png"
   min_sdk_android: 21
   adaptive_icon_background: "#ffffff" # You can use a color or image for the background
-  adaptive_icon_foreground: "assets/icon/MasjidKITALogo.png" # For adaptive icons on Android
+  adaptive_icon_foreground: "assets/icon/MasjidKITA-Logo.png" # For adaptive icons on Android
 
 
 flutter:
@@ -103,7 +104,7 @@ flutter:
     - assets/icon/user.png
     - assets/icon/zikir.png
     - assets/icon/mosque.png
-    - assets/icon/MasjidKITALogo.png
+    - assets/icon/MasjidKITA-Logo.png
     - assets/icon/appicon.png
     - assets/icon/qibla.png
     - assets/icon/tasbih.png

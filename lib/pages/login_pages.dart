@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:new_mk_v3/pages/home_pages.dart';
+import 'package:new_mk_v3/pages/landing_pages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -104,10 +104,10 @@ class _LoginPageState extends State<LoginPage> {
           );
 
           // Navigate to the home page
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => HomePage()),
-          );
+          // Navigator.pushReplacement(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => HomePage()),
+          // );
         } else {
           print('Invalid response data: token or user ID is null');
           ScaffoldMessenger.of(context).showSnackBar(
@@ -151,6 +151,21 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue[900],
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => LandingPage()));
+          },
+        ),
+        elevation: 22,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(28.0),
+            bottomRight: Radius.circular(28.0),
+          ),
+        ),
         centerTitle: true,
         title: const Text(
           'Log Masuk',
@@ -160,14 +175,16 @@ class _LoginPageState extends State<LoginPage> {
             fontSize: 25,
           ),
         ),
-        backgroundColor: const Color(0xFF20345B),
-        elevation: 22,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(25.0),
-            bottomRight: Radius.circular(25.0),
+        toolbarHeight: 120,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: Image.asset(
+              'assets/icon/MasjidKITA-Logo.png', // Replace with the path to your logo image
+              height: 70, // Adjust the size as needed
+            ),
           ),
-        ),
+        ],
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -243,7 +260,7 @@ class _LoginPageState extends State<LoginPage> {
                         });
                       },
                     ),
-                    const Text('Remember Me'),
+                    const Text('Ingat Saya'),
                   ],
                 ),
                 const SizedBox(height: 15),
@@ -268,7 +285,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF20345B),
+                    backgroundColor: Colors.blue[900],
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     textStyle: const TextStyle(fontSize: 18),
                   ),

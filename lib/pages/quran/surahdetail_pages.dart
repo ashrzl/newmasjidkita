@@ -30,7 +30,14 @@ class SurahDetailPage extends StatelessWidget {
           },
         ),
         centerTitle: true,
-        backgroundColor: Color(0xFF6B2572),
+        backgroundColor: Colors.blue[900],
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(28.0),
+            bottomRight: Radius.circular(28.0),
+          ),
+        ),
+        toolbarHeight: 120,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
