@@ -58,7 +58,7 @@ class _QiblahPageState extends State<QiblahPage> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/background/islam_background.jpg'), // Path to your background image
+            image: AssetImage('assets/background/homebackground.jpg'), // Path to your background image
             fit: BoxFit.cover, // Ensures the image covers the whole screen
           ),
         ),

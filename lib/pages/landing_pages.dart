@@ -167,211 +167,47 @@ class _LandingPageState extends State<LandingPage> {
               ),
             ),
             const SizedBox(height: 20),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Left side logo
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              // Main logo
-                              Image.asset(
-                                'assets/icon/kariahKITA.png',
-                                width: 150,
-                                height: 150,
-                              ),
-                            ],
-                          ),
-                        ],
+            _buildModulIcons(),
+            const SizedBox(height: 20),
+            _buildMenuIcons(),
+            const SizedBox(height: 16),
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Center(
+                        child: Text(
+                            'Video Terkini',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
-                      const SizedBox(width: 12),
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                isExpanded
-                                    ? 'Sistem Pengurusan Kariah yang dibangunkan '
-                                    'bagi menguruskan hal ehwal keahlian dan pembayaran ahli qariah secara digital. '
-                                    : 'Sistem Pengurusan Kariah yang dibangunkan bagi menguruskan...',
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey,
-                                ),
-                                textAlign: TextAlign.justify,
-                                softWrap: true,
-                              ),
-                              const SizedBox(height: 5),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isExpanded = !isExpanded;
-                                  });
-                                },
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    isExpanded ? 'Tutup' : 'Baca Lagi',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.blue[400],
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                    ),
+                    Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          // Navigator.pushReplacement(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => LoginPage(title: '')),
+                          // );
+                        },
+                        child: Text(
+                            'Lihat semua',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                isExpanded
-                                    ? 'Sistem Pengurusan Khairat Kematian yang dibangunkan '
-                                    'bagi membantu anak kariah mengurus khairat kematian '
-                                    'di masjid dan surau yang berdaftar di bawah MasjidKITA. '
-                                    : 'Sistem Pengurusan Khairat Kematian yang dibangunkan...',
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey,
-                                ),
-                                textAlign: TextAlign.justify,
-                                softWrap: true,
-                              ),
-                              const SizedBox(height: 5),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isExpanded = !isExpanded;
-                                  });
-                                },
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    isExpanded ? 'Tutup' : 'Baca Lagi',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.blue[400],
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/icon/khairatKITA.png',
-                                width: 150,
-                                height: 150,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Left side logo
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              // Main logo
-                              Image.asset(
-                                'assets/icon/MasjidKITA-Logo.png',
-                                width: 150,
-                                height: 150,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(width: 12),
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                isExpanded
-                                    ?'Sistem Pengurusan Infaq yang dibina, '
-                                    'bagi memberi peluang kepada pengguna '
-                                    'untuk berkongsi rezeki bersama masjid dan surau '
-                                    'yang mendaftar dibawah MasjidKITA.'
-                                    : 'Sistem Pengurusan Infaq yang dibina...',
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey,
-                                ),
-                                textAlign: TextAlign.justify,
-                                softWrap: true,
-                              ),
-                              const SizedBox(height: 5),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isExpanded = !isExpanded;
-                                  });
-                                },
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    isExpanded ? 'Tutup' : 'Baca Lagi',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.blue[400],
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+
+              ],
             ),
           ],
         ),
@@ -467,4 +303,80 @@ class _LandingPageState extends State<LandingPage> {
       ),
     );
   }
+
+  Widget _buildModulIcons() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                _buildModulIcon('assets/icon/kariahKITA.png'),
+                SizedBox(width: 16),
+                _buildModulIcon('assets/icon/khairatKITA.png'),
+                SizedBox(width: 16),
+                _buildModulIcon('assets/icon/MasjidKITA-Logo.png'),
+                SizedBox(width: 16),
+                _buildModulIcon('assets/icon/pusaraKITA.png'),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMenuIcons() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                _buildMenuIcon('assets/icon/qibla.png', 'Kiblat', const Color(0xFF073C62)),
+                SizedBox(width: 16),
+                _buildMenuIcon('assets/icon/calendar.png', 'Kalendar', const Color(0xFF073C62)),
+                SizedBox(width: 16),
+                _buildMenuIcon('assets/icon/chat.png', 'Forum', const Color(0xFF073C62)),
+                SizedBox(width: 16),
+                _buildMenuIcon('assets/icon/booking.png', 'Tempahan', const Color(0xFF073C62)),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildModulIcon(String assetPath,) {
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(20),
+          child: Image.asset(assetPath, height: 100, width: 100),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMenuIcon(String assetPath, String label, Color color) {
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(20),
+          child: Image.asset(assetPath, height: 60, width: 60, color: color),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          label,
+          style: const TextStyle(color: Colors.black54),
+        ),
+      ],
+    );
+  }
+
 }
