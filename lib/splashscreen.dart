@@ -56,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen>
                       Padding(
                         padding: const EdgeInsets.all(100), // Push the image slightly to the right
                         child: Image.asset(
-                          'assets/icon/MasjidKITA-Logo.png', // Replace with your logo's path
+                          'assets/icon/mklogo.png', // Replace with your logo's path
                           width: 250, // Adjust the size as needed
                           height: 250,
                         ),

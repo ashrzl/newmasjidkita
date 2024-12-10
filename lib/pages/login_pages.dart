@@ -180,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: Image.asset(
-              'assets/icon/MasjidKITA-Logo.png', // Replace with the path to your logo image
+              'assets/icon/mklogo.png', // Replace with the path to your logo image
               height: 70, // Adjust the size as needed
             ),
           ),

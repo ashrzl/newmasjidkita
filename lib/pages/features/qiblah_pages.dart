@@ -176,7 +176,6 @@ class _QiblahPageState extends State<QiblahPage> {
     );
   }
 
-
   void _showCalibrationDialog() {
     showDialog(
       context: context,

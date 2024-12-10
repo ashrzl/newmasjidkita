@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_mk_v3/pages/landing_pages.dart';
 import 'package:new_mk_v3/pages/quran/surahdetail_pages.dart';
-import 'package:new_mk_v3/qiblah_pages.dart';
+import 'package:new_mk_v3/pages/features/qiblah_pages.dart';
 import 'package:quran/quran.dart' as quran;
 
 /*
@@ -38,23 +38,16 @@ class _QuranPageState extends State<QuranPage>{
         );
         break;
       case 1:
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => PrayerTimesPage()),
-      // );
-        break;
-      case 2:
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => LandingPage())
         );
         break;
-      case 3:
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => QiblahPage())
-        );
+      case 2:
+        // Navigator.pushReplacement(
+        //     context,
+        //     MaterialPageRoute(builder: (context) => QiblahPage())
+        // );
     }
   }
 
@@ -123,7 +116,7 @@ class _QuranPageState extends State<QuranPage>{
                 ),
                 trailing: Icon(
                   Icons.arrow_forward_ios,
-                  color: Color(0xFF6B2572), // Arrow icon to indicate navigation
+                  color: Colors.blue[900], // Arrow icon to indicate navigation
                 ),
                 onTap: () {
                   Navigator.push(
@@ -149,81 +142,12 @@ class _QuranPageState extends State<QuranPage>{
             label: 'al-quran',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage('assets/icon/solat.png'), size: 30),
-            label: 'waktu solat',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.home_rounded, size: 30),
             label: 'utama',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage('assets/icon/qibla.png'),size: 30),
-            label: 'kiblat',
-          ),
-          BottomNavigationBarItem(
-            icon: PopupMenuButton<int>(
-              icon: Icon(Icons.more_horiz_rounded, size: 30),
-              itemBuilder: (BuildContext context) => [
-                PopupMenuItem<int>(
-                  value: 1,
-                  child: Row(
-                    children: [
-                      Icon(Icons.chat_rounded, color: Colors.grey),
-                      const SizedBox(width: 8),
-                      Text('forum'),
-                    ],
-                  ),
-                ),
-                PopupMenuItem<int>(
-                  value: 2,
-                  child: Row(
-                    children: [
-                      Icon(Icons.calendar_month_outlined, color: Colors.grey),
-                      const SizedBox(width: 8),
-                      Text('kalendar'),
-                    ],
-                  ),
-                ),
-                PopupMenuItem<int>(
-                  value: 3,
-                  child: Row(
-                    children: [
-                      Icon(Icons.bookmark_added_rounded, color: Colors.grey),
-                      const SizedBox(width: 8),
-                      Text('tempahan'),
-                    ],
-                  ),
-                ),
-                PopupMenuItem<int>(
-                  value: 4,
-                  child: Row(
-                    children: [
-                      Icon(Icons.share, color: Colors.grey),
-                      const SizedBox(width: 8),
-                      Text('kongsi'),
-                    ],
-                  ),
-                ),
-              ],
-              onSelected: (value) {
-                // Handle the selected menu item
-                switch (value) {
-                  case 1:
-                    print('Menu Item 1 selected');
-                    break;
-                  case 2:
-                    print('Menu Item 2 selected');
-                    break;
-                  case 3:
-                    print('Menu Item 3 selected');
-                    break;
-                  case 4:
-                    print('Menu Item 4 selected');
-                    break;
-                }
-              },
-            ),
-            label: 'lagi',
+            icon: ImageIcon(AssetImage('assets/icon/solat.png'), size: 30),
+            label: 'waktu solat',
           ),
         ],
       ),
