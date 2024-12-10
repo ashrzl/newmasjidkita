@@ -1,4 +1,4 @@
-package com.example.new_mk_v3
+package com.mkmobile3
 
 import android.os.Bundle
 import io.flutter.embedding.android.FlutterActivity

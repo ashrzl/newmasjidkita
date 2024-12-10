@@ -29,7 +29,7 @@ if (flutterVersionName == null) {
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    namespace "com.example.new_mk_v3"
+    namespace "com.mkmobile3"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
@@ -47,7 +47,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.new_mk_v3"
+        applicationId "com.mkmobile3"
         multiDexEnabled true
         minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion

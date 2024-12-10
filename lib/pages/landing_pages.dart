@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:new_mk_v3/qiblah_pages.dart';
+import 'package:new_mk_v3/pages/features/calendar_pages.dart';
+import 'package:new_mk_v3/pages/features/qiblah_pages.dart';
 import 'package:new_mk_v3/pages/quran/quran_pages.dart';
 import 'package:new_mk_v3/pages/login_pages.dart';
+
+/*
+* Project: MasjidKita Mobile App - V3
+* Description: A Landing Page for public user
+* Author: AIMAN SHARIZAL
+* Date: 19 November 20204
+* Version: 3.0
+* Details: Public user: user that not subscribe with MasjidKITA
+*/
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -12,7 +22,7 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage> {
   bool isExpanded = false;
-  int _selectedIndex = 2;
+  int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -28,23 +38,16 @@ class _LandingPageState extends State<LandingPage> {
         );
         break;
       case 1:
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => PrayerTimesPage()),
-      // );
-        break;
-      case 2:
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => LandingPage())
         );
         break;
-      case 3:
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => QiblahPage())
-        );
+      case 2:
+        // Navigator.pushReplacement(
+        //     context,
+        //     MaterialPageRoute(builder: (context) => QiblahPage())
+        // );
     }
   }
 
@@ -73,7 +76,7 @@ class _LandingPageState extends State<LandingPage> {
                     padding: const EdgeInsets.all(12.0),
                     child: Center(
                       child: Image.asset(
-                        'assets/icon/MasjidKITA-Logo.png',
+                        'assets/icon/mklogo.png',
                         height: 50,
                       ),
                     ),
@@ -206,7 +209,6 @@ class _LandingPageState extends State<LandingPage> {
                     ),
                   ],
                 ),
-
               ],
             ),
           ],
@@ -223,81 +225,12 @@ class _LandingPageState extends State<LandingPage> {
             label: 'al-quran',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage('assets/icon/solat.png'), size: 30),
-            label: 'waktu solat',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.home_rounded, size: 30),
             label: 'utama',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage('assets/icon/qibla.png'),size: 30),
-            label: 'kiblat',
-          ),
-          BottomNavigationBarItem(
-            icon: PopupMenuButton<int>(
-              icon: Icon(Icons.more_horiz_rounded, size: 30),
-              itemBuilder: (BuildContext context) => [
-                PopupMenuItem<int>(
-                  value: 1,
-                  child: Row(
-                    children: [
-                      Icon(Icons.chat_rounded, color: Colors.grey),
-                      const SizedBox(width: 8),
-                      Text('forum'),
-                    ],
-                  ),
-                ),
-                PopupMenuItem<int>(
-                  value: 2,
-                  child: Row(
-                    children: [
-                      Icon(Icons.calendar_month_outlined, color: Colors.grey),
-                      const SizedBox(width: 8),
-                      Text('kalendar'),
-                    ],
-                  ),
-                ),
-                PopupMenuItem<int>(
-                  value: 3,
-                  child: Row(
-                    children: [
-                      Icon(Icons.bookmark_added_rounded, color: Colors.grey),
-                      const SizedBox(width: 8),
-                      Text('tempahan'),
-                    ],
-                  ),
-                ),
-                PopupMenuItem<int>(
-                  value: 4,
-                  child: Row(
-                    children: [
-                      Icon(Icons.share, color: Colors.grey),
-                      const SizedBox(width: 8),
-                      Text('kongsi'),
-                    ],
-                  ),
-                ),
-              ],
-              onSelected: (value) {
-                // Handle the selected menu item
-                switch (value) {
-                  case 1:
-                    print('Menu Item 1 selected');
-                    break;
-                  case 2:
-                    print('Menu Item 2 selected');
-                    break;
-                  case 3:
-                    print('Menu Item 3 selected');
-                    break;
-                  case 4:
-                    print('Menu Item 4 selected');
-                    break;
-                }
-              },
-            ),
-            label: 'lagi',
+            icon: ImageIcon(AssetImage('assets/icon/solat.png'), size: 30),
+            label: 'waktu solat',
           ),
         ],
       ),
@@ -317,7 +250,7 @@ class _LandingPageState extends State<LandingPage> {
                 SizedBox(width: 16),
                 _buildModulIcon('assets/icon/khairatKITA.png'),
                 SizedBox(width: 16),
-                _buildModulIcon('assets/icon/MasjidKITA-Logo.png'),
+                _buildModulIcon('assets/icon/mklogo.png'),
                 SizedBox(width: 16),
                 _buildModulIcon('assets/icon/pusaraKITA.png'),
               ],
@@ -337,13 +270,64 @@ class _LandingPageState extends State<LandingPage> {
           children: [
             Row(
               children: [
-                _buildMenuIcon('assets/icon/qibla.png', 'Kiblat', const Color(0xFF073C62)),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => QiblahPage()),
+                    );
+                  },
+                  child: _buildMenuIcon(
+                    'assets/icon/qibla.png',
+                    'Kiblat',
+                    const Color(0xFF073C62),
+                  ),
+                ),
                 SizedBox(width: 16),
-                _buildMenuIcon('assets/icon/calendar.png', 'Kalendar', const Color(0xFF073C62)),
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to KalendarPage (replace with your page)
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CalendarPage()), // Example page
+                    );
+                  },
+                  child: _buildMenuIcon(
+                    'assets/icon/calendar.png',
+                    'Kalendar',
+                    const Color(0xFF073C62),
+                  ),
+                ),
                 SizedBox(width: 16),
-                _buildMenuIcon('assets/icon/chat.png', 'Forum', const Color(0xFF073C62)),
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to ForumPage (replace with your page)
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => ),
+                    // );
+                  },
+                  child: _buildMenuIcon(
+                    'assets/icon/chat.png',
+                    'Forum',
+                    const Color(0xFF073C62),
+                  ),
+                ),
                 SizedBox(width: 16),
-                _buildMenuIcon('assets/icon/booking.png', 'Tempahan', const Color(0xFF073C62)),
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to BookingPage (replace with your page)
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => ),
+                    // );
+                  },
+                  child: _buildMenuIcon(
+                    'assets/icon/booking.png',
+                    'Tempahan',
+                    const Color(0xFF073C62),
+                  ),
+                ),
               ],
             ),
           ],

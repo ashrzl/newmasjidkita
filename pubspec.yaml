@@ -59,7 +59,8 @@ dependencies:
   flutter_debouncer: ^2.0.0
   sensors_plus: ^5.0.1
   timezone: ^0.9.4
-  tbib_get_timezone_location: ^1.1.1
+  hijri_picker: ^3.0.0
+  table_calendar: ^3.1.2
 
 
 dev_dependencies:
@@ -71,10 +72,10 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/icon/MasjidKITALogo.png"
+  image_path: "assets/icon/mklogo.png"
   min_sdk_android: 21
   adaptive_icon_background: "#ffffff" # You can use a color or image for the background
-  adaptive_icon_foreground: "assets/icon/MasjidKITA-Logo.png" # For adaptive icons on Android
+  adaptive_icon_foreground: "assets/icon/mklogo.png" # For adaptive icons on Android
 
 
 flutter:
@@ -98,7 +99,7 @@ flutter:
     - assets/icon/google.png
     - assets/icon/read-quran.png
     - assets/icon/solat.png
-    - assets/icon/MasjidKITA-Logo.png
+    - assets/icon/mklogo.png
     - assets/icon/qibla.png
     - assets/compassgif.gif
     - data/dzikir_pagi.json

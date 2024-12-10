@@ -12,7 +12,7 @@
     <application
         android:label="MasjidKITA"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/mklogo">
         <activity
             android:name=".MainActivity"
             android:exported="true"
