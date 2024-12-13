@@ -44,17 +44,47 @@ class _QiblahPageState extends State<QiblahPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF4A024F),
+        title: Text(
+          'Arah Kiblat',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Scheherazade',
+          ),
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => LandingPage()));
+              context,
+              MaterialPageRoute(builder: (context) => LandingPage()),
+            );
           },
         ),
-        title: const Text('Arah Kiblat', style: TextStyle(color: Colors.white)),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings, color: Colors.white),
+            onPressed: () {
+              // Navigate to the settings page or handle the settings action
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => SettingsPage()),
+              // );
+            },
+          ),
+        ],
+        centerTitle: true,
+        backgroundColor: Colors.blue[900],
+        elevation: 0,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(25.0),
+            bottomRight: Radius.circular(25.0),
+          ),
+        ),
+        toolbarHeight: 120,
       ),
-
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -136,7 +166,7 @@ class _QiblahPageState extends State<QiblahPage> {
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
-                            color: isCorrectDirection ? Colors.green[400] : Colors.white,
+                            color: isCorrectDirection ? Colors.green[400] : Colors.black,
                           ),
                         ),
                         SizedBox(height: 20), // Space between text and compass

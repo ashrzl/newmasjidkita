@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:new_mk_v3/controller/prayer_controller.dart';
 import 'package:new_mk_v3/pages/features/calendar_pages.dart';
+import 'package:new_mk_v3/pages/features/prayertime_pages.dart';
 import 'package:new_mk_v3/pages/features/qiblah_pages.dart';
 import 'package:new_mk_v3/pages/quran/quran_pages.dart';
 import 'package:new_mk_v3/pages/login_pages.dart';
+import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 /*
 * Project: MasjidKita Mobile App - V3
@@ -24,6 +29,30 @@ class _LandingPageState extends State<LandingPage> {
   bool isExpanded = false;
   int _selectedIndex = 1;
 
+  String quote = "Loading...";
+
+  @override
+  void initState() {
+    super.initState();
+    fetchQuote();
+  }
+
+  // Fetch quote from API
+  Future<void> fetchQuote() async {
+    final response = await http.get(Uri.parse('https://zenquotes.io/api/today'));
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      setState(() {
+        quote = data[0]['q'];  // Extract the quote from the response
+      });
+    } else {
+      setState(() {
+        quote = "Failed to load quote.";
+      });
+    }
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index; // Update the selected index
@@ -44,15 +73,17 @@ class _LandingPageState extends State<LandingPage> {
         );
         break;
       case 2:
-        // Navigator.pushReplacement(
-        //     context,
-        //     MaterialPageRoute(builder: (context) => QiblahPage())
-        // );
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => WaktuSolatPage())
+        );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final controller = Provider.of<PrayerController>(context);
+    controller.getCurrentLocation(); // Ensure location is fetched
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -104,7 +135,7 @@ class _LandingPageState extends State<LandingPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Text(
-                  '"Hati yang paling bernilai adalah yang tetap dekat dengan Allah, bahkan ketika sedang sakit."',
+                  '"$quote"',
                   style: const TextStyle(
                     color: Colors.white,
                     fontStyle: FontStyle.italic,
@@ -136,7 +167,7 @@ class _LandingPageState extends State<LandingPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Solat seterusnya Asar',
+                        controller.nextPrayer,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -146,18 +177,10 @@ class _LandingPageState extends State<LandingPage> {
                       const SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text(
-                            '4:27 PM',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
+                        children: [
                           Flexible(
                             child: Text(
-                              'Zon: Puchong, Selangor\nJumaat, 29 Disember 2024',
+                              'Zon: ${controller.currentLocation}',
                               style: TextStyle(fontSize: 12, color: Colors.grey),
                               textAlign: TextAlign.right,
                             ),
@@ -341,7 +364,7 @@ class _LandingPageState extends State<LandingPage> {
       children: [
         Container(
           padding: const EdgeInsets.all(20),
-          child: Image.asset(assetPath, height: 100, width: 100),
+          child: Image.asset(assetPath, height: 90, width: 90),
         ),
       ],
     );
@@ -352,7 +375,7 @@ class _LandingPageState extends State<LandingPage> {
       children: [
         Container(
           padding: const EdgeInsets.all(20),
-          child: Image.asset(assetPath, height: 60, width: 60, color: color),
+          child: Image.asset(assetPath, height: 50, width: 50, color: color),
         ),
         const SizedBox(height: 8),
         Text(
