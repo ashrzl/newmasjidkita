@@ -21,20 +21,41 @@ class SurahDetailPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           quran.getSurahName(surahNumber),
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Scheherazade',
+          ),
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => QuranPage()));
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => QuranPage()),
+            );
           },
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings, color: Colors.white),
+            onPressed: () {
+              // Navigate to the settings page or handle the settings action
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => SettingsPage()),
+              // );
+            },
+          ),
+        ],
         centerTitle: true,
         backgroundColor: Colors.blue[900],
+        elevation: 0,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(28.0),
-            bottomRight: Radius.circular(28.0),
+            bottomLeft: Radius.circular(25.0),
+            bottomRight: Radius.circular(25.0),
           ),
         ),
         toolbarHeight: 120,

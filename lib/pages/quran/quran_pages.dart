@@ -56,27 +56,42 @@ class _QuranPageState extends State<QuranPage>{
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Al-Quran",
+          'Al-Quran',
           style: TextStyle(
+            color: Colors.white,
             fontSize: 26,
             fontWeight: FontWeight.bold,
-            fontFamily: 'Scheherazade', // Customize font for Arabic context
-            color: Colors.white,
+            fontFamily: 'Scheherazade',
           ),
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LandingPage()));
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => LandingPage()),
+            );
           },
         ),
-        backgroundColor: Colors.blue[900],
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings, color: Colors.white),
+            onPressed: () {
+              // Navigate to the settings page or handle the settings action
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => SettingsPage()),
+              // );
+            },
+          ),
+        ],
         centerTitle: true,
-        elevation: 10,
+        backgroundColor: Colors.blue[900],
+        elevation: 0,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(28.0),
-            bottomRight: Radius.circular(28.0),
+            bottomLeft: Radius.circular(25.0),
+            bottomRight: Radius.circular(25.0),
           ),
         ),
         toolbarHeight: 120,

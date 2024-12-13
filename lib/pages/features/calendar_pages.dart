@@ -17,29 +17,46 @@ class _CalendarPageState extends State<CalendarPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          'Kalendar',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Scheherazade',
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => LandingPage()),
+            );
+          },
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings, color: Colors.white),
+            onPressed: () {
+              // Navigate to the settings page or handle the settings action
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => SettingsPage()),
+              // );
+            },
+          ),
+        ],
+        centerTitle: true,
         backgroundColor: Colors.blue[900],
+        elevation: 0,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(25.0),
             bottomRight: Radius.circular(25.0),
           ),
         ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LandingPage()));
-          },
-        ),
         toolbarHeight: 120,
-        centerTitle: true,
-        title: Text(
-          'Kalendar',
-          style: TextStyle(
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
-              color: Colors.white
-          ),
-        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
