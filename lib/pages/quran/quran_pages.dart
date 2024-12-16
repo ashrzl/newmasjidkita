@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_mk_v3/pages/features/prayertime_pages.dart';
 import 'package:new_mk_v3/pages/landing_pages.dart';
 import 'package:new_mk_v3/pages/quran/surahdetail_pages.dart';
 import 'package:new_mk_v3/pages/features/qiblah_pages.dart';
@@ -34,7 +35,7 @@ class _QuranPageState extends State<QuranPage>{
       case 0:
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => QuranPage()),
+          MaterialPageRoute(builder: (context) => QuranPage())
         );
         break;
       case 1:
@@ -44,10 +45,10 @@ class _QuranPageState extends State<QuranPage>{
         );
         break;
       case 2:
-        // Navigator.pushReplacement(
-        //     context,
-        //     MaterialPageRoute(builder: (context) => QiblahPage())
-        // );
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => WaktuSolatPage())
+        );
     }
   }
 
