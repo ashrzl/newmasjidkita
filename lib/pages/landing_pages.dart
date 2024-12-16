@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_mk_v3/controller/prayer_controller.dart';
 import 'package:new_mk_v3/pages/features/calendar_pages.dart';
+import 'package:new_mk_v3/pages/features/listvideo_pages.dart';
 import 'package:new_mk_v3/pages/features/prayertime_pages.dart';
 import 'package:new_mk_v3/pages/features/qiblah_pages.dart';
+import 'package:new_mk_v3/pages/features/videodetail_pages.dart';
 import 'package:new_mk_v3/pages/quran/quran_pages.dart';
 import 'package:new_mk_v3/pages/login_pages.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +32,12 @@ class _LandingPageState extends State<LandingPage> {
   int _selectedIndex = 1;
 
   String quote = "Loading...";
+
+  final List<Map<String, String>> videos = [
+    {'id': '1', 'thumbnail': 'assets/videoagama.png', 'url': 'https://www.youtube.com/watch?v=GeouFcney4c'},
+    {'id': '2', 'thumbnail': 'assets/videoagama2.png', 'url': 'https://www.youtube.com/watch?v=LM_UNHTJESs'},
+  ];
+
 
   @override
   void initState() {
@@ -216,13 +224,13 @@ class _LandingPageState extends State<LandingPage> {
                       padding: const EdgeInsets.only(right: 16.0),
                       child: GestureDetector(
                         onTap: () {
-                          // Navigator.pushReplacement(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => LoginPage(title: '')),
-                          // );
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => VideoListPage(videos: videos)),
+                          );
                         },
                         child: Text(
-                            'Lihat semua',
+                            'Lagi',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.blue,
@@ -231,6 +239,38 @@ class _LandingPageState extends State<LandingPage> {
                       ),
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: 200, // Height for the carousel
+                  child: PageView.builder(
+                    itemCount: videos.length,
+                    itemBuilder: (context, index) {
+                      final video = videos[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => VideoDetailPage(videoUrl: video['url']!),
+                            ),
+                          );
+                        },
+                        child: Hero(
+                          tag: video['id']!,
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.0),
+                              image: DecorationImage(
+                                image: AssetImage(video['thumbnail']!),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
