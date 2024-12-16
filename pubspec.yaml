@@ -60,6 +60,7 @@ dependencies:
   timezone: ^0.9.4
   waktu_solat: ^1.0.1
   table_calendar: ^3.1.2
+  youtube_player_flutter: ^9.1.1
 
 
 dev_dependencies:
@@ -101,9 +102,9 @@ flutter:
     - assets/icon/mklogo.png
     - assets/icon/qibla.png
     - assets/compassgif.gif
-    - data/dzikir_pagi.json
-    - data/doa.json
-    - data/nawawi40.json
+    - assets/videoagama.png
+    - assets/videoagama2.png
+    - data/videos.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:
