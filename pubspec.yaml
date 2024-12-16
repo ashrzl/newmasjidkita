@@ -104,7 +104,7 @@ flutter:
     - assets/compassgif.gif
     - assets/videoagama.png
     - assets/videoagama2.png
-    - data/videos.json
+    - assets/data/videos.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:
