@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_mk_v3/controller/prayer_controller.dart';
 import 'package:new_mk_v3/pages/features/calendar_pages.dart';
+import 'package:new_mk_v3/pages/features/forum_pages.dart';
 import 'package:new_mk_v3/pages/features/listvideo_pages.dart';
 import 'package:new_mk_v3/pages/features/prayertime_pages.dart';
 import 'package:new_mk_v3/pages/features/qiblah_pages.dart';
@@ -214,7 +215,7 @@ class _LandingPageState extends State<LandingPage> {
                       padding: const EdgeInsets.all(16.0),
                       child: Center(
                         child: Text(
-                            'Video Terkini',
+                          'Video Terkini',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -230,7 +231,7 @@ class _LandingPageState extends State<LandingPage> {
                           );
                         },
                         child: Text(
-                            'Lagi',
+                          'Lagi',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.blue,
@@ -365,10 +366,10 @@ class _LandingPageState extends State<LandingPage> {
                 GestureDetector(
                   onTap: () {
                     // Navigate to ForumPage (replace with your page)
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => ),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ForumPage()),
+                    );
                   },
                   child: _buildMenuIcon(
                     'assets/icon/chat.png',

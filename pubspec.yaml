@@ -61,6 +61,7 @@ dependencies:
   waktu_solat: ^1.0.1
   table_calendar: ^3.1.2
   youtube_player_flutter: ^9.1.1
+  carousel_slider: ^5.0.0
 
 
 dev_dependencies:
@@ -104,6 +105,7 @@ flutter:
     - assets/compassgif.gif
     - assets/videoagama.png
     - assets/videoagama2.png
+    - assets/videoagama3.png
     - assets/data/videos.json
 
   # To add assets to your application, add an assets section, like this:
