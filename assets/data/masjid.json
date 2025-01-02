@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "Masjid Sultan Salahuddin Abdul Aziz Shah",
+    "subtitle": "Shah Alam",
+    "url": "https://www.mssaas.gov.my",
+    "image": "assets/masjidpicture/masjidshahalam.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Masjid Putra, Putrajaya",
+    "subtitle": "Putrajaya",
+    "url": "http://www.masjidputra.gov.my/ms/",
+    "image": "assets/masjidpicture/masjidputra.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Masjid Negara",
+    "subtitle": "Malaysia",
+    "url": "https://masjidnegara.gov.my/ms/",
+    "image": "assets/masjidpicture/masjid-negara.jpg"
+  }
+]

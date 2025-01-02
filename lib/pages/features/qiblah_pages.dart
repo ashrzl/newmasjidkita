@@ -171,16 +171,32 @@ class _QiblahPageState extends State<QiblahPage> {
                         ),
                         SizedBox(height: 20), // Space between text and compass
                         // Rotating compass with dynamic border
-                        Transform.rotate(
-                          angle: -(direction * (pi / 180)), // Rotate by negative radians
+                        Stack(
                           alignment: Alignment.center,
-                          child: Image.asset(
-                              'assets/icon/qiblah.png',
-                              fit: BoxFit.contain,
-                              height: 300, // Adjust size as needed
+                          children: [
+                            // Image that will be rotated
+                            Transform.rotate(
+                              angle: -(direction * (pi / 180)), // Rotate by negative radians
                               alignment: Alignment.center,
+                              child: Image.asset(
+                                'assets/icon/qiblat.png',
+                                fit: BoxFit.contain,
+                                height: 300, // Adjust size as needed
+                                alignment: Alignment.center,
+                              ),
                             ),
-                          ),
+                            // Arrow that will be rotated with the image
+                            Transform.rotate(
+                              angle: -(direction * (pi / 180)), // Same rotation as the image
+                              alignment: Alignment.center,
+                              child: Icon(
+                                Icons.arrow_upward, // Choose the arrow icon you want
+                                size: 50, // Adjust size as needed
+                                color: Colors.black, // Choose color as needed
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   );

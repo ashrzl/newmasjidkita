@@ -25,19 +25,13 @@ class _ActivityPageState extends State<ActivityPage> {
         title: Text('Aktiviti Baharu', style: TextStyle(color: Colors.white),),
         backgroundColor: Colors.blue[900],
         elevation: 4.0,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(25.0),
-            bottomRight: Radius.circular(25.0),
-          ),
-        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CalendarPage()));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CalendarPage(title: '',)));
           },
         ),
-        toolbarHeight: 120,
+        toolbarHeight: 100,
         centerTitle: true,
       ),
       body: Padding(

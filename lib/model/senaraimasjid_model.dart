@@ -1,38 +1,39 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 
-class Video {
+class SenaraiMasjid {
   final int id;
   final String title;
+  final String subtitle;
   final String url;
   final String image;
 
-  Video({
+  SenaraiMasjid({
     required this.id,
     required this.title,
+    required this.subtitle,
     required this.url,
     required this.image,
   });
 
-  // Factory constructor to create Video object from JSON
-  factory Video.fromJson(Map<String, dynamic> json) {
-    return Video(
+  factory SenaraiMasjid.fromJson(Map<String, dynamic> json) {
+    return SenaraiMasjid(
       id: json['id'],
       title: json['title'],
+      subtitle: json['subtitle'],
       url: json['url'],
       image: json['image'],
     );
   }
 }
 
-Future<List<Video>> loadVideos() async {
+Future<List<SenaraiMasjid>> loadMasjidList() async {
   try {
-    final String response = await rootBundle.loadString('assets/data/videos.json');
+    final String response = await rootBundle.loadString('assets/data/masjid.json');
     final List<dynamic> data = json.decode(response);
-    return data.map((json) => Video.fromJson(json)).toList();
+    return data.map((json) => SenaraiMasjid.fromJson(json)).toList();
   } catch (e) {
-    print("Error loading videos: $e"); // Debugging output
+    print("Error loading data: $e");
     return [];
   }
 }
-

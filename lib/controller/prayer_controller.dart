@@ -69,12 +69,19 @@ class PrayerController extends ChangeNotifier {
     for (String prayer in prayerNames) {
       String prayerTime = prayerTimes.toJson()[prayer] ?? '';
       if (prayerTime.isNotEmpty) {
-        DateTime prayerDateTime = DateTime.parse('${now.year}-${now.month}-${now.day} $prayerTime:00');
-        if (prayerDateTime.isAfter(now)) {
-          return 'Solat Seterusnya: $prayer pada $prayerTime';
+        try {
+          // Ensure proper formatting
+          String formattedDate = '${now.year.toString().padLeft(4, '0')}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')} $prayerTime:00';
+          DateTime prayerDateTime = DateTime.parse(formattedDate);
+
+          if (prayerDateTime.isAfter(now)) {
+            return 'Solat Seterusnya: $prayer pada $prayerTime';
+          }
+        } catch (e) {
+          print('Error parsing prayer time for $prayer: $e');
         }
       }
     }
-    return 'No more prayers today';
+    return 'Tiada solat lagi untuk hari ini.';
   }
 }

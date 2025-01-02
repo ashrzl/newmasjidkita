@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen>
         height: MediaQuery.of(context).size.height, // Use MediaQuery for full height
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/background/islamic-white.jpg'),
+            image: AssetImage('assets/gif/lanterns.gif'),
             fit: BoxFit.cover,
           ),
         ),
@@ -68,25 +68,7 @@ class _SplashScreenState extends State<SplashScreen>
             ),
             Column(
               children: [
-                const Text('v1.0.0', style: TextStyle(color: Colors.black)),
-                const Text('Dibina oleh', style: TextStyle(color: Colors.black)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/icon/copyright.png',
-                      width: 10,
-                      height: 10,
-                      color: Colors.black,
-                    ),
-                    const SizedBox(width: 2),
-                    const Text(
-                      'Custommedia Sdn Bhd',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
+                const Text('v3.0.0', style: TextStyle(color: Colors.black)),
               ],
             ),
           ],

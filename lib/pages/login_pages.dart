@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:new_mk_v3/pages/landing_pages.dart';
+import 'package:new_mk_v3/pages/loginlanding_pages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -104,10 +105,10 @@ class _LoginPageState extends State<LoginPage> {
           );
 
           // Navigate to the home page
-          // Navigator.pushReplacement(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => HomePage()),
-          // );
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LoginLandingPage()),
+          );
         } else {
           print('Invalid response data: token or user ID is null');
           ScaffoldMessenger.of(context).showSnackBar(
@@ -159,13 +160,6 @@ class _LoginPageState extends State<LoginPage> {
                 context, MaterialPageRoute(builder: (context) => LandingPage()));
           },
         ),
-        elevation: 22,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(28.0),
-            bottomRight: Radius.circular(28.0),
-          ),
-        ),
         centerTitle: true,
         title: const Text(
           'Log Masuk',
@@ -175,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
             fontSize: 25,
           ),
         ),
-        toolbarHeight: 120,
+        toolbarHeight: 100,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),

@@ -6,108 +6,148 @@ import 'package:provider/provider.dart';
 class WaktuSolatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<PrayerController>(context);
-    controller.getCurrentLocation(); // Ensure location is fetched
+    final prayerController = Provider.of<PrayerController>(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Waktu Solat',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 26,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Scheherazade',
-          ),
-        ),
+        backgroundColor: Colors.blue[900],
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => LandingPage()),
-            );
+                context, MaterialPageRoute(builder: (context) => LandingPage()));
           },
+        ),
+        toolbarHeight: 100,
+        centerTitle: true,
+        title: Text(
+          'Waktu Solat',
+          style: TextStyle(
+            color: Colors.white,
+            fontStyle: FontStyle.italic,
+            fontSize: 24,
+          ),
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.settings, color: Colors.white),
             onPressed: () {
-              // Navigate to the settings page or handle the settings action
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => SettingsPage()),
-              // );
+              // Settings action
             },
+            icon: Icon(Icons.settings, color: Colors.white),
           ),
         ],
-        centerTitle: true,
-        backgroundColor: Colors.blue[900],
-        elevation: 0,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(25.0),
-            bottomRight: Radius.circular(25.0),
-          ),
-        ),
-        toolbarHeight: 120,
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Current Location
-            Text(
-              'Zon: ${controller.currentLocation}',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+            // Header Section
+            Card(
+              color: Colors.blue.shade50,
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
               ),
-            ),
-            SizedBox(height: 20),
-
-            // Next Prayer Time
-            Text(
-              controller.nextPrayer,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-              ),
-            ),
-            SizedBox(height: 20),
-
-            // Prayer Times List
-            controller.prayerTimes == null
-                ? Center(child: CircularProgressIndicator())
-                : Expanded(
-              child: ListView.builder(
-                itemCount: 8,
-                itemBuilder: (context, index) {
-                  List<String> prayerTimes = [
-                    'Fajr', 'Imsak', 'Sunrise', 'Dhuhr', 'Asr', 'Sunset', 'Maghrib', 'Isha'
-                  ];
-                  String prayerName = prayerTimes[index];
-                  String prayerTime = controller.prayerTimes!.toJson()[prayerName] ?? '';
-                  return Card(
-                    margin: EdgeInsets.symmetric(vertical: 5),
-                    elevation: 5,
-                    child: ListTile(
-                      contentPadding: EdgeInsets.all(10),
-                      title: Text(
-                        prayerName,
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      subtitle: Text(
-                        prayerTime,
-                        style: TextStyle(fontSize: 16),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      prayerController.nextPrayer,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  );
-                },
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Text(
+                          '${DateTime.now().hour.toString().padLeft(2, '0')}:${DateTime.now().minute.toString().padLeft(2, '0')} ${DateTime.now().hour >= 12 ? 'PM' : 'AM'}',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(width: 50),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text(
+                                'Zon: ${prayerController.currentLocation}',
+                                textAlign: TextAlign.center,
+                              ),
+                              Text(
+                                '${DateTime.now().toLocal().toString().split(' ')[0]}',
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+
+                  ],
+                ),
               ),
+            ),
+            SizedBox(height: 16),
+            // Prayer Times List
+            Expanded(
+              child: ListView(
+                children: [
+                  _buildPrayerTimeRow(
+                      'Imsak', prayerController.prayerTimes?.imsak ?? '...'),
+                  SizedBox(height: 16),
+                  _buildPrayerTimeRow(
+                      'Fajr', prayerController.prayerTimes?.fajr ?? '...'),
+                  SizedBox(height: 16),
+                  _buildPrayerTimeRow(
+                      'Zohor', prayerController.prayerTimes?.dhuhr ?? '...'),
+                  SizedBox(height: 16),
+                  _buildPrayerTimeRow(
+                      'Asar', prayerController.prayerTimes?.asr ?? '...'),
+                  SizedBox(height: 16),
+                  _buildPrayerTimeRow(
+                      'Maghrib', prayerController.prayerTimes?.maghrib ?? '...'),
+                  SizedBox(height: 16),
+                  _buildPrayerTimeRow(
+                      'Isyak', prayerController.prayerTimes?.isha ?? '...'),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          prayerController.getCurrentLocation();
+        },
+        child: Icon(Icons.refresh),
+      ),
+    );
+  }
+
+  // Helper method to build a prayer time row
+  Widget _buildPrayerTimeRow(String title, String time) {
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 4),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+            ),
+            Text(
+              time,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
             ),
           ],
         ),
