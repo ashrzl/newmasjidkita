@@ -26,15 +26,21 @@ class VideoListPage extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: Colors.blue[900],
-        elevation: 0,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(25.0),
-            bottomRight: Radius.circular(25.0),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings, color: Colors.white),
+            onPressed: () {
+              // Navigate to the settings page or handle the settings action
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => SettingsPage()),
+              // );
+            },
           ),
-        ),
-        toolbarHeight: 120,
+        ],
+        backgroundColor: Colors.blue[900],
+        toolbarHeight: 100,
+        centerTitle: true,
       ),
       body: ListView.builder(
         itemCount: videos.length,

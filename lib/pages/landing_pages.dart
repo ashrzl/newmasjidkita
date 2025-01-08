@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:new_mk_v3/controller/prayer_controller.dart';
+import 'package:new_mk_v3/model/senaraimasjid_model.dart';
 import 'package:new_mk_v3/model/video_model.dart';
 import 'package:new_mk_v3/pages/features/calendar_pages.dart';
-import 'package:new_mk_v3/pages/features/senaraimasjid_pages.dart';
 import 'package:new_mk_v3/pages/features/listvideo_pages.dart';
 import 'package:new_mk_v3/pages/features/prayertime_pages.dart';
 import 'package:new_mk_v3/pages/features/qiblah_pages.dart';
+import 'package:new_mk_v3/pages/features/senaraimasjid_pages.dart';
 import 'package:new_mk_v3/pages/features/videodetail_pages.dart';
 import 'package:new_mk_v3/pages/quran/quran_pages.dart';
 import 'package:new_mk_v3/pages/login_pages.dart';
@@ -72,328 +73,8 @@ class _LandingPageState extends State<LandingPage> {
         );
         break;
       case 1:
-        _showBottomDrawer();
         break;
     }
-  }
-
-  void _showBottomDrawer() {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true, // Allows the bottom sheet to adjust its height
-      builder: (BuildContext context) {
-        return FractionallySizedBox(
-          heightFactor: 0.6, // Adjust the height as needed
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min, // Makes the column take only as much space as needed
-                children: [
-                  const Text(
-                    'Teroka',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 16),
-                  ListTile(
-                    title: Row(
-                      children: [
-                        Image.asset('assets/icon/mklogo.png', height: 100),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'MasjidKITA',
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                              ),
-                              const Text(
-                                'Memaparkan senarai masjid',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: TextButton(
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          title: const Text('MasjidKITA'),
-                                          content: const Text(
-                                            'Memaparkan senarai masjid yang berdaftar dibawah MasjidKITA',
-                                          ),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: const Text('Tutup'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: const Text('Seterusnya'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.pushReplacement(
-                          context,
-                        MaterialPageRoute(builder: (context) => MasjidListScreen()),
-                      );
-                    },
-                  ),
-                  const Divider(thickness: 2),
-                  ListTile(
-                    title: Row(
-                      children: [
-                        Image.asset('assets/icon/kariahKITA.png', height: 100),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'KariahKITA',
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                              ),
-                              const Text(
-                                'Sistem Pengurusan Kariah yang dibangunkan ',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: TextButton(
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          title: const Text('KariahKITA'),
-                                          content: const Text(
-                                            'Sistem Pengurusan Kariah yang dibangunkan bagi '
-                                                'membantu dalam pengurusan rekod anak kariah di masjid '
-                                                'atau surau yang berdaftar dalam MasjidKITA. '
-                                                'Sumbangan masjid dan pembayaran khairat kematian juga boleh diakses oleh anak kariah',
-                                          ),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: const Text('Tutup'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: const Text('Seterusnya'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      // Additional onTap action if needed.
-                    },
-                  ),
-                  const Divider(thickness: 2),
-                  ListTile(
-                    title: Row(
-                      children: [
-                        Image.asset('assets/icon/khairatKITA.png', height: 100),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'KhairatKITA',
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                              ),
-                              const Text(
-                                'Membantu anak kariah menguruskan ',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: TextButton(
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          title: const Text('KhairatKITA'),
-                                          content: const Text(
-                                            'Membantu anak kariah mengurus khairat '
-                                                'kematian di masjid dan surau '
-                                                'yang berdaftar di bawah MasjidKITA',
-                                          ),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: const Text('Tutup'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: const Text('Seterusnya'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      // Additional onTap action if needed.
-                    },
-                  ),
-                  const Divider(thickness: 2),
-                  ListTile(
-                    title: Row(
-                      children: [
-                        Image.asset('assets/icon/pusaraKITA.png', height: 100),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'PusaraKITA',
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                              ),
-                              const Text(
-                                'Pengurusan Pusara oleh anak kariah ',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: TextButton(
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          title: const Text('PusaraKITA'),
-                                          content: const Text(
-                                            'Pengurusan Pusara oleh anak kariah '
-                                                'serta sistem untuk plot tanah kubur',
-                                          ),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: const Text('Tutup'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: const Text('Seterusnya'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      // Additional onTap action if needed.
-                    },
-                  ),
-                  const Divider(thickness: 2),
-                  ListTile(
-                    title: Row(
-                      children: [
-                        Image.asset('assets/icon/infaqKITA.png', height: 100),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'InfaqKITA',
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                              ),
-                              const Text(
-                                'Sistem Infaq bagi memberi platform',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: TextButton(
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          title: const Text('InfaqKITA'),
-                                          content: const Text(
-                                            'Sistem Infaq bagi memberi platform '
-                                                'kepada ahli berdaftar bawah '
-                                                'MasjidKITA dan orang ramai '
-                                                'untuk berkongsi rezeki.',
-                                          ),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: const Text('Tutup'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: const Text('Seterusnya'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      // Additional onTap action if needed.
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
   }
 
   @override
@@ -701,7 +382,83 @@ class _LandingPageState extends State<LandingPage> {
         currentIndex: _selectedIndex,
         selectedItemColor: const Color(0xFF20345B),
         unselectedItemColor: Colors.grey,
-        onTap: _onItemTapped,
+        onTap: (int index) {
+          if (index == 1) {
+            // Show bottom sheet when 'Teroka' is tapped
+            showModalBottomSheet(
+              context: context,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+              ),
+              builder: (BuildContext context) {
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Teroka',
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 16),
+                      ListTile(
+                        leading: Image.asset('assets/icon/mklogo.png'),
+                        title: Text('MasjidKITA'),
+                        onTap: () {
+                          // Perform action for 'Eksplorasi 1'
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MasjidListScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                      Divider(thickness: 2),
+                      ListTile(
+                        leading: Image.asset('assets/icon/kariahKITA.png'),
+                        title: Text('KariahKITA'),
+                        onTap: () {
+                          // Perform action for 'Eksplorasi 2'
+                          Navigator.pop(context);
+                        },
+                      ),
+                      Divider(thickness: 2),
+                      ListTile(
+                        leading: Image.asset('assets/icon/khairatKITA.png'),
+                        title: Text('KhairatKITA'),
+                        onTap: () {
+                          // Perform action for 'Eksplorasi 3'
+                          Navigator.pop(context);
+                        },
+                      ),
+                      Divider(thickness: 2),
+                      ListTile(
+                        leading: Image.asset('assets/icon/pusaraKITA.png'),
+                        title: Text('PusaraKITA'),
+                        onTap: () {
+                          // Perform action for 'Eksplorasi 3'
+                          Navigator.pop(context);
+                        },
+                      ),
+                      Divider(thickness: 2),
+                      ListTile(
+                        leading: Image.asset('assets/icon/infaqKITA.png'),
+                        title: Text('InfaqKITA'),
+                        onTap: () {
+                          // Perform action for 'Eksplorasi 3'
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          } else {
+            _onItemTapped(index); // Handle other items normally
+          }
+        },
         items: [
           const BottomNavigationBarItem(
             icon: Icon(Icons.home_rounded, size: 30),
@@ -744,7 +501,7 @@ class _LandingPageState extends State<LandingPage> {
                   ),
                 ),
                 PopupMenuItem<int>(
-                  value: 2,
+                  value: 3,
                   child: Row(
                     children: [
                       Icon(Icons.call, size: 20),
@@ -759,6 +516,7 @@ class _LandingPageState extends State<LandingPage> {
           ),
         ],
       ),
+
     );
   }
 

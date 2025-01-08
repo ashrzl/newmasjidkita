@@ -48,6 +48,7 @@ class _CalendarPageState extends State<CalendarPage> {
           },
         ),
         centerTitle: true,
+        toolbarHeight: 100,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -83,7 +84,7 @@ class _CalendarPageState extends State<CalendarPage> {
             const SizedBox(height: 16),
             if (_getEventsForDay(_selectedDate).isNotEmpty)
               Text(
-                'Events: ${_getEventsForDay(_selectedDate).join(', ')}',
+                'Aktiviti: ${_getEventsForDay(_selectedDate).join(', ')}',
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -92,7 +93,7 @@ class _CalendarPageState extends State<CalendarPage> {
               )
             else
               const Text(
-                'No events on this day.',
+                'Tiada Aktiviti pada hari ini',
                 style: TextStyle(fontSize: 14, color: Colors.grey),
               ),
             const Spacer(),

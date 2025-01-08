@@ -76,14 +76,7 @@ class _QiblahPageState extends State<QiblahPage> {
         ],
         centerTitle: true,
         backgroundColor: Colors.blue[900],
-        elevation: 0,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(25.0),
-            bottomRight: Radius.circular(25.0),
-          ),
-        ),
-        toolbarHeight: 120,
+        toolbarHeight: 100,
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -170,29 +163,28 @@ class _QiblahPageState extends State<QiblahPage> {
                           ),
                         ),
                         SizedBox(height: 20), // Space between text and compass
-                        // Rotating compass with dynamic border
+                        Transform.rotate(
+                          angle: -(direction * (pi / 180)), // Rotate arrow with the same direction
+                          alignment: Alignment.center,
+                          child: Icon(
+                            Icons.arrow_upward,
+                            size: 50,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        // Rotating compass
                         Stack(
                           alignment: Alignment.center,
                           children: [
-                            // Image that will be rotated
                             Transform.rotate(
-                              angle: -(direction * (pi / 180)), // Rotate by negative radians
+                              angle: -(direction * (pi / 180)),
                               alignment: Alignment.center,
                               child: Image.asset(
                                 'assets/icon/qiblat.png',
                                 fit: BoxFit.contain,
-                                height: 300, // Adjust size as needed
+                                height: 300,
                                 alignment: Alignment.center,
-                              ),
-                            ),
-                            // Arrow that will be rotated with the image
-                            Transform.rotate(
-                              angle: -(direction * (pi / 180)), // Same rotation as the image
-                              alignment: Alignment.center,
-                              child: Icon(
-                                Icons.arrow_upward, // Choose the arrow icon you want
-                                size: 50, // Adjust size as needed
-                                color: Colors.black, // Choose color as needed
                               ),
                             ),
                           ],
@@ -222,6 +214,7 @@ class _QiblahPageState extends State<QiblahPage> {
     );
   }
 
+
   void _showCalibrationDialog() {
     showDialog(
       context: context,
@@ -233,7 +226,7 @@ class _QiblahPageState extends State<QiblahPage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset('assets/compassgif.gif'),
+              Image.asset('assets/gif/compassgif.gif'),
               Text(
                   'Untuk memastikan arah Kiblat yang tepat, '
                       'sila kalibrasi kompas anda dengan memutar peranti anda dalam gerakan lapan.'
