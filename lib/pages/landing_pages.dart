@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_mk_v3/controller/prayer_controller.dart';
-import 'package:new_mk_v3/model/senaraimasjid_model.dart';
 import 'package:new_mk_v3/model/video_model.dart';
-import 'package:new_mk_v3/pages/features/calendar_pages.dart';
 import 'package:new_mk_v3/pages/features/listvideo_pages.dart';
 import 'package:new_mk_v3/pages/features/prayertime_pages.dart';
 import 'package:new_mk_v3/pages/features/qiblah_pages.dart';
@@ -572,54 +570,6 @@ class _LandingPageState extends State<LandingPage> {
                 const Color(0xFF073C62)
             ),
           ),
-          const SizedBox(width: 16),
-          GestureDetector(
-            onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => ForumPage(),
-              //   ),
-              // );
-            },
-            child: _buildMenuIcon(
-                'assets/icon/chat.png',
-                'Forum Masjid',
-                const Color(0xFF073C62)
-            ),
-          ),
-          const SizedBox(width: 16),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CalendarPage(title: '',),
-                ),
-              );
-            },
-            child: _buildMenuIcon(
-                'assets/icon/calendar.png',
-                'Kalendar Masjid',
-                const Color(0xFF073C62)
-            ),
-          ),
-          const SizedBox(width: 16),
-          GestureDetector(
-            onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => (),
-              //   ),
-              // );
-            },
-            child: _buildMenuIcon(
-                'assets/icon/booking.png',
-                'Tempahan Masjid',
-                const Color(0xFF073C62)
-            ),
-          ),
         ],
       ),
     );
@@ -630,7 +580,7 @@ class _LandingPageState extends State<LandingPage> {
       children: [
         Container(
           padding: const EdgeInsets.all(20),
-          child: Image.asset(assetPath, height: 60, width: 60, color: color),
+          child: Image.asset(assetPath, height: 70, width: 70, color: color),
         ),
         const SizedBox(height: 8),
         Text(
