@@ -3,21 +3,42 @@
     "id": 1,
     "title": "Masjid Sultan Salahuddin Abdul Aziz Shah",
     "subtitle": "Shah Alam",
-    "url": "https://www.mssaas.gov.my",
-    "image": "assets/masjidpicture/masjidshahalam.jpg"
+    "image": "assets/masjidpicture/masjidshahalam.jpg",
+    "background": "assets/masjidpicture/masjidshahalam2.jpg",
+    "detail": [
+      {
+        "location": "Tingkat 1, Dewan Syarahan dan Muzakarah Islam, \n Persiaran Masjid, Seksyen 14, \n 40000,Shah Alam, Selangor Darul Ehsan.",
+        "email": "mssaas@jais.gov.my",
+        "phone": "03-55238006"
+      }
+    ]
   },
   {
     "id": 2,
     "title": "Masjid Putra, Putrajaya",
     "subtitle": "Putrajaya",
-    "url": "http://www.masjidputra.gov.my/ms/",
-    "image": "assets/masjidpicture/masjidputra.jpg"
+    "image": "assets/masjidpicture/masjidputra.jpg",
+    "background": "assets/masjidpicture/masjidputra2.jpg",
+    "data": [
+      {
+        "location": "Jabatan Kemajuan Islam Malaysia (JAKIM),\nPusat Pentadbiran Kerajaan Persekutuan,\n62502 Putrajaya,\nWilayah Persekutuan Putrajaya.",
+        "email": "masjidputra.gov.my",
+        "phone": "03-8888 5678"
+      }
+    ]
   },
   {
     "id": 3,
     "title": "Masjid Negara",
     "subtitle": "Malaysia",
-    "url": "https://masjidnegara.gov.my/ms/",
-    "image": "assets/masjidpicture/masjid-negara.jpg"
+    "image": "assets/masjidpicture/masjid-negara.jpg",
+    "background": "assets/masjidpicture/masjid-negara2.jpg",
+    "data": [
+      {
+        "location": "Jabatan Kemajuan Islam Malaysia (JAKIM),\nJalan Perdana,\n50480 Kuala Lumpur,\nWilayah Persekutuan.",
+        "email": "pro@masjidnegara.gov.my",
+        "phone": "03-21073100 "
+      }
+    ]
   }
 ]

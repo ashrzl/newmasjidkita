@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_mk_v3/model/senaraimasjid_model.dart';
+import 'package:new_mk_v3/pages/features/masjidetail_pages.dart';
 import 'package:new_mk_v3/pages/landing_pages.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class MasjidListScreen extends StatefulWidget {
   @override
@@ -10,17 +10,6 @@ class MasjidListScreen extends StatefulWidget {
 
 class _MasjidListScreenState extends State<MasjidListScreen> {
   late Future<List<SenaraiMasjid>> _masjidListFuture;
-
-  void _launchURL(String url) async {
-    final Uri uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Could not launch $url')),
-      );
-    }
-  }
 
   @override
   void initState() {
@@ -98,7 +87,12 @@ class _MasjidListScreenState extends State<MasjidListScreen> {
                   ),
                   subtitle: Text(masjid.subtitle),
                   onTap: () {
-                    _launchURL(masjid.url);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MasjidDetailScreen(),
+                      ),
+                    );
                   },
                 ),
               );

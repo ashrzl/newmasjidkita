@@ -5,14 +5,14 @@ class SenaraiMasjid {
   final int id;
   final String title;
   final String subtitle;
-  final String url;
+  final String background;
   final String image;
 
   SenaraiMasjid({
     required this.id,
     required this.title,
     required this.subtitle,
-    required this.url,
+    required this.background,
     required this.image,
   });
 
@@ -21,7 +21,7 @@ class SenaraiMasjid {
       id: json['id'],
       title: json['title'],
       subtitle: json['subtitle'],
-      url: json['url'],
+      background: json['background'],
       image: json['image'],
     );
   }

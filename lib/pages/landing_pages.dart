@@ -343,7 +343,7 @@ class _LandingPageState extends State<LandingPage> {
                           child: TabBarView(
                             children: [
                               ListView.builder(
-                                itemCount: 5,
+                                itemCount: 3,
                                 itemBuilder: (context, index) {
                                   return ListTile(
                                     leading: Icon(Icons.article),
@@ -353,7 +353,7 @@ class _LandingPageState extends State<LandingPage> {
                                   },
                               ),
                               ListView.builder(
-                                itemCount: 5,
+                                itemCount: 3,
                                 itemBuilder: (context, index) {
                                   return ListTile(
                                     leading: Icon(Icons.announcement),
@@ -517,70 +517,74 @@ class _LandingPageState extends State<LandingPage> {
 
     );
   }
-
   Widget _buildMenuIcons() {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => WaktuSolatPage(),
-                ),
-              );
-            },
-            child: _buildMenuIcon(
-                'assets/icon/solat.png',
-                'Waktu Solat',
-                const Color(0xFF073C62)
+      child: Center(
+        child: Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WaktuSolatPage(),
+                  ),
+                );
+              },
+              child: _buildMenuIcon(
+                  'assets/icon/solat.png',
+                  'Waktu Solat',
+                  const Color(0xFF073C62)
+              ),
             ),
-          ),
-          const SizedBox(width: 16),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => QiblahPage(),
-                ),
-              );
-            },
-            child: _buildMenuIcon(
-                'assets/icon/qibla.png',
-                'Kiblat',
-                const Color(0xFF073C62)
+            const SizedBox(width: 16),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => QiblahPage(),
+                  ),
+                );
+              },
+              child: _buildMenuIcon(
+                  'assets/icon/qibla.png',
+                  'Kiblat',
+                  const Color(0xFF073C62)
+              ),
             ),
-          ),
-          const SizedBox(width: 16),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => QuranPage(),
-                ),
-              );
-            },
-            child: _buildMenuIcon(
-                'assets/icon/read-quran.png',
-                'Al-Quran',
-                const Color(0xFF073C62)
+            const SizedBox(width: 16),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => QuranPage(),
+                  ),
+                );
+              },
+              child: _buildMenuIcon(
+                  'assets/icon/read-quran.png',
+                  'Al-Quran',
+                  const Color(0xFF073C62)
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
+
 
   Widget _buildMenuIcon(String assetPath, String label, Color color) {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.all(20),
-          child: Image.asset(assetPath, height: 70, width: 70, color: color),
+          padding: const EdgeInsets.all(30),
+          child: Center(
+            child: Image.asset(assetPath, height: 70, width: 70, color: color),
+          ),
         ),
         const SizedBox(height: 8),
         Text(
@@ -590,4 +594,5 @@ class _LandingPageState extends State<LandingPage> {
       ],
     );
   }
+
 }

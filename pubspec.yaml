@@ -110,8 +110,11 @@ flutter:
     - assets/gif/compassgif.gif
     - assets/gif/lanterns.gif
     - assets/masjidpicture/masjidputra.jpg
+    - assets/masjidpicture/masjidputra2.jpg
     - assets/masjidpicture/masjidshahalam.jpg
+    - assets/masjidpicture/masjidshahalam2.jpg
     - assets/masjidpicture/masjid-negara.jpg
+    - assets/masjidpicture/masjid-negara2.jpg
     - assets/videopicture/videoagama.png
     - assets/videopicture/videoagama2.png
     - assets/videopicture/videoagama3.png
